@@ -15,6 +15,16 @@ string_to_bin_test_() ->
 			?_assert(<<>> == pdu_data:string_to_bin("", 8))}
 	].
 
+bin_to_string_test_() ->
+	[
+		{"Binary less than MAX will unpack with empty binary left", 
+			?_assertEqual({"foo", <<>>}, pdu_data:bin_to_string(<<102,111,111>>, 4))},
+		{"Binary greater than MAX will unpack with extra binary left",
+			?_assertEqual({"foo", <<1,2,3>>}, pdu_data:bin_to_string(<<102,111,111,1,2,3>>, 3))},
+		{"Empty binary will unpack to empty string",
+			?_assertEqual({"", <<>>}, pdu_data:bin_to_string(<<>>, 3))}
+	].
+
 cstring_to_bin_test_() ->
 	[
 		{"A string less than MAX will convert", 
