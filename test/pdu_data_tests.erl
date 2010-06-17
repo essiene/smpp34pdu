@@ -39,6 +39,15 @@ cstring_to_bin_test_() ->
 			?_assert(<<0>> == pdu_data:cstring_to_bin("", 8))}
 	].
 
+bin_to_cstring_test_() ->
+	[
+		{"Binary less than MAX will unpack with empty binary left", 
+			?_assertEqual({"foo", <<>>}, pdu_data:bin_to_cstring(<<102,111,111,0>>, 6))},
+		{"Binary greater than MAX will unpack with extra binary left (basically, lost!)",
+			?_assertEqual({"foo", <<109,97,110,99,104,117,0>>}, pdu_data:bin_to_cstring(<<102,111,111,109,97,110,99,104,117,0>>, 3))},
+		{"Encountering 0 terminator at start of binary, unpacks empty string and returns rest",
+			?_assertEqual({"", <<1,2,3>>}, pdu_data:bin_to_cstring(<<0,1,2,3>>, 8))}
+	].
 
 integer_to_bin_test_() ->
 	[
@@ -84,4 +93,12 @@ integer_to_bin_test_() ->
 		}
 	].
 
+bin_to_integer_test_() ->
+	[
+		{"Unpacking binary of same size as MAX results in proper binary WITH NO extras left",
+			?_assert({12345, <<>>} == pdu_data:bin_to_integer(<<0,0,48,57>>, 4))},
+		{"Unpacking binary greater than MAX results in proper binary WITH extras left",
+			?_assert({12345, <<1,2,3>>} == pdu_data:bin_to_integer(<<0,0,48,57,1,2,3>>, 4))}
+	].
+		
 

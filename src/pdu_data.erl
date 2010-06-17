@@ -45,6 +45,8 @@ bin_to_cstring(<<>>, _,_, Acc) ->
 	{lists:reverse(Acc), <<>>};
 bin_to_cstring(<<0,Rest/binary>>, _, _, Acc) ->
 	{lists:reverse(Acc), Rest};
+bin_to_cstring(<<H,Rest/binary>>, Max, Max, Acc) ->
+	{lists:reverse([H|Acc]), Rest};
 bin_to_cstring(<<H,Rest/binary>>, Current, Max, Acc) ->
 	bin_to_cstring(Rest, Current+1, Max, [H|Acc]);
 bin_to_cstring(Bin, Current, Max, Acc) when Current > Max ->
