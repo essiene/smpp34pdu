@@ -3,6 +3,8 @@
   {description, ""},
   {vsn, "1"},
   {modules, [
+	  		pdu_data,
+			smpp34_BIND_RECEIVER
             ]},
   {registered, []},
   {applications, [
