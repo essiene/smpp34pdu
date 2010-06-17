@@ -30,3 +30,48 @@ cstring_to_bin_test_() ->
 	].
 
 
+integer_to_bin_test_() ->
+	[
+		{"Size specification are octets", 
+			[{"One octet when size is 1", 
+				?_assert(<<32>> == pdu_data:integer_to_bin(32, 1))},
+			 {"Two octets when size is 2, payload is in LSB", 
+				?_assert(<<0,32>> == pdu_data:integer_to_bin(32, 2))},
+			 {"Three octets when size is 3, payload is in LSB", 
+				?_assert(<<0,0,32>> == pdu_data:integer_to_bin(32, 3))},
+			 {"Four octets when size is 4, payload is in LSB", 
+				?_assert(<<0,0,0,32>> == pdu_data:integer_to_bin(32, 4))}
+			]
+		},
+
+		{"No function clause for non integers", 
+			?_assertError(function_clause, pdu_data:integer_to_bin(1.0, 4))},
+
+		{"The atom 'undefined' will be ZERO, with proper octet size",
+			[
+				{"Size of 1 should yield one octet", 
+					?_assert(<<0>> == pdu_data:integer_to_bin(undefined, 1))},
+				{"Size of 2 should yield two octets", 
+					?_assert(<<0,0>> == pdu_data:integer_to_bin(undefined, 2))},
+				{"Size of 3 should yield three octets", 
+					?_assert(<<0,0,0>> == pdu_data:integer_to_bin(undefined, 3))},
+				{"Size of 4 should yield four octets", 
+					?_assert(<<0,0,0,0>> == pdu_data:integer_to_bin(undefined, 4))}
+			]
+		},
+
+		{"The integer ZERO will be ZERO, with proper octet size",
+			[
+				{"Size of 1 should yield one octet", 
+					?_assert(<<0>> == pdu_data:integer_to_bin(0, 1))},
+				{"Size of 2 should yield two octets", 
+					?_assert(<<0,0>> == pdu_data:integer_to_bin(0, 2))},
+				{"Size of 3 should yield three octets", 
+					?_assert(<<0,0,0>> == pdu_data:integer_to_bin(0, 3))},
+				{"Size of 4 should yield four octets", 
+					?_assert(<<0,0,0,0>> == pdu_data:integer_to_bin(0, 4))}
+			]
+		}
+	].
+
+
