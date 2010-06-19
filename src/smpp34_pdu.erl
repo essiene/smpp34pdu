@@ -3,13 +3,13 @@
 -include("types.hrl").
 -export([pack/2, unpack/1]).
 
--type(unpack_cont_action() :: 'header_length' | 'body_length' | 'next').
+-type(unpack_status() :: 'header_length' | 'body_length' | 'ok').
 
 -spec(pack/2 :: (integer(), bind_receiver()) -> binary()).
 -spec(pack/4 :: (integer(), integer(), integer(), binary()) -> binary()).
 
--spec(unpack/1 :: (binary()) -> {[pdu()],binary()}).
--spec(unpack/3 :: (binary(), unpack_cont_action(), [pdu()]) -> {[pdu()], binary()}).
+-spec(unpack/1 :: (binary()) -> {unpack_status(), [pdu()],binary()}).
+-spec(unpack/3 :: (binary(), unpack_status(), [pdu()]) -> {unpack_status(), [pdu()], binary()}).
 
 -spec(unpack_body/2 :: (integer(), binary()) -> bind_receiver() | invalid_command_id()).
 
@@ -27,14 +27,16 @@ pack(Cid, Cstat, Snum, Body) ->
 
 
 unpack(Bin) ->
-	unpack(Bin, next, []).
+	unpack(Bin, ok, []).
 
 
+unpack(<<>>, _, Accm) ->
+	{ok, lists:reverse(Accm), <<>>};
 unpack(Bin, header_length, Accm) ->
-	{lists:reverse(Accm), Bin};
+	{header_length, lists:reverse(Accm), Bin};
 unpack(Bin, body_length, Accm) ->
-	{lists:reverse(Accm), Bin};
-unpack(Bin0, next, Accm) ->
+	{body_length, lists:reverse(Accm), Bin};
+unpack(Bin0, ok, Accm) ->
 	case byte_size(Bin0) of
 		N when N < 16 ->
 			unpack(Bin0, header_length, Accm);
@@ -44,18 +46,20 @@ unpack(Bin0, next, Accm) ->
 			{CommandStatus, Bin3} = pdu_data:bin_to_integer(Bin2, 4),
 			{SequenceNumber, Bin4} = pdu_data:bin_to_integer(Bin3, 4),
 
+			BodyLength = CommandLength - ?HEADER_OCTET_SIZE,
+
 			case byte_size(Bin4) of
-				N when N < CommandLength ->
+				N when N < BodyLength ->
 					unpack(Bin4, body_length, Accm);
 				_ ->
-					<<BodyBin:CommandLength/binary, Rest/binary>> = Bin4,
+					<<BodyBin:BodyLength/binary, Rest/binary>> = Bin4,
 					Body = unpack_body(CommandId, BodyBin),
 					Pdu = #pdu{command_length=CommandLength,
 						       command_id=CommandId,
 							   command_status=CommandStatus,
 							   sequence_number=SequenceNumber,
 							   body=Body},
-					unpack(Rest, next, [Pdu|Accm])
+					unpack(Rest, ok, [Pdu|Accm])
 			end
 	end.
 
