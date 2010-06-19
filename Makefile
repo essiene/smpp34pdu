@@ -6,3 +6,6 @@ tests:
 
 clean:
 	@./rebar clean
+
+analyze:
+	@./rebar analyze
