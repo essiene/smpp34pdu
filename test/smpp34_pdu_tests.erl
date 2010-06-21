@@ -24,15 +24,28 @@ pack_test_() ->
 	].
 
 unpack_test_() ->
-    Bin = <<0,0,0,37,0,0,0,1,0,0,0,0,0,0,0,1,97,98,99,100,101,102,103,104,105,106,0,97,98,99,100,0,0,52,2,1,0>>,
-	Pdu = #pdu{command_length=37, command_id=?BIND_RECEIVER,
-               command_status=0, sequence_number=1,
-			   body=#bind_receiver{system_id="abcdefghij", password="abcd", 
-				   system_type="", interface_version=?VERSION, addr_ton=2, 
-						   addr_npi=1,address_range=""}},
-	?_assertEqual({ok, [Pdu], <<>>}, smpp34_pdu:unpack(Bin)).
-
-
+	[
+		{"Unpacking #bind_receiver{} PDU",
+			?_assertEqual({ok, [#pdu{command_length=37, 
+					command_id=?BIND_RECEIVER, command_status=0, 
+					sequence_number=1, body=#bind_receiver{system_id="abcdefghij", 
+								password="abcd", system_type="", interface_version=?VERSION, 
+								addr_ton=2, addr_npi=1,address_range=""}}], <<>>}, 
+								smpp34_pdu:unpack(<<0,0,0,37,0,0,0,1,0,0,0,0,0,0,0,
+													1,97,98,99,100,101,102,103,104,
+													105,106,0,97,98,99,100,0,0,52,2,
+													1,0>>))},
+		{"Unpacking #bind_transmitter{} PDU",
+			?_assertEqual({ok, [#pdu{command_length=37, 
+					command_id=?BIND_TRANSMITTER, command_status=0, 
+					sequence_number=1, body=#bind_transmitter{system_id="abcdefghij", 
+								password="abcd", system_type="", interface_version=?VERSION, 
+								addr_ton=2, addr_npi=1,address_range=""}}], <<>>}, 
+								smpp34_pdu:unpack(<<0,0,0,37,0,0,0,2,0,0,0,0,0,0,0,
+													1,97,98,99,100,101,102,103,104,
+													105,106,0,97,98,99,100,0,0,52,2,
+													1,0>>))}
+	].
 
 unpack_multiple_test_() ->
 	[
