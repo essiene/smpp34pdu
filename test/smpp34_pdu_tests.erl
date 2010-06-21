@@ -12,8 +12,15 @@ pack_test_() ->
 					   smpp34_pdu:pack(1, #bind_receiver{system_id="abcdefghij", 
 						   password="abcd", system_type="", 
 						   interface_version=?VERSION, addr_ton=2, 
+						   addr_npi=1,address_range=""}))},
+		{"Packing #bind_transmitter{} PDU",
+			?_assertEqual(<<0,0,0,37,0,0,0,2,0,0,0,0,0,0,0,1,
+					   97,98,99,100,101,102,103,104,105,
+					   106,0,97,98,99,100,0,0,52,2,1,0>>,
+					   smpp34_pdu:pack(1, #bind_transmitter{system_id="abcdefghij", 
+						   password="abcd", system_type="", 
+						   interface_version=?VERSION, addr_ton=2, 
 						   addr_npi=1,address_range=""}))}
-
 	].
 
 unpack_test_() ->
