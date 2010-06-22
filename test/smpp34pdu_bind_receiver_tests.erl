@@ -1,10 +1,10 @@
--module(smpp34_BIND_TRANSMITTER_tests).
+-module(smpp34pdu_bind_receiver_tests).
 -include("../include/pdu.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
 
-bind_transmitter_test_() -> 
-    Payload = #bind_transmitter{system_id="abcdefghij",
+bind_receiver_test_() -> 
+    Payload = #bind_receiver{system_id="abcdefghij",
         password="abcd",
 		system_type="",
 		interface_version=?VERSION,
@@ -16,13 +16,13 @@ bind_transmitter_test_() ->
 
 	[
 		{"Packing Payload will give Bin",
-			?_assertEqual(Bin,smpp34_BIND_TRANSMITTER:pack(Payload))},
+			?_assertEqual(Bin,smpp34pdu_bind_receiver:pack(Payload))},
 		{"Unpacking Bin will give Payload",
-			?_assertEqual(Payload, smpp34_BIND_TRANSMITTER:unpack(Bin))},
+			?_assertEqual(Payload, smpp34pdu_bind_receiver:unpack(Bin))},
 		{"Packing and Unpacking Payload will give you Payload", 
 			?_assertEqual(Payload,
-					smpp34_BIND_TRANSMITTER:unpack(smpp34_BIND_TRANSMITTER:pack(Payload)))},
+					smpp34pdu_bind_receiver:unpack(smpp34pdu_bind_receiver:pack(Payload)))},
 		{"Unpacking and Packing Bin will give you Bin", 
 			?_assertEqual(Bin,
-					smpp34_BIND_TRANSMITTER:pack(smpp34_BIND_TRANSMITTER:unpack(Bin)))}
+					smpp34pdu_bind_receiver:pack(smpp34pdu_bind_receiver:unpack(Bin)))}
 	].
