@@ -5,13 +5,13 @@
 
 -type(unpack_status() :: 'header_length' | 'body_length' | 'ok').
 
--spec(pack/2 :: (integer(), bind_receiver()) -> binary()).
+-spec(pack/2 :: (integer(), valid_pdu()) -> binary()).
 -spec(pack/4 :: (integer(), integer(), integer(), binary()) -> binary()).
 
 -spec(unpack/1 :: (binary()) -> {unpack_status(), [pdu()],binary()}).
 -spec(unpack/3 :: (binary(), unpack_status(), [pdu()]) -> {unpack_status(), [pdu()], binary()}).
 
--spec(unpack_body/2 :: (integer(), binary()) -> bind_receiver() | invalid_command_id()).
+-spec(unpack_body/2 :: (integer(), binary()) -> valid_pdu() | invalid_command_id()).
 
 
 pack(Snum, #bind_receiver{}=Body) ->
@@ -24,7 +24,27 @@ pack(Snum, #bind_transmitter{}=Body) ->
 
 pack(Snum, #bind_transceiver{}=Body) ->
 	Bin = smpp34pdu_bind_transceiver:pack(Body),
-	pack(?BIND_TRANSCEIVER, 0, Snum, Bin).
+	pack(?BIND_TRANSCEIVER, 0, Snum, Bin);
+
+pack(Snum, #unbind{}=Body) ->
+	Bin = smpp34pdu_unbind:pack(Body),
+	pack(?UNBIND, 0, Snum, Bin);
+
+pack(Snum, #unbind_resp{}=Body) ->
+	Bin = smpp34pdu_unbind_resp:pack(Body),
+	pack(?UNBIND_RESP, 0, Snum, Bin);
+
+pack(Snum, #enquire_link{}=Body) ->
+	Bin = smpp34pdu_enquire_link:pack(Body),
+	pack(?ENQUIRE_LINK, 0, Snum, Bin);
+
+pack(Snum, #enquire_link_resp{}=Body) ->
+	Bin = smpp34pdu_enquire_link_resp:pack(Body),
+	pack(?ENQUIRE_LINK_RESP, 0, Snum, Bin);
+
+pack(Snum, #generic_nack{}=Body) ->
+	Bin = smpp34pdu_generic_nack:pack(Body),
+	pack(?GENERIC_NACK, 0, Snum, Bin).
 
 
 pack(Cid, Cstat, Snum, Body) ->
@@ -77,5 +97,15 @@ unpack_body(?BIND_TRANSMITTER, Bin) ->
 	smpp34pdu_bind_transmitter:unpack(Bin);
 unpack_body(?BIND_TRANSCEIVER, Bin) ->
 	smpp34pdu_bind_transceiver:unpack(Bin);
+unpack_body(?UNBIND, Bin) ->
+	smpp34pdu_unbind:unpack(Bin);
+unpack_body(?UNBIND_RESP, Bin) ->
+	smpp34pdu_unbind_resp:unpack(Bin);
+unpack_body(?ENQUIRE_LINK, Bin) ->
+	smpp34pdu_enquire_link:unpack(Bin);
+unpack_body(?ENQUIRE_LINK_RESP, Bin) ->
+	smpp34pdu_enquire_link_resp:unpack(Bin);
+unpack_body(?GENERIC_NACK, Bin) ->
+	smpp34pdu_generic_nack:unpack(Bin);
 unpack_body(CommandId, _) ->
 	{error, {command_id, CommandId}}.
