@@ -20,8 +20,11 @@ pack(Snum, #bind_receiver{}=Body) ->
 
 pack(Snum, #bind_transmitter{}=Body) ->
 	Bin = smpp34pdu_bind_transmitter:pack(Body),
-	pack(?BIND_TRANSMITTER, 0, Snum, Bin).
+	pack(?BIND_TRANSMITTER, 0, Snum, Bin);
 
+pack(Snum, #bind_transceiver{}=Body) ->
+	Bin = smpp34pdu_bind_transceiver:pack(Body),
+	pack(?BIND_TRANSCEIVER, 0, Snum, Bin).
 
 
 pack(Cid, Cstat, Snum, Body) ->
@@ -72,5 +75,7 @@ unpack_body(?BIND_RECEIVER, Bin) ->
 	smpp34pdu_bind_receiver:unpack(Bin);
 unpack_body(?BIND_TRANSMITTER, Bin) ->
 	smpp34pdu_bind_transmitter:unpack(Bin);
+unpack_body(?BIND_TRANSCEIVER, Bin) ->
+	smpp34pdu_bind_transceiver:unpack(Bin);
 unpack_body(CommandId, _) ->
 	{error, {command_id, CommandId}}.
