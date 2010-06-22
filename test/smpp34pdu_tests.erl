@@ -1,4 +1,4 @@
--module(smpp34_pdu_tests).
+-module(smpp34pdu_tests).
 -include("../include/pdu.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
@@ -9,7 +9,7 @@ pack_test_() ->
 			?_assertEqual(<<0,0,0,37,0,0,0,1,0,0,0,0,0,0,0,1,
 					   97,98,99,100,101,102,103,104,105,
 					   106,0,97,98,99,100,0,0,52,2,1,0>>,
-					   smpp34_pdu:pack(1, #bind_receiver{system_id="abcdefghij", 
+					   smpp34pdu:pack(1, #bind_receiver{system_id="abcdefghij", 
 						   password="abcd", system_type="", 
 						   interface_version=?VERSION, addr_ton=2, 
 						   addr_npi=1,address_range=""}))},
@@ -17,7 +17,7 @@ pack_test_() ->
 			?_assertEqual(<<0,0,0,37,0,0,0,2,0,0,0,0,0,0,0,1,
 					   97,98,99,100,101,102,103,104,105,
 					   106,0,97,98,99,100,0,0,52,2,1,0>>,
-					   smpp34_pdu:pack(1, #bind_transmitter{system_id="abcdefghij", 
+					   smpp34pdu:pack(1, #bind_transmitter{system_id="abcdefghij", 
 						   password="abcd", system_type="", 
 						   interface_version=?VERSION, addr_ton=2, 
 						   addr_npi=1,address_range=""}))}
@@ -31,7 +31,7 @@ unpack_test_() ->
 					sequence_number=1, body=#bind_receiver{system_id="abcdefghij", 
 								password="abcd", system_type="", interface_version=?VERSION, 
 								addr_ton=2, addr_npi=1,address_range=""}}], <<>>}, 
-								smpp34_pdu:unpack(<<0,0,0,37,0,0,0,1,0,0,0,0,0,0,0,
+								smpp34pdu:unpack(<<0,0,0,37,0,0,0,1,0,0,0,0,0,0,0,
 													1,97,98,99,100,101,102,103,104,
 													105,106,0,97,98,99,100,0,0,52,2,
 													1,0>>))},
@@ -41,7 +41,7 @@ unpack_test_() ->
 					sequence_number=1, body=#bind_transmitter{system_id="abcdefghij", 
 								password="abcd", system_type="", interface_version=?VERSION, 
 								addr_ton=2, addr_npi=1,address_range=""}}], <<>>}, 
-								smpp34_pdu:unpack(<<0,0,0,37,0,0,0,2,0,0,0,0,0,0,0,
+								smpp34pdu:unpack(<<0,0,0,37,0,0,0,2,0,0,0,0,0,0,0,
 													1,97,98,99,100,101,102,103,104,
 													105,106,0,97,98,99,100,0,0,52,2,
 													1,0>>))}
@@ -68,7 +68,7 @@ unpack_multiple_test_() ->
 						password="abcd", system_type="", 
 						interface_version=?VERSION, addr_ton=2, 
 						addr_npi=1,address_range=""}}], <<>>},
-						smpp34_pdu:unpack(<<0,0,0,37,0,0,0,1,0,0,0,0,0,
+						smpp34pdu:unpack(<<0,0,0,37,0,0,0,1,0,0,0,0,0,
 								  0,0,1,97,98,99,100,101,102,
 								  103,104,105,106,0,97,98,99,
 								  100,0,0,52,2,1,0,0,0,0,37,0,
@@ -98,7 +98,7 @@ unpack_multiple_test_() ->
 						password="abcd", system_type="", 
 						interface_version=?VERSION, addr_ton=2, 
 						addr_npi=1,address_range=""}}], <<0,0,0,37>>},
-						smpp34_pdu:unpack(<<0,0,0,37,0,0,0,1,0,0,0,0,0,
+						smpp34pdu:unpack(<<0,0,0,37,0,0,0,1,0,0,0,0,0,
 								  0,0,1,97,98,99,100,101,102,
 								  103,104,105,106,0,97,98,99,
 								  100,0,0,52,2,1,0,0,0,0,37,0,

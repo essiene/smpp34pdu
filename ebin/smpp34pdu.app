@@ -1,12 +1,12 @@
-{application, smpp34_pdu,
+{application, smpp34pdu,
  [
   {description, ""},
   {vsn, "1"},
   {modules, [
 	  		pdu_data,
-			smpp34_pdu,
-			smpp34_BIND_RECEIVER,
-			smpp34_BIND_TRANSMITTER
+			smpp34pdu,
+			smpp34pdu_bind_receiver,
+			smpp34pdu_bind_transmitter
             ]},
   {registered, []},
   {applications, [

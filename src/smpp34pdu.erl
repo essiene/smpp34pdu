@@ -1,4 +1,4 @@
--module(smpp34_pdu).
+-module(smpp34pdu).
 -include("pdu.hrl").
 -include("types.hrl").
 -export([pack/2, unpack/1]).
@@ -15,11 +15,11 @@
 
 
 pack(Snum, #bind_receiver{}=Body) ->
-	Bin = smpp34_BIND_RECEIVER:pack(Body),
+	Bin = smpp34pdu_bind_receiver:pack(Body),
 	pack(?BIND_RECEIVER, 0, Snum, Bin);
 
 pack(Snum, #bind_transmitter{}=Body) ->
-	Bin = smpp34_BIND_TRANSMITTER:pack(Body),
+	Bin = smpp34pdu_bind_transmitter:pack(Body),
 	pack(?BIND_TRANSMITTER, 0, Snum, Bin).
 
 
@@ -69,8 +69,8 @@ unpack(Bin0, ok, Accm) ->
 	end.
 
 unpack_body(?BIND_RECEIVER, Bin) ->
-	smpp34_BIND_RECEIVER:unpack(Bin);
+	smpp34pdu_bind_receiver:unpack(Bin);
 unpack_body(?BIND_TRANSMITTER, Bin) ->
-	smpp34_BIND_TRANSMITTER:unpack(Bin);
+	smpp34pdu_bind_transmitter:unpack(Bin);
 unpack_body(CommandId, _) ->
 	{error, {command_id, CommandId}}.

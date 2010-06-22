@@ -1,4 +1,4 @@
--module(smpp34_BIND_TRANSMITTER).
+-module(smpp34pdu_bind_transmitter).
 -include("pdu.hrl").
 -include("types.hrl").
 -export([pack/1,unpack/1]).
