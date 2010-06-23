@@ -12,6 +12,8 @@
 			smpp34pdu_unbind_resp,
 			smpp34pdu_enquire_link,
 			smpp34pdu_enquire_link_resp,
+			smpp34pdu_replace_sm_resp,
+			smpp34pdu_cancel_sm_resp,
 			smpp34pdu_generic_nack
             ]},
   {registered, []},

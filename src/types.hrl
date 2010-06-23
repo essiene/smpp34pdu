@@ -16,7 +16,9 @@
 					| unbind_resp()
 					| generic_nack()
 					| enquire_link()
-					| enquire_link_resp()).
+					| enquire_link_resp()
+					| replace_sm_resp() 
+					| cancel_sm_resp()).
 
 -type(valid_pdu_error() :: invalid_command_id()).
 
@@ -28,6 +30,8 @@
 -type(generic_nack() :: #generic_nack{}).
 -type(enquire_link() :: #enquire_link{}).
 -type(enquire_link_resp() :: #enquire_link_resp{}).
+-type(replace_sm_resp() :: #replace_sm_resp{}).
+-type(cancel_sm_resp() :: #cancel_sm_resp{}).
 
 -type(invalid_command_id() :: {'error', {'command_id', integer()}}).
 
