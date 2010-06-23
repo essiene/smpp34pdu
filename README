@@ -6,19 +6,27 @@ This library is a take two of a ad-hoc implementation of just
 the wire protocol packing and unpacking routines. It is inspired
 in part by OSERL's approach and my desire to implement this from
 first principles after the lessons learnt implementing this in an
-ad-hoc style.
+ad-hoc style, it will eventually replace the version used in my
+SMPP library.
 
-Another goal of this library is to be fully tested and deemed 
+Another goal of this library is to be fully tested and provably
 "trustworthy".
 
-The hidden goal of this library is to allow serve as boiler plate on
-my research into binary protocol compiler compilers, which is one of
-my current areas of interest.
+The hidden goal of this library is to serve as boiler plate on
+my research into binary protocol compiler compilers, which is 
+one of my current areas of interest, as I want to implement this
+from first principles without too much refactorings, so I can see
+how easy it would be to autogenerate all this code based on an EBNF
+type grammar.
 
 I currently choose to support SMPP 3.4 since its the most widely deployed
 variant of the protocol currently, and SMPP is designed to be backwardly
 compatible, so any compliant system speaking SMPP 5 will accept and work
 with SMPP 3.4 systems.
+
+Note that this library assumes a familiarity with the SMPP 3.4 PDU
+specification, and is a one-to-one mapping of the PDUs onto erlang.  
+Typically, this familarity comes from reading the spec :)
 
 Building
 --------
@@ -47,45 +55,49 @@ Installation
 Deploy like any other erlang library
 
 
-Tutorial
---------
+Usage/Examples
+--------------
+-module(smpp34pdu_example).
+-export([start/0]).
 
-This library just offers two functions: 
-	1. Packing 
-	2. Unpacking
+% Include the resource file defining all the 
+% Records
 
-The packing and unpacking use an internal representation which
-are normal erlang records, thus allowing them to be used in pattern
-matching clauses enabling more flexible use cases, than proplists.
+-include_lib("smpp34pdu/include/pdu.hrl").
 
-Pictorially this looks like:
+start() ->
+	% Create a bind_receiver PDU record
+	BindReceiverBody = #bind_receiver{system_id="abcdefghij", 
+							password="abcd", system_type="", 
+							interface_version=?VERSION, addr_ton=2, 
+							addr_npi=1,address_range=""},
 
-	BINARY PDU 
-		-> smpp34pdu:unpack/1  
-							-> 
-								INTERNAL REPRESENTATION
-							<-
-		<- smpp34pdu:pack/2
-	BINARY PDU
+	% Pack this PDU into binary
+	% Note that this calculates all the neccessary header fields
+	% like command_id, command_length, command_status and builds a complete
+	% PDU
 
-An example snippet is:
 
-	BinaryPdu = <<0,0,0,37,0,0,0,1,0,0,0,0,0,0,0,1,
-				  97,98,99,100,101,102,103,104,105,
-				  106,0,97,98,99,100,0,0,52,2,1,0>>,
+	PackedBinary = smpp34pdu:pack(1, BindReceiverBody),
 
-	{ok, [InternalRep], <<>>} = smpp34pdu:unpack(BinaryPdu),
+	{ok, [Pdu], <<>>} = smpp34pdu:unpack(PackedBinary),
 
-	%% InternalRep now contains the following record
-	%%       #bind_receiver{
-	%%				system_id="abcdefghij", 
-	%%				password="abcd", system_type="", 
-	%%				interface_version=?VERSION, addr_ton=2, 
-	%%				addr_npi=1,address_range=""}
-	%%
+	Pdu#pdu.body = BindReceiverBody,
 
-	BinaryPdu = smpp34pdu:pack(1, InternalRep).
+	io:format("PDU packing/unpacking works properly").
 
-	%% The preceeding should match properly, as InternalRep will
-	%% be packed back into the same binary as BinaryPdu contains.
+Docs
+-----
+
+A fuller documentation will be included soon
+
+
+Current Status
+--------------
+
+This is currently pre-alpha software and is not yet feature complete.
+I am working through an earlier implementation and reimplementing here.
+This situation shouldn't last for too long though.
+
+
 
