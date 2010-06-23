@@ -1,1 +1,91 @@
-stand-alone SMPP pdu packing and unpacking library for erlang
+smpp34pdu is an erlang library for the SMPP 3.4 wire protocol
+
+Brief History
+--------------
+This library is a take two of a ad-hoc implementation of just
+the wire protocol packing and unpacking routines. It is inspired
+in part by OSERL's approach and my desire to implement this from
+first principles after the lessons learnt implementing this in an
+ad-hoc style.
+
+Another goal of this library is to be fully tested and deemed 
+"trustworthy".
+
+The hidden goal of this library is to allow serve as boiler plate on
+my research into binary protocol compiler compilers, which is one of
+my current areas of interest.
+
+I currently choose to support SMPP 3.4 since its the most widely deployed
+variant of the protocol currently, and SMPP is designed to be backwardly
+compatible, so any compliant system speaking SMPP 5 will accept and work
+with SMPP 3.4 systems.
+
+Building
+--------
+smpp34pdu is built with rebar, the awesome erlang build tool.
+
+There is a Makefile wrapping up its use, so it plays nice with other
+build environments.
+
+First clone the sources from git hub:
+
+   $ git clone git://github.com/essiene/smpp34pdu.git
+
+Then build:
+   $ cd smpp34pdu
+   $ make
+
+To run the unittests:
+   $ make tests
+
+To run dialyzer analysis:
+   $ make analyze
+
+
+Installation
+------------
+Deploy like any other erlang library
+
+
+Tutorial
+--------
+
+This library just offers two functions: 
+	1. Packing 
+	2. Unpacking
+
+The packing and unpacking use an internal representation which
+are normal erlang records, thus allowing them to be used in pattern
+matching clauses enabling more flexible use cases, than proplists.
+
+Pictorially this looks like:
+
+	BINARY PDU 
+		-> smpp34pdu:unpack/1  
+							-> 
+								INTERNAL REPRESENTATION
+							<-
+		<- smpp34pdu:pack/2
+	BINARY PDU
+
+An example snippet is:
+
+	BinaryPdu = <<0,0,0,37,0,0,0,1,0,0,0,0,0,0,0,1,
+				  97,98,99,100,101,102,103,104,105,
+				  106,0,97,98,99,100,0,0,52,2,1,0>>,
+
+	{ok, [InternalRep], <<>>} = smpp34pdu:unpack(BinaryPdu),
+
+	%% InternalRep now contains the following record
+	%%       #bind_receiver{
+	%%				system_id="abcdefghij", 
+	%%				password="abcd", system_type="", 
+	%%				interface_version=?VERSION, addr_ton=2, 
+	%%				addr_npi=1,address_range=""}
+	%%
+
+	BinaryPdu = smpp34pdu:pack(1, InternalRep).
+
+	%% The preceeding should match properly, as InternalRep will
+	%% be packed back into the same binary as BinaryPdu contains.
+
