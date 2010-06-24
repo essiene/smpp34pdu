@@ -26,25 +26,26 @@ pack(Snum, #bind_transceiver{}=Body) ->
 	Bin = smpp34pdu_bind_transceiver:pack(Body),
 	pack(?BIND_TRANSCEIVER, 0, Snum, Bin);
 
-pack(Snum, #unbind{}=Body) ->
-	Bin = smpp34pdu_unbind:pack(Body),
-	pack(?UNBIND, 0, Snum, Bin);
+pack(Snum, #unbind{}) ->
+	pack(?UNBIND, 0, Snum, <<>>);
 
-pack(Snum, #unbind_resp{}=Body) ->
-	Bin = smpp34pdu_unbind_resp:pack(Body),
-	pack(?UNBIND_RESP, 0, Snum, Bin);
+pack(Snum, #unbind_resp{}) ->
+	pack(?UNBIND_RESP, 0, Snum, <<>>);
 
-pack(Snum, #enquire_link{}=Body) ->
-	Bin = smpp34pdu_enquire_link:pack(Body),
-	pack(?ENQUIRE_LINK, 0, Snum, Bin);
+pack(Snum, #enquire_link{}) ->
+	pack(?ENQUIRE_LINK, 0, Snum, <<>>);
 
-pack(Snum, #enquire_link_resp{}=Body) ->
-	Bin = smpp34pdu_enquire_link_resp:pack(Body),
-	pack(?ENQUIRE_LINK_RESP, 0, Snum, Bin);
+pack(Snum, #enquire_link_resp{}) ->
+	pack(?ENQUIRE_LINK_RESP, 0, Snum, <<>>);
 
-pack(Snum, #generic_nack{}=Body) ->
-	Bin = smpp34pdu_generic_nack:pack(Body),
-	pack(?GENERIC_NACK, 0, Snum, Bin).
+pack(Snum, #generic_nack{}) ->
+	pack(?GENERIC_NACK, 0, Snum, <<>>);
+
+pack(Snum, #replace_sm_resp{}) ->
+	pack(?REPLACE_SM_RESP, 0, Snum, <<>>);
+
+pack(Snum, #cancel_sm_resp{}) ->
+	pack(?CANCEL_SM_RESP, 0, Snum, <<>>).
 
 
 pack(Cid, Cstat, Snum, Body) ->
@@ -97,15 +98,19 @@ unpack_body(?BIND_TRANSMITTER, Bin) ->
 	smpp34pdu_bind_transmitter:unpack(Bin);
 unpack_body(?BIND_TRANSCEIVER, Bin) ->
 	smpp34pdu_bind_transceiver:unpack(Bin);
-unpack_body(?UNBIND, Bin) ->
-	smpp34pdu_unbind:unpack(Bin);
-unpack_body(?UNBIND_RESP, Bin) ->
-	smpp34pdu_unbind_resp:unpack(Bin);
-unpack_body(?ENQUIRE_LINK, Bin) ->
-	smpp34pdu_enquire_link:unpack(Bin);
-unpack_body(?ENQUIRE_LINK_RESP, Bin) ->
-	smpp34pdu_enquire_link_resp:unpack(Bin);
-unpack_body(?GENERIC_NACK, Bin) ->
-	smpp34pdu_generic_nack:unpack(Bin);
+unpack_body(?UNBIND, _) ->
+	#unbind{};
+unpack_body(?UNBIND_RESP, _) ->
+	#unbind_resp{};
+unpack_body(?ENQUIRE_LINK, _) ->
+	#enquire_link{};
+unpack_body(?ENQUIRE_LINK_RESP, _) ->
+	#enquire_link_resp{};
+unpack_body(?GENERIC_NACK, _) ->
+	#generic_nack{};
+unpack_body(?REPLACE_SM_RESP, _) ->
+	#replace_sm_resp{};
+unpack_body(?CANCEL_SM_RESP, _) ->
+	#cancel_sm_resp{};
 unpack_body(CommandId, _) ->
 	{error, {command_id, CommandId}}.
