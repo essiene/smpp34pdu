@@ -40,6 +40,10 @@ pack(Snum, #bind_transceiver{}=Body) ->
 	Bin = smpp34pdu_bind_transceiver:pack(Body),
 	pack(?BIND_TRANSCEIVER, 0, Snum, Bin);
 
+pack(Snum, #outbind{}=Body) ->
+	Bin = smpp34pdu_outbind:pack(Body),
+	pack(?OUTBIND, 0, Snum, Bin);
+
 pack(Snum, #enquire_link{}) ->
 	pack(?ENQUIRE_LINK, 0, Snum, <<>>);
 
@@ -108,6 +112,8 @@ unpack_body(?CANCEL_SM_RESP, _) ->
 	#cancel_sm_resp{};
 unpack_body(?BIND_TRANSCEIVER, Bin) ->
 	smpp34pdu_bind_transceiver:unpack(Bin);
+unpack_body(?OUTBIND, Bin) ->
+	smpp34pdu_outbind:unpack(Bin);
 unpack_body(?ENQUIRE_LINK, _) ->
 	#enquire_link{};
 unpack_body(?ENQUIRE_LINK_RESP, _) ->
