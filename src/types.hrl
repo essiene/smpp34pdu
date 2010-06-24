@@ -12,6 +12,8 @@
 -type(valid_pdu() ::  generic_nack()
 					| bind_receiver()
 					| bind_transmitter()
+					| submit_sm_resp()
+					| deliver_sm_resp()
 					| unbind() 
 					| unbind_resp()
 					| replace_sm_resp() 
@@ -26,6 +28,8 @@
 -type(generic_nack() :: #generic_nack{}).
 -type(bind_receiver() :: #bind_receiver{}).
 -type(bind_transmitter() :: #bind_transmitter{}).
+-type(submit_sm_resp() :: #submit_sm_resp{}).
+-type(deliver_sm_resp() :: #deliver_sm_resp{}).
 -type(unbind() :: #unbind{}).
 -type(unbind_resp() :: #unbind_resp{}).
 -type(replace_sm_resp() :: #replace_sm_resp{}).
