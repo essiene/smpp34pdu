@@ -31,7 +31,10 @@ pack_test_() ->
 						   addr_npi=1,address_range=""}))},
 		{"Packing #unbind{} PDU",
 			?_assertEqual(<<0,0,0,16,0,0,0,6,0,0,0,0,0,0,0,4>>,
-					   smpp34pdu:pack(4, #unbind{}))}
+					   smpp34pdu:pack(4, #unbind{}))},
+		{"Packing #unbind_resp{} PDU",
+			?_assertEqual(<<0,0,0,16,128,0,0,6,0,0,0,0,0,0,0,4>>,
+					   smpp34pdu:pack(4, #unbind_resp{}))}
 	].
 
 unpack_test_() ->
@@ -70,7 +73,12 @@ unpack_test_() ->
 			?_assertEqual({ok, [#pdu{command_length=16, 
 					command_id=?UNBIND, command_status=0, 
 					sequence_number=7, body=#unbind{}}], <<>>}, 
-								smpp34pdu:unpack(<<0,0,0,16,0,0,0,6,0,0,0,0,0,0,0,7>>))}
+								smpp34pdu:unpack(<<0,0,0,16,0,0,0,6,0,0,0,0,0,0,0,7>>))},
+		{"Unpacking #unbind_resp{} PDU",
+			?_assertEqual({ok, [#pdu{command_length=16, 
+					command_id=?UNBIND_RESP, command_status=0, 
+					sequence_number=7, body=#unbind_resp{}}], <<>>}, 
+								smpp34pdu:unpack(<<0,0,0,16,128,0,0,6,0,0,0,0,0,0,0,7>>))}
 	].
 
 unpack_multiple_test_() ->
@@ -101,12 +109,9 @@ unpack_multiple_test_() ->
 								  105,106,0,97,98,99,100,0,0,
 								  52,2,1,0>>))},
 		{"Unpack PDUs WITH incomplete header",
-			?_assertEqual({header_length, [#pdu{command_length=37, command_id=?BIND_RECEIVER,
+			?_assertEqual({header_length, [#pdu{command_length=16, command_id=?UNBIND_RESP,
 						command_status=0, sequence_number=1,
-						body=#bind_receiver{system_id="abcdefghij", 
-						password="abcd", system_type="", 
-						interface_version=?VERSION, addr_ton=2, 
-						addr_npi=1,address_range=""}},
+						body=#unbind_resp{}},
 					    #pdu{command_length=37, command_id=?BIND_TRANSCEIVER,
 						command_status=0, sequence_number=2,
 						body=#bind_transceiver{system_id="abcdefghij", 
@@ -119,15 +124,13 @@ unpack_multiple_test_() ->
 						password="abcd", system_type="", 
 						interface_version=?VERSION, addr_ton=2, 
 						addr_npi=1,address_range=""}}], <<0,0,0,37>>},
-						smpp34pdu:unpack(<<0,0,0,37,0,0,0,1,0,0,0,0,0,
-								  0,0,1,97,98,99,100,101,102,
+						smpp34pdu:unpack(<<0,0,0,16,128,0,0,6,0,0,0,0,0,
+								  0,0,1,0,0,0,37,0,0,0,9,0,0,
+								  0,0,0,0,0,2,97,98,99,100,
+								  101,102,103,104,105,106,0,
+								  97,98,99,100,0,0,52,2,1,0,
+								  0,0,0,37,0,0,0,2,0,0,0,0,
+								  0,0,0,3,97,98,99,100,101,102,
 								  103,104,105,106,0,97,98,99,
-								  100,0,0,52,2,1,0,0,0,0,37,0,
-								  0,0,9,0,0,0,0,0,0,0,2,97,98,
-								  99,100,101,102,103,104,105,
-								  106,0,97,98,99,100,0,0,52,2,
-								  1,0,0,0,0,37,0,0,0,2,0,0,0,
-								  0,0,0,0,3,97,98,99,100,101,
-								  102,103,104,105,106,0,97,98,
-								  99,100,0,0,52,2,1,0,0,0,0,37>>))}
+								  100,0,0,52,2,1,0,0,0,0,37>>))}
 	].
