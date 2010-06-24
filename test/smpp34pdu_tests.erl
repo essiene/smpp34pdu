@@ -34,7 +34,10 @@ pack_test_() ->
 					   smpp34pdu:pack(4, #unbind{}))},
 		{"Packing #unbind_resp{} PDU",
 			?_assertEqual(<<0,0,0,16,128,0,0,6,0,0,0,0,0,0,0,4>>,
-					   smpp34pdu:pack(4, #unbind_resp{}))}
+					   smpp34pdu:pack(4, #unbind_resp{}))},
+		{"Packing #enquire_link{} PDU",
+			?_assertEqual(<<0,0,0,16,0,0,0,21,0,0,0,0,0,0,0,4>>,
+					   smpp34pdu:pack(4, #enquire_link{}))}
 	].
 
 unpack_test_() ->
@@ -78,7 +81,12 @@ unpack_test_() ->
 			?_assertEqual({ok, [#pdu{command_length=16, 
 					command_id=?UNBIND_RESP, command_status=0, 
 					sequence_number=7, body=#unbind_resp{}}], <<>>}, 
-								smpp34pdu:unpack(<<0,0,0,16,128,0,0,6,0,0,0,0,0,0,0,7>>))}
+								smpp34pdu:unpack(<<0,0,0,16,128,0,0,6,0,0,0,0,0,0,0,7>>))},
+		{"Unpacking #enquire_link{} PDU",
+			?_assertEqual({ok, [#pdu{command_length=16, 
+					command_id=?ENQUIRE_LINK, command_status=0, 
+					sequence_number=7, body=#enquire_link{}}], <<>>}, 
+								smpp34pdu:unpack(<<0,0,0,16,0,0,0,21,0,0,0,0,0,0,0,7>>))}
 	].
 
 unpack_multiple_test_() ->
