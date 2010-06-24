@@ -13,6 +13,8 @@
 
 -spec(unpack_body/2 :: (integer(), binary()) -> valid_pdu() | invalid_command_id()).
 
+pack(Snum, #generic_nack{}) ->
+	pack(?GENERIC_NACK, 0, Snum, <<>>);
 
 pack(Snum, #bind_receiver{}=Body) ->
 	Bin = smpp34pdu_bind_receiver:pack(Body),
@@ -22,30 +24,28 @@ pack(Snum, #bind_transmitter{}=Body) ->
 	Bin = smpp34pdu_bind_transmitter:pack(Body),
 	pack(?BIND_TRANSMITTER, 0, Snum, Bin);
 
-pack(Snum, #bind_transceiver{}=Body) ->
-	Bin = smpp34pdu_bind_transceiver:pack(Body),
-	pack(?BIND_TRANSCEIVER, 0, Snum, Bin);
-
 pack(Snum, #unbind{}) ->
 	pack(?UNBIND, 0, Snum, <<>>);
 
 pack(Snum, #unbind_resp{}) ->
 	pack(?UNBIND_RESP, 0, Snum, <<>>);
 
-pack(Snum, #enquire_link{}) ->
-	pack(?ENQUIRE_LINK, 0, Snum, <<>>);
-
-pack(Snum, #enquire_link_resp{}) ->
-	pack(?ENQUIRE_LINK_RESP, 0, Snum, <<>>);
-
-pack(Snum, #generic_nack{}) ->
-	pack(?GENERIC_NACK, 0, Snum, <<>>);
-
 pack(Snum, #replace_sm_resp{}) ->
 	pack(?REPLACE_SM_RESP, 0, Snum, <<>>);
 
 pack(Snum, #cancel_sm_resp{}) ->
-	pack(?CANCEL_SM_RESP, 0, Snum, <<>>).
+	pack(?CANCEL_SM_RESP, 0, Snum, <<>>);
+
+pack(Snum, #bind_transceiver{}=Body) ->
+	Bin = smpp34pdu_bind_transceiver:pack(Body),
+	pack(?BIND_TRANSCEIVER, 0, Snum, Bin);
+
+pack(Snum, #enquire_link{}) ->
+	pack(?ENQUIRE_LINK, 0, Snum, <<>>);
+
+pack(Snum, #enquire_link_resp{}) ->
+	pack(?ENQUIRE_LINK_RESP, 0, Snum, <<>>).
+
 
 
 pack(Cid, Cstat, Snum, Body) ->
@@ -92,25 +92,25 @@ unpack(Bin0, ok, Accm) ->
 			end
 	end.
 
+unpack_body(?GENERIC_NACK, _) ->
+	#generic_nack{};
 unpack_body(?BIND_RECEIVER, Bin) ->
 	smpp34pdu_bind_receiver:unpack(Bin);
 unpack_body(?BIND_TRANSMITTER, Bin) ->
 	smpp34pdu_bind_transmitter:unpack(Bin);
-unpack_body(?BIND_TRANSCEIVER, Bin) ->
-	smpp34pdu_bind_transceiver:unpack(Bin);
 unpack_body(?UNBIND, _) ->
 	#unbind{};
 unpack_body(?UNBIND_RESP, _) ->
 	#unbind_resp{};
-unpack_body(?ENQUIRE_LINK, _) ->
-	#enquire_link{};
-unpack_body(?ENQUIRE_LINK_RESP, _) ->
-	#enquire_link_resp{};
-unpack_body(?GENERIC_NACK, _) ->
-	#generic_nack{};
 unpack_body(?REPLACE_SM_RESP, _) ->
 	#replace_sm_resp{};
 unpack_body(?CANCEL_SM_RESP, _) ->
 	#cancel_sm_resp{};
+unpack_body(?BIND_TRANSCEIVER, Bin) ->
+	smpp34pdu_bind_transceiver:unpack(Bin);
+unpack_body(?ENQUIRE_LINK, _) ->
+	#enquire_link{};
+unpack_body(?ENQUIRE_LINK_RESP, _) ->
+	#enquire_link_resp{};
 unpack_body(CommandId, _) ->
 	{error, {command_id, CommandId}}.
