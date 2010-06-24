@@ -1,2 +1,4 @@
 - pack/2 should become pack/3 and accept: CommandStatus, SequenceNumber and Body
 - pdu.hrl should be renamed to smpp34pdu.hrl for easier usage
+
+- Have a specific type for SMPP types with two values like 0 or 17
