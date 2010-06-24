@@ -99,5 +99,40 @@ This is currently pre-alpha software and is not yet feature complete.
 I am working through an earlier implementation and reimplementing here.
 This situation shouldn't last for too long though.
 
+	Supported PDUs:
+		GENERIC_NACK
+		BIND_RECEIVER
+		BIND_TRANSMITTER
+		SUBMIT_SM_RESP
+		DELIVER_SM_RESP
+		UNBIND
+		UNBIND_RESP
+		REPLACE_SM_RESP
+		CANCEL_SM_RESP
+		BIND_TRANSCEIVER
+		OUTBIND
+		ENQUIRE_LINK
+		ENQUIRE_LINK_RESP
+
+
+
+	Unsupported PDUs:
+		BIND_RECEIVER_RESP
+		BIND_TRANSMITTER_RESP
+		 *QUERY_SM
+		 *QUERY_SM_RESP
+		SUBMIT_SM
+		DELIVER_SM
+		 *REPLACE_SM
+		 *CANCEL_SM
+		BIND_TRANSCEIVER_RESP
+		SUBMIT_MULTI
+		SUBMIT_MULTI_RESP
+		ALERT_NOTIFICATION
+		DATA_SM
+		DATA_SM_RESP
+
+
+
 
 
