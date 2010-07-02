@@ -49,6 +49,10 @@ pack(Snum, #unbind_resp{}) ->
 pack(Snum, #replace_sm_resp{}) ->
 	pack(?REPLACE_SM_RESP, 0, Snum, <<>>);
 
+pack(Snum, #cancel_sm{}=Body) ->
+	Bin = smpp34pdu_cancel_sm:pack(Body),
+	pack(?CANCEL_SM, 0, Snum, Bin);
+
 pack(Snum, #cancel_sm_resp{}) ->
 	pack(?CANCEL_SM_RESP, 0, Snum, <<>>);
 
@@ -132,6 +136,8 @@ unpack_body(?UNBIND_RESP, _) ->
 	#unbind_resp{};
 unpack_body(?REPLACE_SM_RESP, _) ->
 	#replace_sm_resp{};
+unpack_body(?CANCEL_SM, Bin) ->
+	smpp34pdu_cancel_sm:unpack(Bin);
 unpack_body(?CANCEL_SM_RESP, _) ->
 	#cancel_sm_resp{};
 unpack_body(?BIND_TRANSCEIVER, Bin) ->
