@@ -16,7 +16,7 @@ pack(#query_sm_resp{message_id=MessageId,
 		L = [cstring_to_bin(MessageId, 65),
 					   cstring_to_bin(FinalDate, 17),
 					   integer_to_bin(MessageState, 1),
-					   cstring_to_bin(ErrCode, 1)],
+					   integer_to_bin(ErrCode, 1)],
 
 		list_to_binary(L).
 
