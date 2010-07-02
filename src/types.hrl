@@ -19,6 +19,7 @@
 					| unbind() 
 					| unbind_resp()
 					| replace_sm_resp() 
+					| cancel_sm()
 					| cancel_sm_resp()
 					| bind_transceiver()
 					| outbind()
@@ -37,6 +38,7 @@
 -type(unbind() :: #unbind{}).
 -type(unbind_resp() :: #unbind_resp{}).
 -type(replace_sm_resp() :: #replace_sm_resp{}).
+-type(cancel_sm() :: #cancel_sm{}).
 -type(cancel_sm_resp() :: #cancel_sm_resp{}).
 -type(bind_transceiver() :: #bind_transceiver{}).
 -type(outbind() :: #outbind{}).
