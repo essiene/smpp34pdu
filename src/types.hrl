@@ -18,6 +18,7 @@
 					| deliver_sm_resp()
 					| unbind() 
 					| unbind_resp()
+					| replace_sm() 
 					| replace_sm_resp() 
 					| cancel_sm()
 					| cancel_sm_resp()
@@ -37,6 +38,7 @@
 -type(deliver_sm_resp() :: #deliver_sm_resp{}).
 -type(unbind() :: #unbind{}).
 -type(unbind_resp() :: #unbind_resp{}).
+-type(replace_sm() :: #replace_sm{}).
 -type(replace_sm_resp() :: #replace_sm_resp{}).
 -type(cancel_sm() :: #cancel_sm{}).
 -type(cancel_sm_resp() :: #cancel_sm_resp{}).
