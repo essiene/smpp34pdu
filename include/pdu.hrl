@@ -117,7 +117,7 @@
         source_addr=?DEFAULT_CSTRING,
         schedule_delivery_time=?DEFAULT_CSTRING,
         validity_period=?DEFAULT_CSTRING,
-        registered_deliver = 0,
+        registered_delivery = 0,
         sm_default_msg_id = 0,
         sm_length=0,
         short_message=?DEFAULT_STRING}).
