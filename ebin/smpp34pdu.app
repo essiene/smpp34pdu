@@ -11,6 +11,7 @@
 			smpp34pdu_query_sm_resp,
 			smpp34pdu_submit_sm_resp,
 			smpp34pdu_deliver_sm_resp,
+			smpp34pdu_cancel_sm,
 			smpp34pdu_bind_transceiver,
 			smpp34pdu_outbind
             ]},
