@@ -12,6 +12,7 @@
 -type(valid_pdu() ::  generic_nack()
 					| bind_receiver()
 					| bind_transmitter()
+					| bind_transmitter_resp()
 					| query_sm()
 					| query_sm_resp()
 					| submit_sm_resp()
@@ -32,6 +33,7 @@
 -type(generic_nack() :: #generic_nack{}).
 -type(bind_receiver() :: #bind_receiver{}).
 -type(bind_transmitter() :: #bind_transmitter{}).
+-type(bind_transmitter_resp() :: #bind_transmitter_resp{}).
 -type(query_sm() :: #query_sm{}).
 -type(query_sm_resp() :: #query_sm_resp{}).
 -type(submit_sm_resp() :: #submit_sm_resp{}).
