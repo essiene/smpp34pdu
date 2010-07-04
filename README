@@ -19,14 +19,15 @@ from first principles without too much refactorings, so I can see
 how easy it would be to autogenerate all this code based on an EBNF
 type grammar.
 
-I currently choose to support SMPP 3.4 since its the most widely deployed
+I choosen to support SMPP 3.4 since its the most widely deployed
 variant of the protocol currently, and SMPP is designed to be backwardly
 compatible, so any compliant system speaking SMPP 5 will accept and work
 with SMPP 3.4 systems.
 
 Note that this library assumes a familiarity with the SMPP 3.4 PDU
 specification, and is a one-to-one mapping of the PDUs onto erlang.  
-Typically, this familarity comes from reading the spec :)
+
+Uhh... typically, this familarity comes from reading the spec :)
 
 Building
 --------
@@ -89,7 +90,7 @@ start() ->
 Docs
 -----
 
-A fuller documentation will be included soon
+A more complete documentation will be included soon
 
 
 Current Status
@@ -109,7 +110,9 @@ This situation shouldn't last for too long though.
 		DELIVER_SM_RESP
 		UNBIND
 		UNBIND_RESP
+		REPLACE_SM
 		REPLACE_SM_RESP
+		CANCEL_SM
 		CANCEL_SM_RESP
 		BIND_TRANSCEIVER
 		OUTBIND
@@ -119,20 +122,13 @@ This situation shouldn't last for too long though.
 
 
 	Unsupported PDUs:
-		BIND_RECEIVER_RESP
-		BIND_TRANSMITTER_RESP
+		*BIND_RECEIVER_RESP
+		*BIND_TRANSMITTER_RESP
 		SUBMIT_SM
 		DELIVER_SM
-		 *REPLACE_SM
-		 *CANCEL_SM
-		BIND_TRANSCEIVER_RESP
+		*BIND_TRANSCEIVER_RESP
 		SUBMIT_MULTI
 		SUBMIT_MULTI_RESP
-		ALERT_NOTIFICATION
+		*ALERT_NOTIFICATION
 		DATA_SM
 		DATA_SM_RESP
-
-
-
-
-

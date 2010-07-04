@@ -3,3 +3,4 @@
 
 - Have a specific type for SMPP types with two values like 0 or 17
 - We need to have a representation for DataTime values according to the spec
+- Define helper constants for all parameters have an enumeration in the spec
