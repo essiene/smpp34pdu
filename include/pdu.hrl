@@ -16,7 +16,8 @@
         addr_npi=?DEFAULT_NPI,
         address_range=?DEFAULT_CSTRING}).
 
--record(bind_transmitter_resp, {system_id=?DEFAULT_CSTRING, optional}).
+-record(bind_transmitter_resp, {system_id=?DEFAULT_CSTRING, 
+		sc_interface_version}).
 
 -record(bind_receiver, {system_id=?DEFAULT_CSTRING,
         password=?DEFAULT_CSTRING,
@@ -26,7 +27,8 @@
         addr_npi=?DEFAULT_NPI,
         address_range=?DEFAULT_CSTRING}).
 
--record(bind_receiver_resp, {system_id=?DEFAULT_CSTRING, optional}).
+-record(bind_receiver_resp, {system_id=?DEFAULT_CSTRING, 
+		sc_interface_version}).
 
 -record(bind_transceiver, {system_id=?DEFAULT_CSTRING,
         password=?DEFAULT_CSTRING,
@@ -36,7 +38,8 @@
         addr_npi=?DEFAULT_NPI,
         address_range=?DEFAULT_CSTRING}).
 
--record(bind_transceiver_resp, {system_id=?DEFAULT_CSTRING, optional}).
+-record(bind_transceiver_resp, {system_id=?DEFAULT_CSTRING, 
+		sc_interface_version}).
 
 -record(outbind, {system_id=?DEFAULT_STRING,
         password=?DEFAULT_STRING}).
