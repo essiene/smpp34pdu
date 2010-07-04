@@ -125,12 +125,13 @@ This situation shouldn't last for too long though.
 
 
 	Unsupported PDUs:
+		*BIND_RECEIVER_RESP
+		*BIND_TRANSMITTER_RESP
 		SUBMIT_SM
 		DELIVER_SM
+		*BIND_TRANSCEIVER_RESP
 		SUBMIT_MULTI
 		SUBMIT_MULTI_RESP
 		*ALERT_NOTIFICATION
 		DATA_SM
 		DATA_SM_RESP
-
-
