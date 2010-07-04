@@ -187,4 +187,5 @@
 -define(MS_AVAILABILITY_DENIED, 1).
 -define(MS_AVAILABILITY_UNAVAILABLE, 2).
 
+
 -endif.
