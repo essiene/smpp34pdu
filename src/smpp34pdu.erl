@@ -46,6 +46,10 @@ pack(Snum, #unbind{}) ->
 pack(Snum, #unbind_resp{}) ->
 	pack(?UNBIND_RESP, 0, Snum, <<>>);
 
+pack(Snum, #replace_sm{}=Body) ->
+	Bin = smpp34pdu_replace_sm:pack(Body),
+	pack(?REPLACE_SM, 0, Snum, Bin);
+
 pack(Snum, #replace_sm_resp{}) ->
 	pack(?REPLACE_SM_RESP, 0, Snum, <<>>);
 
