@@ -138,6 +138,8 @@ unpack_body(?UNBIND, _) ->
 	#unbind{};
 unpack_body(?UNBIND_RESP, _) ->
 	#unbind_resp{};
+unpack_body(?REPLACE_SM, Bin) ->
+	smpp34pdu_replace_sm:unpack(Bin);
 unpack_body(?REPLACE_SM_RESP, _) ->
 	#replace_sm_resp{};
 unpack_body(?CANCEL_SM, Bin) ->
