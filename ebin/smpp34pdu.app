@@ -7,6 +7,7 @@
 			smpp34pdu,
 			smpp34pdu_bind_receiver,
 			smpp34pdu_bind_transmitter,
+			smpp34pdu_bind_transmitter_resp,
 			smpp34pdu_query_sm,
 			smpp34pdu_query_sm_resp,
 			smpp34pdu_submit_sm_resp,
