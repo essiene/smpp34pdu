@@ -121,6 +121,7 @@ This situation shouldn't last for too long though.
 		OUTBIND
 		ENQUIRE_LINK
 		ENQUIRE_LINK_RESP
+		ALERT_NOTIFICATION
 
 
 
@@ -129,6 +130,5 @@ This situation shouldn't last for too long though.
 		DELIVER_SM
 		SUBMIT_MULTI
 		SUBMIT_MULTI_RESP
-		*ALERT_NOTIFICATION
 		DATA_SM
 		DATA_SM_RESP
