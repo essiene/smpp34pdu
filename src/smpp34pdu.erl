@@ -84,7 +84,11 @@ pack(Snum, #enquire_link{}) ->
 	pack(?ENQUIRE_LINK, 0, Snum, <<>>);
 
 pack(Snum, #enquire_link_resp{}) ->
-	pack(?ENQUIRE_LINK_RESP, 0, Snum, <<>>).
+	pack(?ENQUIRE_LINK_RESP, 0, Snum, <<>>);
+
+pack(Snum, #alert_notification{}=Body) ->
+	Bin = smpp34pdu_alert_notification:pack(Body),
+	pack(?ALERT_NOTIFICATION, 0, Snum, Bin).
 
 
 
@@ -172,5 +176,7 @@ unpack_body(?ENQUIRE_LINK, _) ->
 	#enquire_link{};
 unpack_body(?ENQUIRE_LINK_RESP, _) ->
 	#enquire_link_resp{};
+unpack_body(?ALERT_NOTIFICATION, Bin) ->
+	smpp34pdu_alert_notification:unpack(Bin);
 unpack_body(CommandId, _) ->
 	{error, {command_id, CommandId}}.
