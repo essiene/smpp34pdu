@@ -139,8 +139,11 @@
 -define(DEFAULT_NPI, 1).
 -define(DEFAULT_TON, 2).
 
+-define(OCTET_SIZE, 8).
 -define(HEADER_BIT_SIZE, 128).
 -define(HEADER_OCTET_SIZE, 16).
+-define(TLV_TAG_SIZE, 16).
+-define(TLV_LEN_SIZE, 16).
 
 % Bit 0 -> RX bit
 % Bit 1 -> TX bit
