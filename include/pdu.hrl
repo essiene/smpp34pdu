@@ -133,4 +133,13 @@
 -record(unbind, {}).
 -record(unbind_resp, {}).
 
+-record(alert_notification, {source_addr_ton=?DEFAULT_TON,
+		source_addr_npi=?DEFAULT_NPI,
+		source_addr=?DEFAULT_CSTRING,
+		esme_addr_ton=?DEFAULT_TON,
+		esme_addr_npi=?DEFAULT_NPI,
+		esme_addr=?DEFAULT_CSTRING,
+		ms_availability_status}).
+
+
 -endif.

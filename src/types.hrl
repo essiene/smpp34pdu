@@ -28,7 +28,8 @@
 					| bind_transceiver_resp()
 					| outbind()
 					| enquire_link()
-					| enquire_link_resp()).
+					| enquire_link_resp()
+					| alert_notification()).
 
 -type(valid_pdu_error() :: invalid_command_id()).
 
@@ -52,6 +53,7 @@
 -type(outbind() :: #outbind{}).
 -type(enquire_link() :: #enquire_link{}).
 -type(enquire_link_resp() :: #enquire_link_resp{}).
+-type(alert_notification() :: #alert_notification{}).
 
 -type(invalid_command_id() :: {'error', {'command_id', integer()}}).
 
