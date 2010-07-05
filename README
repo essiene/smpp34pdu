@@ -103,7 +103,9 @@ This situation shouldn't last for too long though.
 	Supported PDUs:
 		GENERIC_NACK
 		BIND_RECEIVER
+		BIND_RECEIVER_RESP
 		BIND_TRANSMITTER
+		BIND_TRANSMITTER_RESP
 		QUERY_SM
 		QUERY_SM_RESP
 		SUBMIT_SM_RESP
@@ -115,6 +117,7 @@ This situation shouldn't last for too long though.
 		CANCEL_SM
 		CANCEL_SM_RESP
 		BIND_TRANSCEIVER
+		BIND_TRANSCEIVER_RESP
 		OUTBIND
 		ENQUIRE_LINK
 		ENQUIRE_LINK_RESP
@@ -122,11 +125,8 @@ This situation shouldn't last for too long though.
 
 
 	Unsupported PDUs:
-		*BIND_RECEIVER_RESP
-		*BIND_TRANSMITTER_RESP
 		SUBMIT_SM
 		DELIVER_SM
-		*BIND_TRANSCEIVER_RESP
 		SUBMIT_MULTI
 		SUBMIT_MULTI_RESP
 		*ALERT_NOTIFICATION
