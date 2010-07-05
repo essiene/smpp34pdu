@@ -1,24 +1,16 @@
 -module(tlv).
 -include("constants.hrl").
--export[pack/2, unpack/2].
+-export[to_bin/2, from_bin/2].
 
--spec(pack/2 :: (integer(), integer()) -> binary()).
--spec(unpack/2 :: (integer(), binary()) -> {integer(), binary()}).
+-spec(to_bin/2 :: (integer(), integer()) -> binary()).
+-spec(from_bin/2 :: (integer(), binary()) -> {integer(), binary()}).
 
-pack(_, undefined) ->
+to_bin(_, undefined) ->
 	<<>>;
-pack(?SC_INTERFACE_VERSION, Val) ->
+to_bin(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
-	<<?SC_INTERFACE_VERSION:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+	<<?SC_INTERFACE_VERSION:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
 
-pack(?MS_AVAILABILITY_STATUS, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?MS_AVAILABILITY_STATUS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
-
-unpack(?SC_INTERFACE_VERSION, <<Len:16,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?MS_AVAILABILITY_STATUS, <<Len:16,Rest0/binary>>) ->
+from_bin(?SC_INTERFACE_VERSION, <<Len:16,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len).
