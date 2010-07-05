@@ -2,20 +2,20 @@
 -include("../src/constants.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
-to_bin_test_() ->
+tlv_test_() ->
 	[
-		{"to_bin", 
+		{"pack", 
 			[{"undefined yields empty binary",
-				?_assertEqual(<<>>, tlv:to_bin(?SC_INTERFACE_VERSION, undefined))},
+				?_assertEqual(<<>>, tlv:pack(?SC_INTERFACE_VERSION, undefined))},
 			 {"sc_interface_version", 
-				?_assertEqual(<<2,16,0,1,52>>, tlv:to_bin(?SC_INTERFACE_VERSION, 16#34))}
+				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
 		},
 
-		{"from_bin",
+		{"unpack",
 			[
 				{"sc_interface_version", 
-					?_assertEqual({16#34, <<>>}, tlv:from_bin(?SC_INTERFACE_VERSION, <<0,1,52>>))}
+					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
 		}
 	].
