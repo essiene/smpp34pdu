@@ -20,6 +20,10 @@ pack(Snum, #bind_receiver{}=Body) ->
 	Bin = smpp34pdu_bind_receiver:pack(Body),
 	pack(?BIND_RECEIVER, 0, Snum, Bin);
 
+pack(Snum, #bind_receiver_resp{}=Body) ->
+	Bin = smpp34pdu_bind_receiver_resp:pack(Body),
+	pack(?BIND_RECEIVER_RESP, 0, Snum, Bin);
+
 pack(Snum, #bind_transmitter{}=Body) ->
 	Bin = smpp34pdu_bind_transmitter:pack(Body),
 	pack(?BIND_TRANSMITTER, 0, Snum, Bin);
@@ -67,6 +71,10 @@ pack(Snum, #cancel_sm_resp{}) ->
 pack(Snum, #bind_transceiver{}=Body) ->
 	Bin = smpp34pdu_bind_transceiver:pack(Body),
 	pack(?BIND_TRANSCEIVER, 0, Snum, Bin);
+
+pack(Snum, #bind_transceiver_resp{}=Body) ->
+	Bin = smpp34pdu_bind_transceiver_resp:pack(Body),
+	pack(?BIND_TRANSCEIVER_RESP, 0, Snum, Bin);
 
 pack(Snum, #outbind{}=Body) ->
 	Bin = smpp34pdu_outbind:pack(Body),
@@ -128,6 +136,8 @@ unpack_body(?GENERIC_NACK, _) ->
 	#generic_nack{};
 unpack_body(?BIND_RECEIVER, Bin) ->
 	smpp34pdu_bind_receiver:unpack(Bin);
+unpack_body(?BIND_RECEIVER_RESP, Bin) ->
+	smpp34pdu_bind_receiver_resp:unpack(Bin);
 unpack_body(?BIND_TRANSMITTER, Bin) ->
 	smpp34pdu_bind_transmitter:unpack(Bin);
 unpack_body(?BIND_TRANSMITTER_RESP, Bin) ->
@@ -154,6 +164,8 @@ unpack_body(?CANCEL_SM_RESP, _) ->
 	#cancel_sm_resp{};
 unpack_body(?BIND_TRANSCEIVER, Bin) ->
 	smpp34pdu_bind_transceiver:unpack(Bin);
+unpack_body(?BIND_TRANSCEIVER_RESP, Bin) ->
+	smpp34pdu_bind_transceiver_resp:unpack(Bin);
 unpack_body(?OUTBIND, Bin) ->
 	smpp34pdu_outbind:unpack(Bin);
 unpack_body(?ENQUIRE_LINK, _) ->
