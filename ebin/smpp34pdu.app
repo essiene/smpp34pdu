@@ -18,8 +18,7 @@
 			smpp34pdu_cancel_sm,
 			smpp34pdu_bind_transceiver,
 			smpp34pdu_bind_transceiver_resp,
-			smpp34pdu_outbind,
-			smpp34pdu_alert_notification
+			smpp34pdu_outbind
             ]},
   {registered, []},
   {applications, [
