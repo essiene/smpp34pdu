@@ -121,7 +121,15 @@ pack_test_() ->
 					   smpp34pdu:pack(4, #enquire_link{}))},
 		{"Packing #enquire_link_resp{} PDU",
 			?_assertEqual(<<0,0,0,16,128,0,0,21,0,0,0,0,0,0,0,4>>,
-					   smpp34pdu:pack(4, #enquire_link_resp{}))}
+					   smpp34pdu:pack(4, #enquire_link_resp{}))},
+		{"Packing #alert_notification{} PDU",
+			?_assertEqual(<<0,0,0,35,0,0,1,2,0,0,0,0,0,0,0,1, 
+					        2,1,97,98,99,100,0,2,1,101,102,103,
+							104,0,4,34,0,1,2>>,
+					   smpp34pdu:pack(1, #alert_notification{source_addr_ton=2, 
+						   source_addr_npi=1, source_addr="abcd", esme_addr_ton=2, 
+						   esme_addr_npi=1, esme_addr="efgh", 
+						   ms_availability_status=?MS_AVAILABILITY_UNAVAILABLE}))}
 	].
 
 unpack_test_() ->
@@ -279,7 +287,16 @@ unpack_test_() ->
 			?_assertEqual({ok, [#pdu{command_length=16, 
 					command_id=?ENQUIRE_LINK_RESP, command_status=0, 
 					sequence_number=7, body=#enquire_link_resp{}}], <<>>}, 
-								smpp34pdu:unpack(<<0,0,0,16,128,0,0,21,0,0,0,0,0,0,0,7>>))}
+								smpp34pdu:unpack(<<0,0,0,16,128,0,0,21,0,0,0,0,0,0,0,7>>))},
+		{"Unpacking #outbind{} PDU",
+			?_assertEqual({ok, [#pdu{command_length=35, 
+					command_id=?ALERT_NOTIFICATION, command_status=0, 
+					sequence_number=1, body=#alert_notification{source_addr_ton=2, 
+					source_addr_npi=1, source_addr="abcd", esme_addr_ton=2, 
+					esme_addr_npi=1, esme_addr="efgh", ms_availability_status=?MS_AVAILABILITY_UNAVAILABLE}}], <<>>}, 
+								smpp34pdu:unpack(<<0,0,0,35,0,0,1,2,0,0,0,0,0,0,0,1, 
+											       2,1,97,98,99,100,0,2,1,101,102,103, 
+												   104,0,4,34,0,1,2>>))}
 	].
 
 unpack_multiple_test_() ->
