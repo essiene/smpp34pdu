@@ -136,8 +136,8 @@
 -define(DEFAULT_CSTRING, "").
 -define(DEFAULT_STRING, "").
 -define(DEFAULT_INTEGER, 0).
--define(DEFAULT_NPI, 1).
--define(DEFAULT_TON, 2).
+-define(DEFAULT_NPI, 0).
+-define(DEFAULT_TON, 0).
 
 -define(OCTET_SIZE, 8).
 -define(HEADER_BIT_SIZE, 128).
