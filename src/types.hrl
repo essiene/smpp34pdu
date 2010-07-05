@@ -11,6 +11,7 @@
 
 -type(valid_pdu() ::  generic_nack()
 					| bind_receiver()
+					| bind_receiver_resp()
 					| bind_transmitter()
 					| bind_transmitter_resp()
 					| query_sm()
@@ -24,6 +25,7 @@
 					| cancel_sm()
 					| cancel_sm_resp()
 					| bind_transceiver()
+					| bind_transceiver_resp()
 					| outbind()
 					| enquire_link()
 					| enquire_link_resp()).
@@ -32,6 +34,7 @@
 
 -type(generic_nack() :: #generic_nack{}).
 -type(bind_receiver() :: #bind_receiver{}).
+-type(bind_receiver_resp() :: #bind_receiver_resp{}).
 -type(bind_transmitter() :: #bind_transmitter{}).
 -type(bind_transmitter_resp() :: #bind_transmitter_resp{}).
 -type(query_sm() :: #query_sm{}).
@@ -45,6 +48,7 @@
 -type(cancel_sm() :: #cancel_sm{}).
 -type(cancel_sm_resp() :: #cancel_sm_resp{}).
 -type(bind_transceiver() :: #bind_transceiver{}).
+-type(bind_transceiver_resp() :: #bind_transceiver_resp{}).
 -type(outbind() :: #outbind{}).
 -type(enquire_link() :: #enquire_link{}).
 -type(enquire_link_resp() :: #enquire_link_resp{}).
