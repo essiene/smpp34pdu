@@ -64,16 +64,7 @@
         sm_default_msg_id = 0,
         sm_length=0,
         short_message=?DEFAULT_STRING,
-		user_message_reference,
-		source_port,
-		source_addr_subunit,
-		destination_port,
-		dest_addr_subunit,
-		sar_msg_ref_num,
-		sar_total_segments,
-		sar_segment_seqnum,
-		more_messages_to_send,
-		payload_type
+		user_message_reference
         }).
 
 -record(submit_sm_resp, {message_id=?DEFAULT_CSTRING}).
