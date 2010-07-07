@@ -36,6 +36,7 @@
 					| bind_transmitter_resp()
 					| query_sm()
 					| query_sm_resp()
+					| submit_sm()
 					| submit_sm_resp()
 					| deliver_sm_resp()
 					| unbind() 
