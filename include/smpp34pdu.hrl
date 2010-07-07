@@ -63,7 +63,8 @@
         data_coding = 0,
         sm_default_msg_id = 0,
         sm_length=0,
-        short_message=?DEFAULT_STRING
+        short_message=?DEFAULT_STRING,
+		user_message_reference
         }).
 
 -record(submit_sm_resp, {message_id=?DEFAULT_CSTRING}).
