@@ -1,7 +1,7 @@
 -module(smpp34pdu).
 -include("pdu.hrl").
 -include("types.hrl").
--export([pack/2, unpack/1]).
+-export([pack/3, unpack/1]).
 
 -type(unpack_status() :: 'header_length' | 'body_length' | 'ok').
 
@@ -13,82 +13,82 @@
 
 -spec(unpack_body/2 :: (integer(), binary()) -> valid_pdu() | invalid_command_id()).
 
-pack(Snum, #generic_nack{}) ->
-	pack(?GENERIC_NACK, 0, Snum, <<>>);
+pack(CmdStat, Snum, #generic_nack{}) ->
+	pack(?GENERIC_NACK, CmdStat, Snum, <<>>);
 
-pack(Snum, #bind_receiver{}=Body) ->
+pack(CmdStat, Snum, #bind_receiver{}=Body) ->
 	Bin = smpp34pdu_bind_receiver:pack(Body),
-	pack(?BIND_RECEIVER, 0, Snum, Bin);
+	pack(?BIND_RECEIVER, CmdStat, Snum, Bin);
 
-pack(Snum, #bind_receiver_resp{}=Body) ->
+pack(CmdStat, Snum, #bind_receiver_resp{}=Body) ->
 	Bin = smpp34pdu_bind_receiver_resp:pack(Body),
-	pack(?BIND_RECEIVER_RESP, 0, Snum, Bin);
+	pack(?BIND_RECEIVER_RESP, CmdStat, Snum, Bin);
 
-pack(Snum, #bind_transmitter{}=Body) ->
+pack(CmdStat, Snum, #bind_transmitter{}=Body) ->
 	Bin = smpp34pdu_bind_transmitter:pack(Body),
-	pack(?BIND_TRANSMITTER, 0, Snum, Bin);
+	pack(?BIND_TRANSMITTER, CmdStat, Snum, Bin);
 
-pack(Snum, #bind_transmitter_resp{}=Body) ->
+pack(CmdStat, Snum, #bind_transmitter_resp{}=Body) ->
 	Bin = smpp34pdu_bind_transmitter_resp:pack(Body),
-	pack(?BIND_TRANSMITTER_RESP, 0, Snum, Bin);
+	pack(?BIND_TRANSMITTER_RESP, CmdStat, Snum, Bin);
 
-pack(Snum, #query_sm{}=Body) ->
+pack(CmdStat, Snum, #query_sm{}=Body) ->
 	Bin = smpp34pdu_query_sm:pack(Body),
-	pack(?QUERY_SM, 0, Snum, Bin);
+	pack(?QUERY_SM, CmdStat, Snum, Bin);
 
-pack(Snum, #query_sm_resp{}=Body) ->
+pack(CmdStat, Snum, #query_sm_resp{}=Body) ->
 	Bin = smpp34pdu_query_sm_resp:pack(Body),
-	pack(?QUERY_SM_RESP, 0, Snum, Bin);
+	pack(?QUERY_SM_RESP, CmdStat, Snum, Bin);
 
-pack(Snum, #submit_sm_resp{}=Body) ->
+pack(CmdStat, Snum, #submit_sm_resp{}=Body) ->
 	Bin = smpp34pdu_submit_sm_resp:pack(Body),
-	pack(?SUBMIT_SM_RESP, 0, Snum, Bin);
+	pack(?SUBMIT_SM_RESP, CmdStat, Snum, Bin);
 
-pack(Snum, #deliver_sm_resp{}=Body) ->
+pack(CmdStat, Snum, #deliver_sm_resp{}=Body) ->
 	Bin = smpp34pdu_deliver_sm_resp:pack(Body),
-	pack(?DELIVER_SM_RESP, 0, Snum, Bin);
+	pack(?DELIVER_SM_RESP, CmdStat, Snum, Bin);
 
-pack(Snum, #unbind{}) ->
-	pack(?UNBIND, 0, Snum, <<>>);
+pack(CmdStat, Snum, #unbind{}) ->
+	pack(?UNBIND, CmdStat, Snum, <<>>);
 
-pack(Snum, #unbind_resp{}) ->
-	pack(?UNBIND_RESP, 0, Snum, <<>>);
+pack(CmdStat, Snum, #unbind_resp{}) ->
+	pack(?UNBIND_RESP, CmdStat, Snum, <<>>);
 
-pack(Snum, #replace_sm{}=Body) ->
+pack(CmdStat, Snum, #replace_sm{}=Body) ->
 	Bin = smpp34pdu_replace_sm:pack(Body),
-	pack(?REPLACE_SM, 0, Snum, Bin);
+	pack(?REPLACE_SM, CmdStat, Snum, Bin);
 
-pack(Snum, #replace_sm_resp{}) ->
-	pack(?REPLACE_SM_RESP, 0, Snum, <<>>);
+pack(CmdStat, Snum, #replace_sm_resp{}) ->
+	pack(?REPLACE_SM_RESP, CmdStat, Snum, <<>>);
 
-pack(Snum, #cancel_sm{}=Body) ->
+pack(CmdStat, Snum, #cancel_sm{}=Body) ->
 	Bin = smpp34pdu_cancel_sm:pack(Body),
-	pack(?CANCEL_SM, 0, Snum, Bin);
+	pack(?CANCEL_SM, CmdStat, Snum, Bin);
 
-pack(Snum, #cancel_sm_resp{}) ->
-	pack(?CANCEL_SM_RESP, 0, Snum, <<>>);
+pack(CmdStat, Snum, #cancel_sm_resp{}) ->
+	pack(?CANCEL_SM_RESP, CmdStat, Snum, <<>>);
 
-pack(Snum, #bind_transceiver{}=Body) ->
+pack(CmdStat, Snum, #bind_transceiver{}=Body) ->
 	Bin = smpp34pdu_bind_transceiver:pack(Body),
-	pack(?BIND_TRANSCEIVER, 0, Snum, Bin);
+	pack(?BIND_TRANSCEIVER, CmdStat, Snum, Bin);
 
-pack(Snum, #bind_transceiver_resp{}=Body) ->
+pack(CmdStat, Snum, #bind_transceiver_resp{}=Body) ->
 	Bin = smpp34pdu_bind_transceiver_resp:pack(Body),
-	pack(?BIND_TRANSCEIVER_RESP, 0, Snum, Bin);
+	pack(?BIND_TRANSCEIVER_RESP, CmdStat, Snum, Bin);
 
-pack(Snum, #outbind{}=Body) ->
+pack(CmdStat, Snum, #outbind{}=Body) ->
 	Bin = smpp34pdu_outbind:pack(Body),
-	pack(?OUTBIND, 0, Snum, Bin);
+	pack(?OUTBIND, CmdStat, Snum, Bin);
 
-pack(Snum, #enquire_link{}) ->
-	pack(?ENQUIRE_LINK, 0, Snum, <<>>);
+pack(CmdStat, Snum, #enquire_link{}) ->
+	pack(?ENQUIRE_LINK, CmdStat, Snum, <<>>);
 
-pack(Snum, #enquire_link_resp{}) ->
-	pack(?ENQUIRE_LINK_RESP, 0, Snum, <<>>);
+pack(CmdStat, Snum, #enquire_link_resp{}) ->
+	pack(?ENQUIRE_LINK_RESP, CmdStat, Snum, <<>>);
 
-pack(Snum, #alert_notification{}=Body) ->
+pack(CmdStat, Snum, #alert_notification{}=Body) ->
 	Bin = smpp34pdu_alert_notification:pack(Body),
-	pack(?ALERT_NOTIFICATION, 0, Snum, Bin).
+	pack(?ALERT_NOTIFICATION, CmdStat, Snum, Bin).
 
 
 
