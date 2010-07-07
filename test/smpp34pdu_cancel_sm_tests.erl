@@ -1,5 +1,5 @@
 -module(smpp34pdu_cancel_sm_tests).
--include("../include/pdu.hrl").
+-include("../include/smpp34pdu.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
 
