@@ -5,7 +5,7 @@
 
 -type(unpack_status() :: 'header_length' | 'body_length' | 'ok').
 
--spec(pack/2 :: (integer(), valid_pdu()) -> binary()).
+-spec(pack/3 :: (integer(), integer(), valid_pdu()) -> binary()).
 -spec(pack/4 :: (integer(), integer(), integer(), binary()) -> binary()).
 
 -spec(unpack/1 :: (binary()) -> {unpack_status(), [pdu()],binary()}).
@@ -92,9 +92,9 @@ pack(CmdStat, Snum, #alert_notification{}=Body) ->
 
 
 
-pack(Cid, Cstat, Snum, Body) ->
+pack(Cid, CmdStat, Snum, Body) ->
 		Clen = byte_size(Body) + ?HEADER_OCTET_SIZE,
-		L = [<<Clen:32,Cid:32,Cstat:32,Snum:32>>, Body],
+		L = [<<Clen:32,Cid:32,CmdStat:32,Snum:32>>, Body],
 		list_to_binary(L).
 
 
