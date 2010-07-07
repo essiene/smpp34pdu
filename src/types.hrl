@@ -28,7 +28,6 @@
 
 -type(invalid_command_id() :: {'error', {'command_id', integer()}}).
 
-
 -type(valid_pdu() ::  generic_nack()
 					| bind_receiver()
 					| bind_receiver_resp()
