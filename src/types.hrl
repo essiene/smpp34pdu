@@ -1,7 +1,7 @@
 -ifndef(types).
 -define(types, true).
 
--include("pdu.hrl").
+-include("smpp34pdu.hrl").
 
 -type(pdu() :: #pdu{command_length :: integer(),
 					command_id :: integer(),

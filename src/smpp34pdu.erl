@@ -1,5 +1,5 @@
 -module(smpp34pdu).
--include("pdu.hrl").
+-include("smpp34pdu.hrl").
 -include("types.hrl").
 -export([pack/3, unpack/1]).
 
