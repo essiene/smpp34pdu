@@ -1,5 +1,5 @@
--ifndef(pdu).
--define(pdu, true).
+-ifndef(smpp34pdu).
+-define(smpp34pdu, true).
 
 -include("../src/constants.hrl").
 
