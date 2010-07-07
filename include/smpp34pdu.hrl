@@ -150,6 +150,4 @@
 		esme_addr_npi=?DEFAULT_NPI,
 		esme_addr=?DEFAULT_CSTRING,
 		ms_availability_status}).
-
-
 -endif.
