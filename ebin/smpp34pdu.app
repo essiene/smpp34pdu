@@ -12,6 +12,7 @@
 			smpp34pdu_bind_transmitter_resp,
 			smpp34pdu_query_sm,
 			smpp34pdu_query_sm_resp,
+			smpp34pdu_submit_sm,
 			smpp34pdu_submit_sm_resp,
 			smpp34pdu_deliver_sm_resp,
 			smpp34pdu_replace_sm,
