@@ -16,6 +16,7 @@
 					| bind_transmitter_resp()
 					| query_sm()
 					| query_sm_resp()
+					| submit_sm()
 					| submit_sm_resp()
 					| deliver_sm_resp()
 					| unbind() 
@@ -40,6 +41,7 @@
 -type(bind_transmitter_resp() :: #bind_transmitter_resp{}).
 -type(query_sm() :: #query_sm{}).
 -type(query_sm_resp() :: #query_sm_resp{}).
+-type(submit_sm() :: #submit_sm{}).
 -type(submit_sm_resp() :: #submit_sm_resp{}).
 -type(deliver_sm_resp() :: #deliver_sm_resp{}).
 -type(unbind() :: #unbind{}).
