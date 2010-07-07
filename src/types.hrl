@@ -3,6 +3,7 @@
 
 -include("smpp34pdu.hrl").
 
+
 -type(generic_nack() :: #generic_nack{}).
 -type(bind_receiver() :: #bind_receiver{}).
 -type(bind_receiver_resp() :: #bind_receiver_resp{}).
