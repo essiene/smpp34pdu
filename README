@@ -64,7 +64,7 @@ Usage/Examples
 % Include the resource file defining all the 
 % Records
 
--include_lib("smpp34pdu/include/pdu.hrl").
+-include_lib("smpp34pdu/include/smpp34pdu.hrl").
 
 start() ->
 	% Create a bind_receiver PDU record
