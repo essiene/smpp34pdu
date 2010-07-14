@@ -114,4 +114,31 @@ unpack_tlv_fields(<<>>, Body) ->
 	Body;
 unpack_tlv_fields(<<?USER_MESSAGE_REFERENCE:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
 	{Val, Rest1} = tlv:unpack(?USER_MESSAGE_REFERENCE, Rest0),
-	unpack_tlv_fields(Rest1, Body#submit_sm{user_message_reference=Val}).
+	unpack_tlv_fields(Rest1, Body#submit_sm{user_message_reference=Val});
+unpack_tlv_fields(<<?SOURCE_PORT:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
+	{Val, Rest1} = tlv:unpack(?SOURCE_PORT, Rest0),
+	unpack_tlv_fields(Rest1, Body#submit_sm{source_port=Val});
+unpack_tlv_fields(<<?SOURCE_ADDR_SUBUNIT:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
+	{Val, Rest1} = tlv:unpack(?SOURCE_ADDR_SUBUNIT, Rest0),
+	unpack_tlv_fields(Rest1, Body#submit_sm{source_addr_subunit=Val});
+unpack_tlv_fields(<<?DESTINATION_PORT:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
+	{Val, Rest1} = tlv:unpack(?DESTINATION_PORT, Rest0),
+	unpack_tlv_fields(Rest1, Body#submit_sm{destination_port=Val});
+unpack_tlv_fields(<<?DEST_ADDR_SUBUNIT:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
+	{Val, Rest1} = tlv:unpack(?DEST_ADDR_SUBUNIT, Rest0),
+	unpack_tlv_fields(Rest1, Body#submit_sm{dest_addr_subunit=Val});
+unpack_tlv_fields(<<?SAR_MSG_REF_NUM:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
+	{Val, Rest1} = tlv:unpack(?SAR_MSG_REF_NUM, Rest0),
+	unpack_tlv_fields(Rest1, Body#submit_sm{sar_msg_ref_num=Val});
+unpack_tlv_fields(<<?SAR_TOTAL_SEGMENTS:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
+	{Val, Rest1} = tlv:unpack(?SAR_TOTAL_SEGMENTS, Rest0),
+	unpack_tlv_fields(Rest1, Body#submit_sm{sar_total_segments=Val});
+unpack_tlv_fields(<<?SAR_SEGMENT_SEQNUM:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
+	{Val, Rest1} = tlv:unpack(?SAR_SEGMENT_SEQNUM, Rest0),
+	unpack_tlv_fields(Rest1, Body#submit_sm{sar_segment_seqnum=Val});
+unpack_tlv_fields(<<?MORE_MESSAGES_TO_SEND:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
+	{Val, Rest1} = tlv:unpack(?MORE_MESSAGES_TO_SEND, Rest0),
+	unpack_tlv_fields(Rest1, Body#submit_sm{more_messages_to_send=Val});
+unpack_tlv_fields(<<?PAYLOAD_TYPE:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
+	{Val, Rest1} = tlv:unpack(?PAYLOAD_TYPE, Rest0),
+	unpack_tlv_fields(Rest1, Body#submit_sm{payload_type=Val}).
