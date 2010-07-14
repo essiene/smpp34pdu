@@ -25,7 +25,16 @@ pack(#submit_sm{service_type=SrvType,
 		data_coding=DataCoding,
 		sm_default_msg_id=SmDfltMsgId,
 		short_message=ShortMessage,
-		user_message_reference=UsrMsgRef}) ->
+		user_message_reference=UsrMsgRef,
+		source_port=SrcPort,
+		source_addr_subunit=SrcAddrSubUnit,
+		destination_port=DstPort,
+		dest_addr_subunit=DstAddrSubUnit,
+		sar_msg_ref_num=SarMsgRefNum,
+		sar_total_segments=SarTotalSegments,
+		sar_segment_seqnum=SarSegSeqnum,
+		more_messages_to_send=MoreMsgToSend,
+		payload_type=PayloadType}) ->
 
 		SmLen = length(ShortMessage),
 
@@ -48,7 +57,16 @@ pack(#submit_sm{service_type=SrvType,
 					   integer_to_bin(SmDfltMsgId, 1),
 					   integer_to_bin(SmLen, 1),
 					   string_to_bin(ShortMessage, SmLen),
-					   tlv:pack(?USER_MESSAGE_REFERENCE, UsrMsgRef)],
+					   tlv:pack(?USER_MESSAGE_REFERENCE, UsrMsgRef),
+					   tlv:pack(?SOURCE_PORT, SrcPort),
+					   tlv:pack(?SOURCE_ADDR_SUBUNIT, SrcAddrSubUnit),
+					   tlv:pack(?DESTINATION_PORT, DstPort),
+					   tlv:pack(?DEST_ADDR_SUBUNIT,DstAddrSubUnit),
+					   tlv:pack(?SAR_MSG_REF_NUM, SarMsgRefNum),
+					   tlv:pack(?SAR_TOTAL_SEGMENTS, SarTotalSegments),
+					   tlv:pack(?SAR_SEGMENT_SEQNUM, SarSegSeqnum),
+					   tlv:pack(?MORE_MESSAGES_TO_SEND, MoreMsgToSend),
+					   tlv:pack(?PAYLOAD_TYPE, PayloadType)],
 
 		list_to_binary(L).
 
