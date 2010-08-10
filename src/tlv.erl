@@ -81,7 +81,7 @@ pack(?PRIVACY_INDICATOR, Val) ->
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
-	<<?SC_INTERFACE_VERSION:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+	<<?SOURCE_ADDR_SUBUNIT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
 pack(?MS_AVAILABILITY_STATUS, Val) ->
 	Len = 1,
