@@ -38,6 +38,16 @@ pack(?SOURCE_BEARER_TYPE, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?SOURCE_BEARER_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
+pack(?DEST_TELEMATICS_ID, Val) ->
+	Len = 2,
+	Size = Len * ?OCTET_SIZE,
+	<<?DEST_TELEMATICS_ID:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?SOURCE_TELEMATICS_ID, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?SOURCE_TELEMATICS_ID:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -64,6 +74,12 @@ unpack(?DEST_BEARER_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SOURCE_BEARER_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?DEST_TELEMATICS_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?SOURCE_TELEMATICS_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->

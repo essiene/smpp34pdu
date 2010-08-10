@@ -19,6 +19,10 @@ tlv_test_() ->
 				?_assertEqual(<<0,7,0,1,1>>, tlv:pack(?DEST_BEARER_TYPE, ?BEARER_TYPE_SMS))},
 			 {"source_bearer_type", 
 				?_assertEqual(<<0,15,0,1,4>>, tlv:pack(?SOURCE_BEARER_TYPE, ?BEARER_TYPE_USSD))},
+			 {"dest_telematics_id", 
+				?_assertEqual(<<0,8,0,2,0,2>>, tlv:pack(?DEST_TELEMATICS_ID, 16#0002))},
+			 {"source_telematics_id", 
+				?_assertEqual(<<0,16,0,1,1>>, tlv:pack(?SOURCE_TELEMATICS_ID, 16#01))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -38,6 +42,10 @@ tlv_test_() ->
 					?_assertEqual({?BEARER_TYPE_SMS, <<>>}, tlv:unpack(?DEST_BEARER_TYPE, <<0,1,1>>))},
 				{"source_bearer_type", 
 					?_assertEqual({?BEARER_TYPE_USSD, <<>>}, tlv:unpack(?SOURCE_BEARER_TYPE, <<0,1,4>>))},
+				{"dest_telematics_id", 
+					?_assertEqual({2, <<>>}, tlv:unpack(?DEST_TELEMATICS_ID, <<0,2,0,2>>))},
+				{"source_telematics_id", 
+					?_assertEqual({1, <<>>}, tlv:unpack(?SOURCE_TELEMATICS_ID, <<0,1,1>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
