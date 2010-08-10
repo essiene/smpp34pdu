@@ -2,6 +2,7 @@
 -include("constants.hrl").
 -export[pack/2, unpack/2].
 
+
 -spec(pack/2 :: (integer(), integer()) -> binary()).
 -spec(unpack/2 :: (integer(), binary()) -> {integer(), binary()}).
 
