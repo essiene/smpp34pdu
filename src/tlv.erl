@@ -134,82 +134,13 @@ pack(?MS_AVAILABILITY_STATUS, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?MS_AVAILABILITY_STATUS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
 
-unpack(?DEST_ADDR_SUBUNIT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+unpack(?DEST_ADDR_SUBUNIT, <<Len:16,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
-unpack(?SOURCE_ADDR_SUBUNIT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+unpack(?SOURCE_ADDR_SUBUNIT, <<Len:16,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
-unpack(?DEST_NETWORK_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?SOURCE_NETWORK_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?DEST_BEARER_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?SOURCE_BEARER_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?DEST_TELEMATICS_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?SOURCE_TELEMATICS_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?QOS_TIME_TO_LIVE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?PAYLOAD_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?ADDITIONAL_STATUS_INFO_TEXT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_cstring(Rest0, Len);
-
-unpack(?RECEIPTED_MESSAGE_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_cstring(Rest0, Len);
-
-unpack(?MS_MSG_WAIT_FACILITIES, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?PRIVACY_INDICATOR, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?SOURCE_SUBADDRESS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_octstring(Rest0, Len);
-
-unpack(?DEST_SUBADDRESS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_octstring(Rest0, Len);
-
-unpack(?USER_MESSAGE_REFERENCE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?USER_RESPONSE_CODE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?LANGUAGE_INDICATOR, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?SOURCE_PORT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?DESTINATION_PORT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?SAR_MSG_REF_NUM, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?SAR_TOTAL_SEGMENTS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?SAR_SEGMENT_SEQNUM, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
-unpack(?MORE_MESSAGES_TO_SEND, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+unpack(?SC_INTERFACE_VERSION, <<Len:16,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?MS_AVAILABILITY_STATUS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
