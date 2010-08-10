@@ -15,6 +15,10 @@ tlv_test_() ->
 				?_assertEqual(<<0,6,0,1,1>>, tlv:pack(?DEST_NETWORK_TYPE, ?NETWORK_TYPE_GSM))},
 			 {"source_network_type", 
 				?_assertEqual(<<0,14,0,1,3>>, tlv:pack(?SOURCE_NETWORK_TYPE, ?NETWORK_TYPE_CDMA))},
+			 {"dest_bearer_type", 
+				?_assertEqual(<<0,7,0,1,1>>, tlv:pack(?DEST_BEARER_TYPE, ?BEARER_TYPE_SMS))},
+			 {"source_bearer_type", 
+				?_assertEqual(<<0,15,0,1,4>>, tlv:pack(?SOURCE_BEARER_TYPE, ?BEARER_TYPE_USSD))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -30,6 +34,10 @@ tlv_test_() ->
 					?_assertEqual({?NETWORK_TYPE_GSM, <<>>}, tlv:unpack(?DEST_NETWORK_TYPE, <<0,1,1>>))},
 				{"source_network_type", 
 					?_assertEqual({?NETWORK_TYPE_CDMA, <<>>}, tlv:unpack(?SOURCE_NETWORK_TYPE, <<0,1,3>>))},
+				{"dest_bearer_type", 
+					?_assertEqual({?BEARER_TYPE_SMS, <<>>}, tlv:unpack(?DEST_BEARER_TYPE, <<0,1,1>>))},
+				{"source_bearer_type", 
+					?_assertEqual({?BEARER_TYPE_USSD, <<>>}, tlv:unpack(?SOURCE_BEARER_TYPE, <<0,1,4>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
