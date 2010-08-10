@@ -73,6 +73,11 @@ pack(?MS_MSG_WAIT_FACILITIES, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?MS_MSG_WAIT_FACILITIES:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
+pack(?PRIVACY_INDICATOR, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?PRIVACY_INDICATOR:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -120,6 +125,9 @@ unpack(?RECEIPTED_MESSAGE_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_cstring(Rest0, Len);
 
 unpack(?MS_MSG_WAIT_FACILITIES, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?PRIVACY_INDICATOR, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
