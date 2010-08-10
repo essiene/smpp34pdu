@@ -33,6 +33,8 @@ tlv_test_() ->
 				?_assertEqual(<<0,30,0,7,102,111,111,98,97,114,0>>, tlv:pack(?RECEIPTED_MESSAGE_ID, "foobar"))},
 			 {"ms_msg_wait_facilities", 
 				?_assertEqual(<<0,48,0,1,130>>, tlv:pack(?MS_MSG_WAIT_FACILITIES, ?MSG_WAIT_ACTIVE bor ?MSG_WAIT_TYPE_EMAIL))},
+			 {"privacy_indicator", 
+				?_assertEqual(<<2,1,0,1,3>>, tlv:pack(?PRIVACY_INDICATOR, ?PRIVACY_INDICATOR_SECRET))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -66,6 +68,8 @@ tlv_test_() ->
 					?_assertEqual({"foobar", <<>>}, tlv:unpack(?RECEIPTED_MESSAGE_ID, <<0,7,102,111,111,98,97,114,0>>))},
 				{"ms_msg_wait_facilities", 
 					?_assertEqual({?MSG_WAIT_ACTIVE bor ?MSG_WAIT_TYPE_EMAIL, <<>>}, tlv:unpack(?MS_MSG_WAIT_FACILITIES, <<0,1,130>>))},
+				{"privacy_indicator", 
+					?_assertEqual({?PRIVACY_INDICATOR_SECRET, <<>>}, tlv:unpack(?PRIVACY_INDICATOR, <<0,1,3>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
