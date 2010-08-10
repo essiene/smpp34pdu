@@ -28,6 +28,16 @@ pack(?SOURCE_NETWORK_TYPE, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?SOURCE_NETWORK_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
+pack(?DEST_BEARER_TYPE, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?DEST_BEARER_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?SOURCE_BEARER_TYPE, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?SOURCE_BEARER_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -48,6 +58,12 @@ unpack(?DEST_NETWORK_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SOURCE_NETWORK_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?DEST_BEARER_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?SOURCE_BEARER_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
