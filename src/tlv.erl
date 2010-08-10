@@ -60,7 +60,12 @@ pack(?PAYLOAD_TYPE, Val) ->
 
 pack(?ADDITIONAL_STATUS_INFO_TEXT, Val) ->
 	Len = length(Val) + 1,
-	L = [<<?ADDITIONAL_STATUS_INFO_TEXT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, Val, 0],
+	L = [<<?ADDITIONAL_STATUS_INFO_TEXT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:cstring_to_bin(Val,256)],
+	list_to_binary(L);
+
+pack(?RECEIPTED_MESSAGE_ID, Val) ->
+	Len = length(Val) + 1,
+	L = [<<?RECEIPTED_MESSAGE_ID:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:cstring_to_bin(Val,65)],
 	list_to_binary(L);
 
 pack(?SC_INTERFACE_VERSION, Val) ->
@@ -104,6 +109,9 @@ unpack(?PAYLOAD_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?ADDITIONAL_STATUS_INFO_TEXT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_cstring(Rest0, Len);
+
+unpack(?RECEIPTED_MESSAGE_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_cstring(Rest0, Len);
 
 unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
