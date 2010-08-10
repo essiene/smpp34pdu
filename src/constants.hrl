@@ -211,5 +211,16 @@
 -define(NETWORK_TYPE_AMPS, 16#07).
 -define(NETWORK_TYPE_PAGING_NETWORK, 16#08).
 
+-define(BEARER_TYPE_UNKNOWN, 16#00).
+-define(BEARER_TYPE_SMS, 16#01).
+-define(BEARER_TYPE_CSD, 16#02).
+-define(BEARER_TYPE_PACKET_DATA, 16#03).
+-define(BEARER_TYPE_USSD, 16#04).
+-define(BEARER_TYPE_CDPD, 16#05).
+-define(BEARER_TYPE_DATATAC, 16#06).
+-define(BEARER_TYPE_FLEX, 16#07). % the spec actually says 0x07 = FLEX/ReFLEX
+-define(BEARER_TYPE_REFLEX, 16#07).
+-define(BEARER_TYPE_CELLCAST, 16#08).
+
 
 -endif.
