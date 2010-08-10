@@ -58,6 +58,11 @@ pack(?PAYLOAD_TYPE, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?PAYLOAD_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
+pack(?ADDITIONAL_STATUS_INFO_TEXT, Val) ->
+	Len = length(Val) + 1,
+	L = [<<?ADDITIONAL_STATUS_INFO_TEXT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, Val, 0],
+	list_to_binary(L);
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -97,6 +102,9 @@ unpack(?QOS_TIME_TO_LIVE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 
 unpack(?PAYLOAD_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?ADDITIONAL_STATUS_INFO_TEXT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_cstring(Rest0, Len);
 
 unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
