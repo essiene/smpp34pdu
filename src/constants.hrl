@@ -199,4 +199,17 @@
 -define(PAYLOAD_TYPE_DEFAULT, 0).
 -define(PAYLOAD_TYPE_WCMP, 1).
 
+-define(NETWORK_TYPE_UNKNOWN, 16#00).
+-define(NETWORK_TYPE_GSM, 16#01).
+-define(NETWORK_TYPE_ANSI136, 16#02). % the spec actually says 0x02 = ANSI-136/TDMA
+-define(NETWORK_TYPE_TDMA, 16#02).
+-define(NETWORK_TYPE_IS95, 16#03). % the spec actually says 0x02 = ANSI-95/CDMA
+-define(NETWORK_TYPE_CDMA, 16#03).
+-define(NETWORK_TYPE_PDC, 16#04).
+-define(NETWORK_TYPE_PHS, 16#05).
+-define(NETWORK_TYPE_iDEN, 16#06).
+-define(NETWORK_TYPE_AMPS, 16#07).
+-define(NETWORK_TYPE_PAGING_NETWORK, 16#08).
+
+
 -endif.
