@@ -4,7 +4,6 @@
 -define(VERSION, 16#34).
 
 % PDU Command IDs
-
 -define(GENERIC_NACK, 16#80000000).
 -define(BIND_RECEIVER, 16#00000001).
 -define(BIND_RECEIVER_RESP, 16#80000001).
