@@ -38,6 +38,8 @@ tlv_test_() ->
 				?_assertEqual(<<2,1,0,1,3>>, tlv:pack(?PRIVACY_INDICATOR, ?PRIVACY_INDICATOR_SECRET))},
 			 {"addtional_status_info_text", 
 				?_assertEqual(<<0,29,0,8,102,111,111,32,98,97,114,0>>, tlv:pack(?ADDITIONAL_STATUS_INFO_TEXT, "foo bar"))},
+			 {"receipted_message_id", 
+				?_assertEqual(<<0,30,0,7,102,111,111,98,97,114,0>>, tlv:pack(?RECEIPTED_MESSAGE_ID, "foobar"))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
