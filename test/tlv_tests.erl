@@ -29,6 +29,8 @@ tlv_test_() ->
 				?_assertEqual(<<0,25,0,1,0>>, tlv:pack(?PAYLOAD_TYPE, ?PAYLOAD_TYPE_DEFAULT))},
 			 {"addtional_status_info_text", 
 				?_assertEqual(<<0,29,0,8,102,111,111,32,98,97,114,0>>, tlv:pack(?ADDITIONAL_STATUS_INFO_TEXT, "foo bar"))},
+			 {"receipted_message_id", 
+				?_assertEqual(<<0,30,0,7,102,111,111,98,97,114,0>>, tlv:pack(?RECEIPTED_MESSAGE_ID, "foobar"))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -58,6 +60,8 @@ tlv_test_() ->
 					?_assertEqual({?PAYLOAD_TYPE_WCMP, <<>>}, tlv:unpack(?PAYLOAD_TYPE, <<0,1,1>>))},
 				{"addtional_status_info_text", 
 					?_assertEqual({"foo bar", <<>>}, tlv:unpack(?ADDITIONAL_STATUS_INFO_TEXT, <<0,8,102,111,111,32,98,97,114,0>>))},
+				{"receipted_message_id", 
+					?_assertEqual({"foobar", <<>>}, tlv:unpack(?RECEIPTED_MESSAGE_ID, <<0,7,102,111,111,98,97,114,0>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
