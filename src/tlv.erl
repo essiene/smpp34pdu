@@ -48,6 +48,11 @@ pack(?SOURCE_TELEMATICS_ID, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?SOURCE_TELEMATICS_ID:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
+pack(?QOS_TIME_TO_LIVE, Val) ->
+	Len = 4,
+	Size = Len * ?OCTET_SIZE,
+	<<?QOS_TIME_TO_LIVE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -80,6 +85,9 @@ unpack(?DEST_TELEMATICS_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SOURCE_TELEMATICS_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?QOS_TIME_TO_LIVE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
