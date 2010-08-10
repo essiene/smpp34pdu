@@ -68,6 +68,11 @@ pack(?RECEIPTED_MESSAGE_ID, Val) ->
 	L = [<<?RECEIPTED_MESSAGE_ID:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:cstring_to_bin(Val,65)],
 	list_to_binary(L);
 
+pack(?MS_MSG_WAIT_FACILITIES, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?MS_MSG_WAIT_FACILITIES:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -113,6 +118,9 @@ unpack(?ADDITIONAL_STATUS_INFO_TEXT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 
 unpack(?RECEIPTED_MESSAGE_ID, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_cstring(Rest0, Len);
+
+unpack(?MS_MSG_WAIT_FACILITIES, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
