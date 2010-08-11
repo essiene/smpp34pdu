@@ -35,6 +35,10 @@ tlv_test_() ->
 				?_assertEqual(<<0,48,0,1,130>>, tlv:pack(?MS_MSG_WAIT_FACILITIES, ?MSG_WAIT_ACTIVE bor ?MSG_WAIT_TYPE_EMAIL))},
 			 {"privacy_indicator", 
 				?_assertEqual(<<2,1,0,1,3>>, tlv:pack(?PRIVACY_INDICATOR, ?PRIVACY_INDICATOR_SECRET))},
+			 {"source_subaddress", 
+				?_assertEqual(<<2,2,0,5,1,2,3,4,5>>, tlv:pack(?SOURCE_SUBADDRESS, <<1,2,3,4,5>>))},
+			 {"dest_subaddress", 
+				?_assertEqual(<<2,3,0,5,1,2,3,4,5>>, tlv:pack(?DEST_SUBADDRESS, <<1,2,3,4,5>>))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -70,6 +74,10 @@ tlv_test_() ->
 					?_assertEqual({?MSG_WAIT_ACTIVE bor ?MSG_WAIT_TYPE_EMAIL, <<>>}, tlv:unpack(?MS_MSG_WAIT_FACILITIES, <<0,1,130>>))},
 				{"privacy_indicator", 
 					?_assertEqual({?PRIVACY_INDICATOR_SECRET, <<>>}, tlv:unpack(?PRIVACY_INDICATOR, <<0,1,3>>))},
+				{"source_subaddress", 
+					?_assertEqual({<<1,2,3,4,5>>, <<>>}, tlv:unpack(?SOURCE_SUBADDRESS, <<0,5,1,2,3,4,5>>))},
+				{"dest_subaddress", 
+					?_assertEqual({<<0,1,2>>, <<>>}, tlv:unpack(?DEST_SUBADDRESS, <<0,3,0,1,2>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
