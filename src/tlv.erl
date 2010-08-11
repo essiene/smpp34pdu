@@ -89,6 +89,11 @@ pack(?DEST_SUBADDRESS, Val) ->
 	L = [<<?DEST_SUBADDRESS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,23)], % minimum of 2, should be implemented
 	list_to_binary(L);
 
+pack(?USER_MESSAGE_REFERENCE, Val) ->
+	Len = 2,
+	Size = Len * ?OCTET_SIZE,
+	<<?USER_MESSAGE_REFERENCE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -152,10 +157,10 @@ unpack(?SOURCE_SUBADDRESS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 unpack(?DEST_SUBADDRESS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_octstring(Rest0, Len);
 
-unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+unpack(?USER_MESSAGE_REFERENCE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
-unpack(?USER_MESSAGE_REFERENCE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SOURCE_PORT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->

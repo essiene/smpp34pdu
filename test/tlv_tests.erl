@@ -44,6 +44,8 @@ tlv_test_() ->
 				?_assertEqual(<<2,2,0,5,1,2,3,4,5>>, tlv:pack(?SOURCE_SUBADDRESS, <<1,2,3,4,5>>))},
 			 {"dest_subaddress", 
 				?_assertEqual(<<2,3,0,5,1,2,3,4,5>>, tlv:pack(?DEST_SUBADDRESS, <<1,2,3,4,5>>))},
+			 {"user_message_reference", 
+				?_assertEqual(<<2,4,0,2,1,4>>, tlv:pack(?USER_MESSAGE_REFERENCE, 260))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -83,6 +85,8 @@ tlv_test_() ->
 					?_assertEqual({<<1,2,3,4,5>>, <<>>}, tlv:unpack(?SOURCE_SUBADDRESS, <<0,5,1,2,3,4,5>>))},
 				{"dest_subaddress", 
 					?_assertEqual({<<0,1,2>>, <<>>}, tlv:unpack(?DEST_SUBADDRESS, <<0,3,0,1,2>>))},
+				{"user_message_reference", 
+					?_assertEqual({260, <<>>}, tlv:unpack(?USER_MESSAGE_REFERENCE, <<0,2,1,4>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
