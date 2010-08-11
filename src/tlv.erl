@@ -104,6 +104,21 @@ pack(?LANGUAGE_INDICATOR, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?LANGUAGE_INDICATOR:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
+pack(?SOURCE_PORT, Val) ->
+	Len = 2,
+	Size = Len * ?OCTET_SIZE,
+	<<?SOURCE_PORT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?DESTINATION_PORT, Val) ->
+	Len = 2,
+	Size = Len * ?OCTET_SIZE,
+	<<?DESTINATION_PORT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?SAR_MSG_REF_NUM, Val) ->
+	Len = 2,
+	Size = Len * ?OCTET_SIZE,
+	<<?SAR_MSG_REF_NUM:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -176,9 +191,6 @@ unpack(?USER_RESPONSE_CODE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 unpack(?LANGUAGE_INDICATOR, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
-unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
-
 unpack(?SOURCE_PORT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
@@ -186,6 +198,9 @@ unpack(?DESTINATION_PORT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SAR_MSG_REF_NUM, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SAR_TOTAL_SEGMENTS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->

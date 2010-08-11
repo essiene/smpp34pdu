@@ -50,6 +50,12 @@ tlv_test_() ->
 				?_assertEqual(<<2,5,0,1,67>>, tlv:pack(?USER_RESPONSE_CODE, 67))},
 			 {"language_indicator", 
 				?_assertEqual(<<2,13,0,1,2>>, tlv:pack(?LANGUAGE_INDICATOR, ?LANGUAGE_INDICATOR_FRENCH))},
+			 {"source_port", 
+				?_assertEqual(<<2,10,0,2,1,59>>, tlv:pack(?SOURCE_PORT, 315))},
+			 {"destination_port", 
+				?_assertEqual(<<2,11,0,2,2,26>>, tlv:pack(?DESTINATION_PORT, 538))},
+			 {"sar_msg_ref_num", 
+				?_assertEqual(<<2,12,0,2,0,111>>, tlv:pack(?SAR_MSG_REF_NUM, 111))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -95,6 +101,12 @@ tlv_test_() ->
 					?_assertEqual({67, <<>>}, tlv:unpack(?USER_RESPONSE_CODE, <<0,1,67>>))},
 				{"language_indicator", 
 					?_assertEqual({?LANGUAGE_INDICATOR_FRENCH, <<>>}, tlv:unpack(?LANGUAGE_INDICATOR, <<0,1,2>>))},
+				{"source_port", 
+					?_assertEqual({315, <<>>}, tlv:unpack(?SOURCE_PORT, <<0,2,1,59>>))},
+				{"destination_port", 
+					?_assertEqual({538, <<>>}, tlv:unpack(?SOURCE_PORT, <<0,2,2,26>>))},
+				{"sar_msg_ref_num", 
+					?_assertEqual({111, <<>>}, tlv:unpack(?SOURCE_PORT, <<0,2,0,111>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
