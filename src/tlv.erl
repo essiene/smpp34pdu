@@ -79,6 +79,16 @@ pack(?PRIVACY_INDICATOR, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?PRIVACY_INDICATOR:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
+pack(?SOURCE_SUBADDRESS, Val) ->
+	Len = byte_size(Val),
+	L = [<<?SOURCE_SUBADDRESS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,23)], % minimum of 2, should be implemented
+	list_to_binary(L);
+
+pack(?DEST_SUBADDRESS, Val) ->
+	Len = byte_size(Val),
+	L = [<<?DEST_SUBADDRESS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,23)], % minimum of 2, should be implemented
+	list_to_binary(L);
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -135,6 +145,12 @@ unpack(?MS_MSG_WAIT_FACILITIES, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 
 unpack(?PRIVACY_INDICATOR, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?SOURCE_SUBADDRESS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_octstring(Rest0, Len);
+
+unpack(?DEST_SUBADDRESS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_octstring(Rest0, Len);
 
 unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
