@@ -48,6 +48,8 @@ tlv_test_() ->
 				?_assertEqual(<<2,4,0,2,1,4>>, tlv:pack(?USER_MESSAGE_REFERENCE, 260))},
 			 {"user_response_code", 
 				?_assertEqual(<<2,5,0,1,67>>, tlv:pack(?USER_RESPONSE_CODE, 67))},
+			 {"language_indicator", 
+				?_assertEqual(<<2,13,0,1,2>>, tlv:pack(?LANGUAGE_INDICATOR, ?LANGUAGE_INDICATOR_FRENCH))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -91,6 +93,8 @@ tlv_test_() ->
 					?_assertEqual({260, <<>>}, tlv:unpack(?USER_MESSAGE_REFERENCE, <<0,2,1,4>>))},
 				{"user_response_code", 
 					?_assertEqual({67, <<>>}, tlv:unpack(?USER_RESPONSE_CODE, <<0,1,67>>))},
+				{"language_indicator", 
+					?_assertEqual({?LANGUAGE_INDICATOR_FRENCH, <<>>}, tlv:unpack(?LANGUAGE_INDICATOR, <<0,1,2>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
