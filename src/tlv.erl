@@ -98,6 +98,11 @@ pack(?USER_RESPONSE_CODE, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?USER_RESPONSE_CODE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
+pack(?LANGUAGE_INDICATOR, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?LANGUAGE_INDICATOR:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -160,6 +165,9 @@ unpack(?USER_MESSAGE_REFERENCE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?USER_RESPONSE_CODE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?LANGUAGE_INDICATOR, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
