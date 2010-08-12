@@ -143,6 +143,16 @@ pack(?MS_VALIDITY, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?MS_VALIDITY:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
+pack(?DPF_RESULT, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?DPF_RESULT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?SET_DPF, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?SET_DPF:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
 pack(?MS_AVAILABILITY_STATUS, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
@@ -185,6 +195,12 @@ unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?MS_VALIDITY, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?DPF_RESULT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?SET_DPF, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?DISPLAY_TIME, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->

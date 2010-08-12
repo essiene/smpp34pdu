@@ -59,6 +59,10 @@ tlv_test_() ->
 				?_assertEqual(<<18,1,0,1,1>>, tlv:pack(?DISPLAY_TIME, ?DISPLAY_TIME_DEFAULT))},
 			 {"ms_validity", 
 				?_assertEqual(<<18,4,0,1,3>>, tlv:pack(?MS_VALIDITY, ?MS_VALIDITY_DISPLAY))},
+			 {"dpf_result", 
+				?_assertEqual(<<4,32,0,1,0>>, tlv:pack(?DPF_RESULT, ?DPF_RESULT_NOT_SET))},
+			 {"set_dpf", 
+				?_assertEqual(<<4,33,0,1,1>>, tlv:pack(?SET_DPF, ?SET_DPF_DEFAULT))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -118,6 +122,10 @@ tlv_test_() ->
 					?_assertEqual({?DISPLAY_TIME_DEFAULT, <<>>}, tlv:unpack(?DISPLAY_TIME, <<0,1,1>>))},
 				{"ms_validity", 
 					?_assertEqual({?MS_VALIDITY_DISPLAY, <<>>}, tlv:unpack(?MS_VALIDITY, <<0,1,3>>))},
+				{"dpf_result", 
+					?_assertEqual({?DPF_RESULT_NOT_SET, <<>>}, tlv:unpack(?DPF_RESULT, <<0,1,0>>))},
+				{"set_dpf", 
+					?_assertEqual({?SET_DPF_DEFAULT, <<>>}, tlv:unpack(?SET_DPF, <<0,1,1>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
