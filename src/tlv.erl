@@ -119,10 +119,15 @@ pack(?SAR_MSG_REF_NUM, Val) ->
 	Size = Len * ?OCTET_SIZE,
 	<<?SAR_MSG_REF_NUM:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
-pack(?SC_INTERFACE_VERSION, Val) ->
+pack(?SAR_TOTAL_SEGMENTS, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
-	<<?SOURCE_ADDR_SUBUNIT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+	<<?SAR_TOTAL_SEGMENTS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?SAR_SEGMENT_SEQNUM, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?SAR_SEGMENT_SEQNUM:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
 
 pack(?SC_INTERFACE_VERSION, Val) ->
 	Len = 1,
@@ -165,6 +170,9 @@ unpack(?SAR_TOTAL_SEGMENTS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?SAR_SEGMENT_SEQNUM, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?SC_INTERFACE_VERSION, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?MORE_MESSAGES_TO_SEND, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
