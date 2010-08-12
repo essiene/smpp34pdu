@@ -60,6 +60,8 @@ tlv_test_() ->
 				?_assertEqual(<<2,14,0,1,5>>, tlv:pack(?SAR_TOTAL_SEGMENTS, 5))},
 			 {"sar_segment_seqnum", 
 				?_assertEqual(<<2,15,0,1,39>>, tlv:pack(?SAR_SEGMENT_SEQNUM, 39))},
+			 {"sc_interface_version", 
+				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))},
 			 {"display_time", 
 				?_assertEqual(<<18,1,0,1,1>>, tlv:pack(?DISPLAY_TIME, ?DISPLAY_TIME_DEFAULT))},
 			 {"ms_validity", 
@@ -68,8 +70,8 @@ tlv_test_() ->
 				?_assertEqual(<<4,32,0,1,0>>, tlv:pack(?DPF_RESULT, ?DPF_RESULT_NOT_SET))},
 			 {"set_dpf", 
 				?_assertEqual(<<4,33,0,1,1>>, tlv:pack(?SET_DPF, ?SET_DPF_DEFAULT))},
-			 {"sc_interface_version", 
-				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
+			 {"ms_availability_status", 
+				?_assertEqual(<<4,34,0,1,1>>, tlv:pack(?MS_AVAILABILITY_STATUS, ?MS_AVAILABILITY_DENIED))}
 			]
 		},
 
@@ -123,6 +125,8 @@ tlv_test_() ->
 					?_assertEqual({5, <<>>}, tlv:unpack(?SAR_TOTAL_SEGMENTS, <<0,1,5>>))},
 				{"sar_segment_seqnum", 
 					?_assertEqual({39, <<>>}, tlv:unpack(?SAR_SEGMENT_SEQNUM, <<0,1,39>>))},
+				{"sc_interface_version", 
+					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))},
 				{"display_time", 
 					?_assertEqual({?DISPLAY_TIME_DEFAULT, <<>>}, tlv:unpack(?DISPLAY_TIME, <<0,1,1>>))},
 				{"ms_validity", 
@@ -131,8 +135,8 @@ tlv_test_() ->
 					?_assertEqual({?DPF_RESULT_NOT_SET, <<>>}, tlv:unpack(?DPF_RESULT, <<0,1,0>>))},
 				{"set_dpf", 
 					?_assertEqual({?SET_DPF_DEFAULT, <<>>}, tlv:unpack(?SET_DPF, <<0,1,1>>))},
-				{"sc_interface_version", 
-					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
+				{"ms_availability_status", 
+					?_assertEqual({?MS_AVAILABILITY_DENIED, <<>>}, tlv:unpack(?MS_AVAILABILITY_STATUS, <<0,1,1>>))}
 			]
 		}
 	].
