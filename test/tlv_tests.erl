@@ -55,6 +55,10 @@ tlv_test_() ->
 				?_assertEqual(<<2,14,0,1,5>>, tlv:pack(?SAR_TOTAL_SEGMENTS, 5))},
 			 {"sar_segment_seqnum", 
 				?_assertEqual(<<2,15,0,1,39>>, tlv:pack(?SAR_SEGMENT_SEQNUM, 39))},
+			 {"display_time", 
+				?_assertEqual(<<18,1,0,1,1>>, tlv:pack(?DISPLAY_TIME, ?DISPLAY_TIME_DEFAULT))},
+			 {"ms_validity", 
+				?_assertEqual(<<18,4,0,1,3>>, tlv:pack(?MS_VALIDITY, ?MS_VALIDITY_DISPLAY))},
 			 {"sc_interface_version", 
 				?_assertEqual(<<2,16,0,1,52>>, tlv:pack(?SC_INTERFACE_VERSION, 16#34))}
 			]
@@ -110,6 +114,10 @@ tlv_test_() ->
 					?_assertEqual({5, <<>>}, tlv:unpack(?SAR_TOTAL_SEGMENTS, <<0,1,5>>))},
 				{"sar_segment_seqnum", 
 					?_assertEqual({39, <<>>}, tlv:unpack(?SAR_SEGMENT_SEQNUM, <<0,1,39>>))},
+				{"display_time", 
+					?_assertEqual({?DISPLAY_TIME_DEFAULT, <<>>}, tlv:unpack(?DISPLAY_TIME, <<0,1,1>>))},
+				{"ms_validity", 
+					?_assertEqual({?MS_VALIDITY_DISPLAY, <<>>}, tlv:unpack(?MS_VALIDITY, <<0,1,3>>))},
 				{"sc_interface_version", 
 					?_assertEqual({16#34, <<>>}, tlv:unpack(?SC_INTERFACE_VERSION, <<0,1,52>>))}
 			]
