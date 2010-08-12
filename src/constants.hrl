@@ -221,4 +221,11 @@
 -define(MS_VALIDITY_SID, 2).
 -define(MS_VALIDITY_DISPLAY, 3).
 
+-define(DPF_RESULT_NOT_SET, 0).
+-define(DPF_RESULT_SET, 1).
+
+-define(SET_DPF_NOT_REQUESTED, 0).
+-define(SET_DPF_REQUESTED, 1).
+-define(SET_DPF_DEFAULT, 1).
+
 -endif.
