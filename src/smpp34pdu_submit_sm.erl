@@ -5,7 +5,6 @@
 -import(pdu_data, [cstring_to_bin/2, string_to_bin/2, integer_to_bin/2]).
 -import(pdu_data, [bin_to_cstring/2, bin_to_string/2, bin_to_integer/2]).
 
-
 -spec(pack/1 :: (submit_sm()) -> binary()).
 -spec(unpack/1 :: (binary()) -> submit_sm()).
 
@@ -36,6 +35,8 @@ pack(#submit_sm{service_type=SrvType,
 		sar_segment_seqnum=SarSegSeqnum, 
 		more_messages_to_send=MoreMsgToSend, 
 		payload_type=PayloadType}) ->
+		short_message=ShortMessage,
+		user_message_reference=UsrMsgRef}) ->
 
 		SmLen = length(ShortMessage),
 
