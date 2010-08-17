@@ -25,8 +25,17 @@ pack(#submit_sm{service_type=SrvType,
 		replace_if_present_flag=RplcIfPresentFlg,
 		data_coding=DataCoding,
 		sm_default_msg_id=SmDfltMsgId,
-		short_message=ShortMessage,
-		user_message_reference=UsrMsgRef}) ->
+		short_message=ShortMessage, 
+		user_message_reference=UsrMsgRef, 
+		source_port=SrcPort, 
+		source_addr_subunit=SrcAddrSubUnit, 
+		destination_port=DstPort, 
+		dest_addr_subunit=DstAddrSubUnit, 
+		sar_msg_ref_num=SarMsgRefNum, 
+		sar_total_segments=SarTotalSegments, 
+		sar_segment_seqnum=SarSegSeqnum, 
+		more_messages_to_send=MoreMsgToSend, 
+		payload_type=PayloadType}) ->
 
 		SmLen = length(ShortMessage),
 
@@ -49,7 +58,16 @@ pack(#submit_sm{service_type=SrvType,
 					   integer_to_bin(SmDfltMsgId, 1),
 					   integer_to_bin(SmLen, 1),
 					   string_to_bin(ShortMessage, SmLen),
-					   tlv:pack(?USER_MESSAGE_REFERENCE, UsrMsgRef)],
+					   tlv:pack(?USER_MESSAGE_REFERENCE, UsrMsgRef), 
+					   tlv:pack(?SOURCE_PORT, SrcPort), 
+					   tlv:pack(?SOURCE_ADDR_SUBUNIT, SrcAddrSubUnit), 
+					   tlv:pack(?DESTINATION_PORT, DstPort), 
+					   tlv:pack(?DEST_ADDR_SUBUNIT,DstAddrSubUnit), 
+					   tlv:pack(?SAR_MSG_REF_NUM, SarMsgRefNum), 
+					   tlv:pack(?SAR_TOTAL_SEGMENTS, SarTotalSegments), 
+					   tlv:pack(?SAR_SEGMENT_SEQNUM, SarSegSeqnum), 
+					   tlv:pack(?MORE_MESSAGES_TO_SEND, MoreMsgToSend), 
+					   tlv:pack(?PAYLOAD_TYPE, PayloadType)],
 
 		list_to_binary(L).
 
@@ -96,5 +114,32 @@ unpack(Bin0) ->
 unpack_tlv_fields(<<>>, Body) ->
 	Body;
 unpack_tlv_fields(<<?USER_MESSAGE_REFERENCE:?TLV_TAG_SIZE, Rest0/binary>>, Body) ->
-	{Val, Rest1} = tlv:unpack(?USER_MESSAGE_REFERENCE, Rest0),
-	unpack_tlv_fields(Rest1, Body#submit_sm{user_message_reference=Val}).
+	{Val, Rest1} = tlv:unpack(?USER_MESSAGE_REFERENCE, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{user_message_reference=Val}); 
+unpack_tlv_fields(<<?SOURCE_PORT:?TLV_TAG_SIZE, Rest0/binary>>, Body) -> 
+	{Val, Rest1} = tlv:unpack(?SOURCE_PORT, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{source_port=Val}); 
+unpack_tlv_fields(<<?SOURCE_ADDR_SUBUNIT:?TLV_TAG_SIZE, Rest0/binary>>, Body) -> 
+	{Val, Rest1} = tlv:unpack(?SOURCE_ADDR_SUBUNIT, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{source_addr_subunit=Val}); 
+unpack_tlv_fields(<<?DESTINATION_PORT:?TLV_TAG_SIZE, Rest0/binary>>, Body) -> 
+	{Val, Rest1} = tlv:unpack(?DESTINATION_PORT, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{destination_port=Val}); 
+unpack_tlv_fields(<<?DEST_ADDR_SUBUNIT:?TLV_TAG_SIZE, Rest0/binary>>, Body) -> 
+	{Val, Rest1} = tlv:unpack(?DEST_ADDR_SUBUNIT, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{dest_addr_subunit=Val}); 
+unpack_tlv_fields(<<?SAR_MSG_REF_NUM:?TLV_TAG_SIZE, Rest0/binary>>, Body) -> 
+	{Val, Rest1} = tlv:unpack(?SAR_MSG_REF_NUM, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{sar_msg_ref_num=Val}); 
+unpack_tlv_fields(<<?SAR_TOTAL_SEGMENTS:?TLV_TAG_SIZE, Rest0/binary>>, Body) -> 
+	{Val, Rest1} = tlv:unpack(?SAR_TOTAL_SEGMENTS, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{sar_total_segments=Val}); 
+unpack_tlv_fields(<<?SAR_SEGMENT_SEQNUM:?TLV_TAG_SIZE, Rest0/binary>>, Body) -> 
+	{Val, Rest1} = tlv:unpack(?SAR_SEGMENT_SEQNUM, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{sar_segment_seqnum=Val}); 
+unpack_tlv_fields(<<?MORE_MESSAGES_TO_SEND:?TLV_TAG_SIZE, Rest0/binary>>, Body) -> 
+	{Val, Rest1} = tlv:unpack(?MORE_MESSAGES_TO_SEND, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{more_messages_to_send=Val}); 
+unpack_tlv_fields(<<?PAYLOAD_TYPE:?TLV_TAG_SIZE, Rest0/binary>>, Body) -> 
+	{Val, Rest1} = tlv:unpack(?PAYLOAD_TYPE, Rest0), 
+	unpack_tlv_fields(Rest1, Body#submit_sm{payload_type=Val}).
