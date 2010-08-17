@@ -35,8 +35,6 @@ pack(#submit_sm{service_type=SrvType,
 		sar_segment_seqnum=SarSegSeqnum, 
 		more_messages_to_send=MoreMsgToSend, 
 		payload_type=PayloadType}) ->
-		short_message=ShortMessage,
-		user_message_reference=UsrMsgRef}) ->
 
 		SmLen = length(ShortMessage),
 
