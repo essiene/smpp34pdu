@@ -164,6 +164,31 @@
 -define(BOUND_TRX,2#0111).
 -define(OPEN, 2#0100).
 
+-define(TON_UNKNOWN, 16#00).
+-define(TON_INTERNATIONAL, 16#01).
+-define(TON_NATIONAL, 16#02).
+-define(TON_NETWORK, 16#03).
+-define(TON_SUBSCRIBER_NUM, 16#04).
+-define(TON_ALPHANUM, 16#05).
+-define(TON_ABBREVIATED, 16#06).
+
+-define(NPI_UNKNOWN, 16#00).
+-define(NPI_ISDN, 16#01).
+-define(NPI_E163, 16#01).
+-define(NPI_E164, 16#01).
+-define(NPI_DATA, 16#03).
+-define(NPI_X121, 16#03).
+-define(NPI_TELEX, 16#04).
+-define(NPI_F69, 16#04).
+-define(NPI_LAND_MOBILE, 16#06).
+-define(NPI_E212, 16#06).
+-define(NPI_NATIONAL, 16#08).
+-define(NPI_PRIVATE, 16#09).
+-define(NPI_ERMES, 16#0A).
+-define(NPI_INTERNET, 16#0E).
+-define(NPI_IP, 16#0E).
+-define(NPI_WAP_CLIENT_ID, 16#12).
+
 
 -define(TIMEOUT_SESSION_INIT, 500).
 -define(TIMEOUT_ENQUIRE_LINK, 2000).
