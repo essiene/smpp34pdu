@@ -177,7 +177,12 @@ pack(?DELIVERY_FAILURE_REASON, Val) ->
 pack(?MORE_MESSAGES_TO_SEND, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
-	<<?MORE_MESSAGES_TO_SEND:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
+	<<?MORE_MESSAGES_TO_SEND:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?MESSAGE_STATE, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?MESSAGE_STATE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
 
 unpack(?DEST_ADDR_SUBUNIT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
@@ -279,5 +284,8 @@ unpack(?DELIVERY_FAILURE_REASON, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?MORE_MESSAGES_TO_SEND, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?MESSAGE_STATE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len).
 
