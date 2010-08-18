@@ -1,5 +1,5 @@
--ifndef(pdu).
--define(pdu, true).
+-ifndef(smpp34pdu).
+-define(smpp34pdu, true).
 
 -include("../src/constants.hrl").
 
@@ -58,13 +58,23 @@
         priority_flag = 1,
         schedule_delivery_time=?DEFAULT_CSTRING,
         validity_period=?DEFAULT_CSTRING,
-        registered_deliver = 0,
-        replace_if_present = 0,
+        registered_delivery = 0,
+        replace_if_present_flag = 0,
         data_coding = 0,
         sm_default_msg_id = 0,
         sm_length=0,
-        short_message=?DEFAULT_STRING
-        }).
+        short_message=?DEFAULT_STRING, 
+		user_message_reference, 
+		source_port,
+		source_addr_subunit,
+		destination_port,
+		dest_addr_subunit,
+		sar_msg_ref_num,
+		sar_total_segments,
+		sar_segment_seqnum,
+		more_messages_to_send,
+		payload_type 
+}).
 
 -record(submit_sm_resp, {message_id=?DEFAULT_CSTRING}).
 
@@ -83,8 +93,8 @@
         priority_flag = 1,
         schedule_delivery_time=?DEFAULT_CSTRING,
         validity_period=?DEFAULT_CSTRING,
-        registered_deliver = 0,
-        replace_if_present = 0,
+        registered_delivery = 0,
+        replace_if_present_flag = 0,
         data_coding = 0,
         sm_default_msg_id = 0,
         sm_length=0,
@@ -140,6 +150,4 @@
 		esme_addr_npi=?DEFAULT_NPI,
 		esme_addr=?DEFAULT_CSTRING,
 		ms_availability_status}).
-
-
 -endif.

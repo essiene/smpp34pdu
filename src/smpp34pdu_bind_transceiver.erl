@@ -1,5 +1,5 @@
 -module(smpp34pdu_bind_transceiver).
--include("pdu.hrl").
+-include("smpp34pdu.hrl").
 -include("types.hrl").
 -export([pack/1,unpack/1]).
 -import(pdu_data, [cstring_to_bin/2, integer_to_bin/2]).

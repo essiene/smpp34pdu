@@ -1,5 +1,5 @@
 -module(smpp34pdu_alert_notification_tests).
--include("../include/pdu.hrl").
+-include("../include/smpp34pdu.hrl").
 -include_lib("eunit/include/eunit.hrl").
 
 

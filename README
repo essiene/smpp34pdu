@@ -64,7 +64,7 @@ Usage/Examples
 % Include the resource file defining all the 
 % Records
 
--include_lib("smpp34pdu/include/pdu.hrl").
+-include_lib("smpp34pdu/include/smpp34pdu.hrl").
 
 start() ->
 	% Create a bind_receiver PDU record
@@ -79,7 +79,7 @@ start() ->
 	% PDU
 
 
-	PackedBinary = smpp34pdu:pack(1, BindReceiverBody),
+	PackedBinary = smpp34pdu:pack(?ESME_ROK, 1, BindReceiverBody),
 
 	{ok, [Pdu], <<>>} = smpp34pdu:unpack(PackedBinary),
 

@@ -1,6 +1,6 @@
 -module(pdu_data).
--export([string_to_bin/2, cstring_to_bin/2, integer_to_bin/2]).
--export([bin_to_string/2, bin_to_cstring/2, bin_to_integer/2]).
+-export([string_to_bin/2, cstring_to_bin/2, integer_to_bin/2, octstring_to_bin/2]).
+-export([bin_to_string/2, bin_to_cstring/2, bin_to_integer/2, bin_to_octstring/2]).
 
 string_to_bin(undefined, _) ->
     <<"">>;
@@ -64,3 +64,30 @@ bin_to_integer(Bin, Max) ->
     Size = Max * 8,
     <<Integer:Size, Rest/binary>> = Bin,
     {Integer, Rest}.
+
+octstring_to_bin(undefined, _) ->
+	<<>>;
+octstring_to_bin(<<>>, _) ->
+	<<>>;
+octstring_to_bin(Data0, {Min, _}) when is_binary(Data0), byte_size(Data0) < Min ->
+	{error, {less_than_min, Min}};
+octstring_to_bin(Data0, {_, Max}) when is_binary(Data0), byte_size(Data0) < Max ->
+	Size = byte_size(Data0) * 8,
+	<<Data1:Size,_/binary>> = Data0,
+	<<Data1:Size>>;
+octstring_to_bin(Data0, {_, Max}) when is_binary(Data0) ->
+	Size = Max * 8,
+	<<Data1:Size,_/binary>> = Data0,
+	<<Data1:Size>>;
+octstring_to_bin(Data0, Len) when is_binary(Data0) ->
+	octstring_to_bin(Data0, {Len, Len}).
+
+
+bin_to_octstring(Bin, Max) when byte_size(Bin) < Max ->
+	Size = byte_size(Bin) * 8,
+	<<Bin1:Size,Rest/binary>> = Bin,
+	{<<Bin1:Size>>, Rest};
+bin_to_octstring(Bin, Max) ->
+	Size = Max * 8,
+	<<Bin1:Size,Rest/binary>> = Bin,
+	{<<Bin1:Size>>, Rest}.

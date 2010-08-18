@@ -1,7 +1,7 @@
 -ifndef(types).
 -define(types, true).
 
--include("pdu.hrl").
+-include("smpp34pdu.hrl").
 
 -type(generic_nack() :: #generic_nack{}).
 -type(bind_receiver() :: #bind_receiver{}).
@@ -28,7 +28,6 @@
 
 -type(invalid_command_id() :: {'error', {'command_id', integer()}}).
 
-
 -type(valid_pdu() ::  generic_nack()
 					| bind_receiver()
 					| bind_receiver_resp()
@@ -36,6 +35,7 @@
 					| bind_transmitter_resp()
 					| query_sm()
 					| query_sm_resp()
+					| submit_sm()
 					| submit_sm_resp()
 					| deliver_sm_resp()
 					| unbind() 

@@ -1,6 +1,3 @@
-- pack/2 should become pack/3 and accept: CommandStatus, SequenceNumber and Body
-- pdu.hrl should be renamed to smpp34pdu.hrl for easier usage
-
 - Have a specific type for SMPP types with two values like 0 or 17
 - We need to have a representation for DataTime values according to the spec
 - Define helper constants for all parameters have an enumeration in the spec
@@ -10,3 +7,12 @@
   make this convenience available in this pure wire library or do this in a
   higher up library? favouring the higher-up library approach, but documenting
   this here so I do not forget this.
+
+- I need to be sure that a broken PDU gets an appropriate response, this should
+  be tested in a higher level library though, not in here
+
+- Define type specifications for all functions that take protocol based
+  constants to limit the legal values. For instance smpp34pdu:pack/3 should
+  should define a command_status() type that defines all the command status
+  macros, and there should be a command_id() type that defines all the valid
+  command ids, etc
