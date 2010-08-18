@@ -157,7 +157,12 @@ pack(?SET_DPF, Val) ->
 pack(?MS_AVAILABILITY_STATUS, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
-	<<?MS_AVAILABILITY_STATUS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
+	<<?MS_AVAILABILITY_STATUS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?NETWORK_ERROR_CODE, Val) ->
+	Len = 3,
+	L = [<<?NETWORK_ERROR_CODE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,3)],
+	list_to_binary(L).
 
 unpack(?DEST_ADDR_SUBUNIT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
@@ -250,4 +255,7 @@ unpack(?MORE_MESSAGES_TO_SEND, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?MS_AVAILABILITY_STATUS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len).
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?NETWORK_ERROR_CODE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_octstring(Rest0, Len).
