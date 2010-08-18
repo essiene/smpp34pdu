@@ -292,4 +292,7 @@
 -define(DEL_FAIL_REASON_PERM_NET_ERR, 2).
 -define(DEL_FAIL_REASON_TEMP_NET_ERR, 3).
 
+-define(DMI_DTMF_TBCD, 16#00).
+-define(DMI_ASCII, 16#01).
+
 -endif.

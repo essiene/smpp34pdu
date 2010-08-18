@@ -182,7 +182,12 @@ pack(?MORE_MESSAGES_TO_SEND, Val) ->
 pack(?MESSAGE_STATE, Val) ->
 	Len = 1,
 	Size = Len * ?OCTET_SIZE,
-	<<?MESSAGE_STATE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
+	<<?MESSAGE_STATE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?CALLBACK_NUM, Val) ->
+	Len = byte_size(Val),
+	L = [<<?CALLBACK_NUM:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, {4, 19})],
+	list_to_binary(L).
 
 unpack(?DEST_ADDR_SUBUNIT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
@@ -287,5 +292,7 @@ unpack(?MORE_MESSAGES_TO_SEND, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?MESSAGE_STATE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len).
+	pdu_data:bin_to_integer(Rest0, Len);
 
+unpack(?CALLBACK_NUM, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_octstring(Rest0, Len).

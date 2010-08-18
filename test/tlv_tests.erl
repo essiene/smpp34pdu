@@ -81,7 +81,10 @@ tlv_test_() ->
 			 {"more_messages_to_send", 
 				?_assertEqual(<<4,38,0,1,1>>, tlv:pack(?MORE_MESSAGES_TO_SEND, ?MORE_MESSAGES_TRUE))},
 			 {"message_state", 
-				?_assertEqual(<<4,39,0,1,0>>, tlv:pack(?MESSAGE_STATE, ?DPF_RESULT_NOT_SET))}
+				?_assertEqual(<<4,39,0,1,0>>, tlv:pack(?MESSAGE_STATE, ?DPF_RESULT_NOT_SET))},
+			 {"callback_num", 
+				?_assertEqual(<<3,129,0,14,1,2,8,48,56,48,51,53,54,55,49,50,51,52>>,
+						tlv:pack(?CALLBACK_NUM, <<?DMI_ASCII,?TON_NATIONAL,?NPI_NATIONAL,"08035671234">>))}
 			]
 		},
 
@@ -156,7 +159,10 @@ tlv_test_() ->
 				{"more_messages_to_send",
 					?_assertEqual({?MORE_MESSAGES_TRUE, <<>>}, tlv:unpack(?MORE_MESSAGES_TO_SEND, <<0,1,1>>))},
 				{"message_state",
-					?_assertEqual({?DPF_RESULT_NOT_SET, <<>>}, tlv:unpack(?MESSAGE_STATE, <<0,1,0>>))} 
+					?_assertEqual({?DPF_RESULT_NOT_SET, <<>>}, tlv:unpack(?MESSAGE_STATE, <<0,1,0>>))}, 
+				{"callback_num",
+					?_assertEqual({<<?DMI_ASCII, ?TON_NATIONAL, ?NPI_NATIONAL, "08035671234">>, <<>>}, 
+							tlv:unpack(?CALLBACK_NUM, <<0,14,1,2,8,48,56,48,51,53,54,55,49,50,51,52>>))} 
 			]
 		}
 	].
