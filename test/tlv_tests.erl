@@ -77,7 +77,9 @@ tlv_test_() ->
 			 {"message_payload", 
 				?_assertEqual(<<4,36,0,5,97,98,99,100,101>>, tlv:pack(?MESSAGE_PAYLOAD, <<"abcde">>))},
 			 {"delivery_failure_reason", 
-				?_assertEqual(<<4,37,0,1,0>>, tlv:pack(?DELIVERY_FAILURE_REASON, ?DEL_FAIL_REASON_DEST_UNAVAIL))}
+				?_assertEqual(<<4,37,0,1,0>>, tlv:pack(?DELIVERY_FAILURE_REASON, ?DEL_FAIL_REASON_DEST_UNAVAIL))},
+			 {"more_messages_to_send", 
+				?_assertEqual(<<4,38,0,1,1>>, tlv:pack(?MORE_MESSAGES_TO_SEND, ?MORE_MESSAGES_TRUE))}
 			]
 		},
 
@@ -146,10 +148,11 @@ tlv_test_() ->
 				{"network_error_code",
 					?_assertEqual({<<?NETWORK_ERROR_TYPE_GSM:8,257:16>>, <<>>}, tlv:unpack(?NETWORK_ERROR_CODE, <<0,3,3,1,1>>))},
 				{"message_payload",
-					?_assertEqual({<<"abcde">>, <<>>},
-							tlv:unpack(?MESSAGE_PAYLOAD, <<0,5,97,98,99,100,101>>))},
+					?_assertEqual({<<"abcde">>, <<>>}, tlv:unpack(?MESSAGE_PAYLOAD, <<0,5,97,98,99,100,101>>))},
 				{"delivery_failure_reason",
-					?_assertEqual({?DEL_FAIL_REASON_TEMP_NET_ERR, <<>>}, tlv:unpack(?DELIVERY_FAILURE_REASON, <<0,1,3>>))} 
+					?_assertEqual({?DEL_FAIL_REASON_TEMP_NET_ERR, <<>>}, tlv:unpack(?DELIVERY_FAILURE_REASON, <<0,1,3>>))},
+				{"more_messages_to_send",
+					?_assertEqual({?MORE_MESSAGES_TRUE, <<>>}, tlv:unpack(?MORE_MESSAGES_TO_SEND, <<0,1,1>>))} 
 			]
 		}
 	].
