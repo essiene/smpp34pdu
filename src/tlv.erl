@@ -167,7 +167,12 @@ pack(?NETWORK_ERROR_CODE, Val) ->
 pack(?MESSAGE_PAYLOAD, Val) ->
 	Len = byte_size(Val),
 	L = [<<?MESSAGE_PAYLOAD:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, Len)],
-	list_to_binary(L).
+	list_to_binary(L);
+
+pack(?DELIVERY_FAILURE_REASON, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?DELIVERY_FAILURE_REASON:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
 
 unpack(?DEST_ADDR_SUBUNIT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
@@ -266,4 +271,7 @@ unpack(?NETWORK_ERROR_CODE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_octstring(Rest0, Len);
 
 unpack(?MESSAGE_PAYLOAD, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_octstring(Rest0, Len).
+	pdu_data:bin_to_octstring(Rest0, Len);
+
+unpack(?DELIVERY_FAILURE_REASON, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len).
