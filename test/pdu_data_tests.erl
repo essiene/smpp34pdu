@@ -103,12 +103,18 @@ bin_to_integer_test_() ->
 		
 octstring_to_bin_test_() ->
 	[
-		{"A bin less than MAX will pass", 
-			?_assertEqual(<<0,1,2>>, pdu_data:octstring_to_bin(<<0,1,2>>, 4))},
+		{"A bin less than min will return error", 
+			?_assertEqual({error, {less_than_min, 3}}, pdu_data:octstring_to_bin(<<0,1>>, {3, 4}))},
+		{"A bin greater than min and less than MAX will pass", 
+			?_assertEqual(<<0,1,2>>, pdu_data:octstring_to_bin(<<0,1,2>>, {2, 4}))},
 		{"A bin greater than MAX will pass but truncated",
-			?_assertEqual(<<0,1,2>>, pdu_data:octstring_to_bin(<<0,1,2,3,4>>, 3))},
+			?_assertEqual(<<0,1,2>>, pdu_data:octstring_to_bin(<<0,1,2,3,4>>, {2, 3}))},
 		{"A bin equal to MAX will pass exactly",
-			?_assertEqual(<<0,1,2,3,4>>, pdu_data:octstring_to_bin(<<0,1,2,3,4>>, 5))},
+			?_assertEqual(<<0,1,2,3,4>>, pdu_data:octstring_to_bin(<<0,1,2,3,4>>, {2, 5}))},
+		{"A bin less than LEN will return error",
+			?_assertEqual({error, {less_than_min, 3}}, pdu_data:octstring_to_bin(<<0,1>>, 3))},
+		{"A bin greater than LEN will be truncated",
+			?_assertEqual(<<0,1,2>>, pdu_data:octstring_to_bin(<<0,1,2,3,4,5>>, 3))},
 		{"No function clause for non binary",
     		?_assertError(function_clause, pdu_data:octstring_to_bin(1, 4))},
 		{"The atom 'undefined' will yield empty binary",

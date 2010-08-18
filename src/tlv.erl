@@ -81,12 +81,12 @@ pack(?PRIVACY_INDICATOR, Val) ->
 
 pack(?SOURCE_SUBADDRESS, Val) ->
 	Len = byte_size(Val),
-	L = [<<?SOURCE_SUBADDRESS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,23)], % minimum of 2, should be implemented
+	L = [<<?SOURCE_SUBADDRESS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,{2, 23})], 
 	list_to_binary(L);
 
 pack(?DEST_SUBADDRESS, Val) ->
 	Len = byte_size(Val),
-	L = [<<?DEST_SUBADDRESS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,23)], % minimum of 2, should be implemented
+	L = [<<?DEST_SUBADDRESS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,{2, 23})], 
 	list_to_binary(L);
 
 pack(?USER_MESSAGE_REFERENCE, Val) ->
