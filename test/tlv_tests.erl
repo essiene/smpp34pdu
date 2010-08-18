@@ -73,7 +73,9 @@ tlv_test_() ->
 			 {"ms_availability_status", 
 				?_assertEqual(<<4,34,0,1,1>>, tlv:pack(?MS_AVAILABILITY_STATUS, ?MS_AVAILABILITY_DENIED))},
 			 {"network_error_code", 
-				?_assertEqual(<<4,35,0,3,3,1,1>>, tlv:pack(?NETWORK_ERROR_CODE, <<?NETWORK_ERROR_TYPE_GSM,257:16>>))}
+				?_assertEqual(<<4,35,0,3,3,1,1>>, tlv:pack(?NETWORK_ERROR_CODE, <<?NETWORK_ERROR_TYPE_GSM,257:16>>))},
+			 {"message_payload", 
+				?_assertEqual(<<4,36,0,5,97,98,99,100,101>>, tlv:pack(?MESSAGE_PAYLOAD, <<"abcde">>))}
 			]
 		},
 
@@ -140,7 +142,9 @@ tlv_test_() ->
 				{"ms_availability_status", 
 					?_assertEqual({?MS_AVAILABILITY_DENIED, <<>>}, tlv:unpack(?MS_AVAILABILITY_STATUS, <<0,1,1>>))},
 				{"network_error_code",
-					?_assertEqual({<<?NETWORK_ERROR_TYPE_GSM:8,257:16>>, <<>>}, tlv:unpack(?NETWORK_ERROR_CODE, <<0,3,3,1,1>>))} 
+					?_assertEqual({<<?NETWORK_ERROR_TYPE_GSM:8,257:16>>, <<>>}, tlv:unpack(?NETWORK_ERROR_CODE, <<0,3,3,1,1>>))},
+				{"message_payload",
+					?_assertEqual({<<"abcde">>, <<>>}, tlv:unpack(?MESSAGE_PAYLOAD, <<0,5,97,98,99,100,101>>))} 
 			]
 		}
 	].

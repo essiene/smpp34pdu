@@ -162,6 +162,11 @@ pack(?MS_AVAILABILITY_STATUS, Val) ->
 pack(?NETWORK_ERROR_CODE, Val) ->
 	Len = 3,
 	L = [<<?NETWORK_ERROR_CODE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,3)],
+	list_to_binary(L);
+
+pack(?MESSAGE_PAYLOAD, Val) ->
+	Len = byte_size(Val),
+	L = [<<?MESSAGE_PAYLOAD:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, Len)],
 	list_to_binary(L).
 
 unpack(?DEST_ADDR_SUBUNIT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
@@ -258,4 +263,7 @@ unpack(?MS_AVAILABILITY_STATUS, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?NETWORK_ERROR_CODE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_octstring(Rest0, Len);
+
+unpack(?MESSAGE_PAYLOAD, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_octstring(Rest0, Len).
