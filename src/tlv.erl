@@ -187,7 +187,49 @@ pack(?MESSAGE_STATE, Val) ->
 pack(?CALLBACK_NUM, Val) ->
 	Len = byte_size(Val),
 	L = [<<?CALLBACK_NUM:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, {4, 19})],
+	list_to_binary(L);
+
+pack(?CALLBACK_NUM_PRES_IND, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?CALLBACK_NUM_PRES_IND:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?CALLBACK_NUM_ATAG, Val) ->
+	Len = byte_size(Val),
+	L = [<<?CALLBACK_NUM_ATAG:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>,
+	pdu_data:octstring_to_bin(Val, {2, 65})], % the spec says Var max 65. But the description contains a 1 encoding scheme octet and then value octets
+	list_to_binary(L);
+
+pack(?NUMBER_OF_MESSAGES, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?NUMBER_OF_MESSAGES:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?SMS_SIGNAL, Val) ->
+	Len = 2,
+	Size = Len * ?OCTET_SIZE,
+	<<?SMS_SIGNAL:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?ALERT_ON_MESSAGE_DELIVERY, Val) ->
+	Len = 0,
+	Size = Len * ?OCTET_SIZE,
+	<<?ALERT_ON_MESSAGE_DELIVERY:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?ITS_REPLY_TYPE, Val) ->
+	Len = 1,
+	Size = Len * ?OCTET_SIZE,
+	<<?ITS_REPLY_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+
+pack(?ITS_SESSION_INFO, Val) ->
+	Len = 2,
+	L = [<<?ITS_SESSION_INFO:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, 2})],
+	list_to_binary(L);
+
+pack(?USSD_SERVICE_OP, Val) ->
+	Len = 1,
+	L = [<<?USSD_SERVICE_OP:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, 1})],
 	list_to_binary(L).
+
 
 unpack(?DEST_ADDR_SUBUNIT, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
@@ -295,4 +337,29 @@ unpack(?MESSAGE_STATE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?CALLBACK_NUM, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_octstring(Rest0, Len);
+
+unpack(?CALLBACK_NUM_PRES_IND, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?CALLBACK_NUM_ATAG, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_octstring(Rest0, Len);
+
+unpack(?NUMBER_OF_MESSAGES, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?SMS_SIGNAL, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?ALERT_ON_MESSAGE_DELIVERY, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?ITS_REPLY_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_integer(Rest0, Len);
+
+unpack(?ITS_SESSION_INFO, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
+	pdu_data:bin_to_octstring(Rest0, Len);
+
+unpack(?USSD_SERVICE_OP, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_octstring(Rest0, Len).
+
