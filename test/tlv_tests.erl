@@ -87,7 +87,10 @@ tlv_test_() ->
 						tlv:pack(?CALLBACK_NUM, <<?DMI_ASCII,?TON_NATIONAL,?NPI_NATIONAL,"08035671234">>))},
 			 {"callback_num_pres_ind", 
 				?_assertEqual(<<3,2,0,1,3>>, 
-						tlv:pack(?CALLBACK_NUM_PRES_IND, ?CALLBACK_NUM_PRES_ALLOWED bor ?CALLBACK_NUM_NETWORK_PROVIDED))}
+						tlv:pack(?CALLBACK_NUM_PRES_IND, ?CALLBACK_NUM_PRES_ALLOWED bor ?CALLBACK_NUM_NETWORK_PROVIDED))},
+			 {"callback_num_atag", 
+				?_assertEqual(<<3,3,0,12,1,48,56,48,51,49,50,51,52,53,54,55>>, 
+						tlv:pack(?CALLBACK_NUM_ATAG, <<?DCS_ASCII, "08031234567">>))}
 			]
 		},
 
@@ -168,7 +171,10 @@ tlv_test_() ->
 							tlv:unpack(?CALLBACK_NUM, <<0,14,1,2,8,48,56,48,51,53,54,55,49,50,51,52>>))},
 				{"callback_num_pres_ind",
 					?_assertEqual({?CALLBACK_NUM_PRES_ALLOWED bor ?CALLBACK_NUM_NETWORK_PROVIDED, <<>>}, 
-							tlv:unpack(?CALLBACK_NUM_PRES_IND, <<0,1,3>>))} 
+							tlv:unpack(?CALLBACK_NUM_PRES_IND, <<0,1,3>>))},
+				{"callback_num_atag",
+					?_assertEqual({<<?DCS_ASCII,"08031234567">>, <<>>}, 
+							tlv:unpack(?CALLBACK_NUM_ATAG, <<0,12,1,48,56,48,51,49,50,51,52,53,54,55>>))} 
 			]
 		}
 	].
