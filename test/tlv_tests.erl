@@ -96,7 +96,9 @@ tlv_test_() ->
 			 {"sms_signal", 
 				?_assertEqual(<<18,3,0,2,1,1>>, tlv:pack(?SMS_SIGNAL, 257))},
 			 {"alert_on_message_delivery", 
-				?_assertEqual(<<19,12,0,0>>, tlv:pack(?ALERT_ON_MESSAGE_DELIVERY, nil))}
+				?_assertEqual(<<19,12,0,0>>, tlv:pack(?ALERT_ON_MESSAGE_DELIVERY, nil))},
+			 {"its_reply_type", 
+				?_assertEqual(<<19,8,0,1,2>>, tlv:pack(?ITS_REPLY_TYPE, ?ITS_REPLY_TELEPHONE))}
 			]
 		},
 
@@ -188,7 +190,10 @@ tlv_test_() ->
 				{"alert_on_message_delivery will unpack nothing when nothing is given",
 					?_assertEqual({<<>>, <<>>}, tlv:unpack(?ALERT_ON_MESSAGE_DELIVERY, <<0,0>>))}, 
 				{"alert_on_message_delivery will unpack nothing with remains if given data",
-					?_assertEqual({<<>>, <<1,2,3>>}, tlv:unpack(?ALERT_ON_MESSAGE_DELIVERY, <<0,0,1,2,3>>))} 
+					?_assertEqual({<<>>, <<1,2,3>>},
+							tlv:unpack(?ALERT_ON_MESSAGE_DELIVERY, <<0,0,1,2,3>>))},
+				{"its_reply_type",
+					?_assertEqual({?ITS_REPLY_CONTINUE, <<>>}, tlv:unpack(?ITS_REPLY_TYPE, <<0,1,8>>))} 
 			]
 		}
 	].
