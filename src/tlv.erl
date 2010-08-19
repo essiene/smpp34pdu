@@ -352,7 +352,7 @@ unpack(?SMS_SIGNAL, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);
 
 unpack(?ALERT_ON_MESSAGE_DELIVERY, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
-	pdu_data:bin_to_integer(Rest0, Len);
+	pdu_data:bin_to_octstring(Rest0, Len);
 
 unpack(?ITS_REPLY_TYPE, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_integer(Rest0, Len);

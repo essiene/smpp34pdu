@@ -94,7 +94,9 @@ tlv_test_() ->
 			 {"number_of_messages", 
 				?_assertEqual(<<3,4,0,1,48>>, tlv:pack(?NUMBER_OF_MESSAGES, 48))},
 			 {"sms_signal", 
-				?_assertEqual(<<18,3,0,2,1,1>>, tlv:pack(?SMS_SIGNAL, 257))}
+				?_assertEqual(<<18,3,0,2,1,1>>, tlv:pack(?SMS_SIGNAL, 257))},
+			 {"alert_on_message_delivery", 
+				?_assertEqual(<<19,12,0,0>>, tlv:pack(?ALERT_ON_MESSAGE_DELIVERY, nil))}
 			]
 		},
 
@@ -182,7 +184,11 @@ tlv_test_() ->
 				{"number_of_messages",
 					?_assertEqual({48, <<>>}, tlv:unpack(?NUMBER_OF_MESSAGES, <<0,1,48>>))},
 				{"sms_signal",
-					?_assertEqual({257, <<>>}, tlv:unpack(?SMS_SIGNAL, <<0,2,1,1>>))} 
+					?_assertEqual({257, <<>>}, tlv:unpack(?SMS_SIGNAL, <<0,2,1,1>>))},
+				{"alert_on_message_delivery will unpack nothing when nothing is given",
+					?_assertEqual({<<>>, <<>>}, tlv:unpack(?ALERT_ON_MESSAGE_DELIVERY, <<0,0>>))}, 
+				{"alert_on_message_delivery will unpack nothing with remains if given data",
+					?_assertEqual({<<>>, <<1,2,3>>}, tlv:unpack(?ALERT_ON_MESSAGE_DELIVERY, <<0,0,1,2,3>>))} 
 			]
 		}
 	].
