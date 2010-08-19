@@ -222,12 +222,12 @@ pack(?ITS_REPLY_TYPE, Val) ->
 
 pack(?ITS_SESSION_INFO, Val) ->
 	Len = 2,
-	L = [<<?ITS_SESSION_INFO:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, 2})],
+	L = [<<?ITS_SESSION_INFO:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, 2)],
 	list_to_binary(L);
 
 pack(?USSD_SERVICE_OP, Val) ->
 	Len = 1,
-	L = [<<?USSD_SERVICE_OP:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, 1})],
+	L = [<<?USSD_SERVICE_OP:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, 1)],
 	list_to_binary(L).
 
 
