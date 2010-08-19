@@ -98,7 +98,9 @@ tlv_test_() ->
 			 {"alert_on_message_delivery", 
 				?_assertEqual(<<19,12,0,0>>, tlv:pack(?ALERT_ON_MESSAGE_DELIVERY, nil))},
 			 {"its_reply_type", 
-				?_assertEqual(<<19,8,0,1,2>>, tlv:pack(?ITS_REPLY_TYPE, ?ITS_REPLY_TELEPHONE))}
+				?_assertEqual(<<19,8,0,1,2>>, tlv:pack(?ITS_REPLY_TYPE, ?ITS_REPLY_TELEPHONE))},
+			 {"its_session_info", 
+				?_assertEqual(<<19,131,0,2,55,29>>, tlv:pack(?ITS_SESSION_INFO, <<55,29>>))}
 			]
 		},
 
@@ -193,7 +195,9 @@ tlv_test_() ->
 					?_assertEqual({<<>>, <<1,2,3>>},
 							tlv:unpack(?ALERT_ON_MESSAGE_DELIVERY, <<0,0,1,2,3>>))},
 				{"its_reply_type",
-					?_assertEqual({?ITS_REPLY_CONTINUE, <<>>}, tlv:unpack(?ITS_REPLY_TYPE, <<0,1,8>>))} 
+					?_assertEqual({?ITS_REPLY_CONTINUE, <<>>}, tlv:unpack(?ITS_REPLY_TYPE, <<0,1,8>>))},
+				{"its_session_info",
+					?_assertEqual({<<129,10>>, <<>>}, tlv:unpack(?ITS_SESSION_INFO, <<0,2,129,10>>))} 
 			]
 		}
 	].
