@@ -331,4 +331,13 @@
 -define(ITS_REPLY_TIME, 7).
 -define(ITS_REPLY_CONTINUE, 8).
 
+-define(USSD_PSSD_INDICATION, 0).
+-define(USSD_PSSR_INDICATION, 1).
+-define(USSD_USSR_REQUEST, 2).
+-define(USSD_USSN_REQUEST, 3).
+-define(USSD_PSSD_RESPONSE, 16).
+-define(USSD_PSSR_RESPONSE, 17).
+-define(USSD_USSR_CONFIRM, 18).
+-define(USSD_USSN_CONFIRM, 19).
+
 -endif.

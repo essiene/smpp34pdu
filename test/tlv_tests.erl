@@ -100,7 +100,10 @@ tlv_test_() ->
 			 {"its_reply_type", 
 				?_assertEqual(<<19,8,0,1,2>>, tlv:pack(?ITS_REPLY_TYPE, ?ITS_REPLY_TELEPHONE))},
 			 {"its_session_info", 
-				?_assertEqual(<<19,131,0,2,55,29>>, tlv:pack(?ITS_SESSION_INFO, <<55,29>>))}
+				?_assertEqual(<<19,131,0,2,55,29>>, tlv:pack(?ITS_SESSION_INFO, <<55,29>>))},
+			 {"ussd_service_op", 
+				?_assertEqual(<<5,1,0,1,19>>, tlv:pack(?USSD_SERVICE_OP, <<?USSD_USSN_CONFIRM>>))}
+			
 			]
 		},
 
@@ -197,7 +200,9 @@ tlv_test_() ->
 				{"its_reply_type",
 					?_assertEqual({?ITS_REPLY_CONTINUE, <<>>}, tlv:unpack(?ITS_REPLY_TYPE, <<0,1,8>>))},
 				{"its_session_info",
-					?_assertEqual({<<129,10>>, <<>>}, tlv:unpack(?ITS_SESSION_INFO, <<0,2,129,10>>))} 
+					?_assertEqual({<<129,10>>, <<>>}, tlv:unpack(?ITS_SESSION_INFO, <<0,2,129,10>>))},
+				{"ussd_service_op",
+					?_assertEqual({<<?USSD_USSN_CONFIRM>>, <<>>}, tlv:unpack(?USSD_SERVICE_OP, <<0,1,19>>))} 			
 			]
 		}
 	].
