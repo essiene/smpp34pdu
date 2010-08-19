@@ -189,6 +189,23 @@
 -define(NPI_IP, 16#0E).
 -define(NPI_WAP_CLIENT_ID, 16#12).
 
+-define(DCS_DEFAULT, 16#00).
+-define(DCS_IA5, 16#01).
+-define(DCS_ASCII, 16#01).
+-define(DCS_LATIN1, 16#03).
+-define(DCS_JIS, 16#05).
+-define(DCS_CYRLLIC, 16#06).
+-define(DCS_LATIN, 16#07).
+-define(DCS_HEBREW, 16#07).
+-define(DCS_UCS2, 16#08).
+-define(DCS_PICTOGRAM, 16#09).
+-define(DCS_ISO2022JP, 16#0A).
+-define(DCS_EXT_KANJI_JIS, 16#0D).
+-define(DCS_KSC5601, 16#0E).
+-define(DCS_GSM_MWI, 16#C0).
+-define(DCS_GSM_MWI1, 16#C0).
+-define(DCS_GSM_MSG_CONTROL, 16#F0).
+
 
 -define(TIMEOUT_SESSION_INIT, 500).
 -define(TIMEOUT_ENQUIRE_LINK, 2000).
