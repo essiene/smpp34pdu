@@ -16,7 +16,7 @@
 -spec(pack/2 :: (integer(), valid_values()) -> binary()).
 -spec(unpack/2 :: (integer(), binary()) -> {valid_values(), binary()}).
 -spec(pack_multi/2 :: (integer(), value_list()) -> binary()).
--spec(unpack_multi/2 :: (integer(), binary()) -> value_list()).
+-spec(unpack_multi/2 :: (integer(), binary()) -> {value_list(), binary()}).
 -spec(pack_noval/1 :: (integer()) -> binary()).
 -spec(pack_int/3 :: (integer(), integer(), integer()) -> binary()).
 -spec(pack_cstring/3 :: (integer(), iolist(), integer()) -> binary()).
@@ -319,15 +319,17 @@ pack_multi(Tag, [Head|Rest], Accm) ->
 
 
 unpack_multi(_, <<>>) ->
-	[];
+	{[], <<>>};
 unpack_multi(Tag, Bin) ->
 	unpack_multi(Tag, Bin, []).
 
 unpack_multi(_, <<>>, Accm) ->
-	lists:reverse(Accm);
-unpack_multi(Tag, Bin, Accm) ->
+	{lists:reverse(Accm), <<>>};
+unpack_multi(Tag, <<Tag:?TLV_TAG_SIZE,_/binary>>=Bin, Accm) ->
 	{Value, Rest} = unpack(Tag, Bin),
-	unpack_multi(Tag, Rest, [Value|Accm]).
+	unpack_multi(Tag, Rest, [Value|Accm]);
+unpack_multi(_Tag0, <<_Tag1:?TLV_TAG_SIZE,_/binary>>=Bin, Accm) ->
+	{lists:reverse(Accm), Bin}.
 
 
 pack_noval(Tag) ->
