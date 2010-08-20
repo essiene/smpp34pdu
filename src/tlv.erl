@@ -385,8 +385,12 @@ pack_int(Tag, Val, Len) ->
 	<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
 
 pack_octstring_fixedlen(Tag, Val, Len) ->
-	L = [<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, Len)],
-	list_to_binary(L).
+	case pdu_data:octstring_to_bin(Val, Len) of
+		{error, _}=Err ->
+			Err;
+		Bin ->
+			<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Bin/binary>>
+	end.
 
 pack_octstring_varlen(Tag, Val, {Min, Max}) ->
 	Len = byte_size(Val),
