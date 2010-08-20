@@ -23,7 +23,13 @@ tlv_test_() ->
 				{"pack_cstring with Len == Max", 
 					?_assertEqual(<<16,12,0,3,97,98,0>>, tlv:pack_cstring(16#100C, "abc", 3))},
 				{"pack_cstring with Len > Max", 
-					?_assertEqual(<<16,12,0,3,97,98,0>>, tlv:pack_cstring(16#100C, "abcde", 3))}
+					?_assertEqual(<<16,12,0,3,97,98,0>>, tlv:pack_cstring(16#100C, "abcde", 3))},
+				{"pack_octstring_fixedlen with Len < Min", 
+					?_assertEqual({error, {less_than_min, 10}}, tlv:pack_octstring_fixedlen(16#100C, <<"abc">>, 10))},
+				{"pack_octstring_fixedlen with Len == Min", 
+					?_assertEqual(<<16,12,0,3,97,98,99>>, tlv:pack_octstring_fixedlen(16#100C, <<"abc">>, 3))},
+				{"pack_octstring_fixedlen with Len > Min", 
+					?_assertEqual(<<16,12,0,3,97,98,99>>, tlv:pack_octstring_fixedlen(16#100C, <<"abcde">>, 3))}
 			]
 		},
 
