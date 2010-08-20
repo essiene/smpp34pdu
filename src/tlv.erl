@@ -1,6 +1,7 @@
 -module(tlv).
 -include("constants.hrl").
--export[pack/2, unpack/2].
+-export([pack/2, unpack/2]).
+-export([pack_multi/2]).
 
 
 -spec(pack/2 :: (integer(), integer()) -> binary()).
@@ -363,3 +364,14 @@ unpack(?ITS_SESSION_INFO, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 unpack(?USSD_SERVICE_OP, <<Len:?TLV_LEN_SIZE,Rest0/binary>>) ->
 	pdu_data:bin_to_octstring(Rest0, Len).
 
+
+pack_multi(_, []) ->
+	<<>>;
+pack_multi(Tag, [_|_]=L) ->
+	pack_multi(Tag, L, <<>>).
+
+pack_multi(__, [], Accm) ->
+	Accm;
+pack_multi(Tag, [Head|Rest], Accm) ->
+	Bin = pack(Tag, Head),
+	pack_multi(Tag, Rest, <<Accm/binary, Bin/binary>>).

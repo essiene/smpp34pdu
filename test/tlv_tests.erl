@@ -3,6 +3,7 @@
 -include_lib("eunit/include/eunit.hrl").
 
 
+
 tlv_test_() ->
 	[
 		{"pack", 
@@ -103,7 +104,17 @@ tlv_test_() ->
 				?_assertEqual(<<19,131,0,2,55,29>>, tlv:pack(?ITS_SESSION_INFO, <<55,29>>))},
 			 {"ussd_service_op", 
 				?_assertEqual(<<5,1,0,1,19>>, tlv:pack(?USSD_SERVICE_OP, <<?USSD_USSN_CONFIRM>>))}
-			
+			]
+		},
+
+		{"pack_multi", 
+			[
+				{"list with no value will give empty binary", 
+					?_assertEqual(<<>>, tlv:pack_multi(?NUMBER_OF_MESSAGES, []))}, 
+				{"will pack list with single value", 
+					?_assertEqual(<<3,4,0,1,10>>, tlv:pack_multi(?NUMBER_OF_MESSAGES, [10]))}, 
+				{"will pack list with multiple values", 
+					?_assertEqual(<<3,4,0,1,10,3,4,0,1,14,3,4,0,1,15,3,4,0,1,16>>, tlv:pack_multi(?NUMBER_OF_MESSAGES, [10,14,15,16]))} 
 			]
 		},
 
