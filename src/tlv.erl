@@ -5,6 +5,7 @@
 -export([pack_noval/1, pack_int/3, pack_cstring/3,
 		 pack_octstring_fixedlen/3, pack_octstring_varlen/3,
 		 pack_octstring_nomax/2]).
+-export([unpack_int/2, unpack_cstring/2, unpack_octstring/2]).
 
 -type(valid_values() :: integer()
 					|	iolist()
@@ -23,6 +24,9 @@
 -spec(pack_octstring_varlen/3 :: (integer(), binary(), {integer(), integer()})
 		-> binary()).
 -spec(pack_octstring_nomax/2 :: (integer(), binary()) -> binary()).
+-spec(unpack_int/2 :: (integer(), binary()) -> integer()).
+-spec(unpack_cstring/2 :: (integer(), binary()) -> iolist()).
+-spec(unpack_octstring/2 :: (integer(), binary()) -> binary()).
 
 pack(_, undefined) ->
 	<<>>;
