@@ -288,7 +288,7 @@ unpack_test_() ->
 					command_id=?ENQUIRE_LINK_RESP, command_status=0, 
 					sequence_number=7, body=#enquire_link_resp{}}], <<>>}, 
 								smpp34pdu:unpack(<<0,0,0,16,128,0,0,21,0,0,0,0,0,0,0,7>>))},
-		{"Unpacking #outbind{} PDU",
+		{"Unpacking #alert_notification{} PDU",
 			?_assertEqual({ok, [#pdu{command_length=35, 
 					command_id=?ALERT_NOTIFICATION, command_status=0, 
 					sequence_number=1, body=#alert_notification{source_addr_ton=2, 
