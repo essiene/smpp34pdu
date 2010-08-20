@@ -45,6 +45,8 @@ bin_to_cstring_test_() ->
 			?_assertEqual({"foo", <<>>}, pdu_data:bin_to_cstring(<<102,111,111,0>>, 6))},
 		{"Binary greater than MAX will unpack with extra binary left (basically, lost!)",
 			?_assertEqual({"foo", <<109,97,110,99,104,117,0>>}, pdu_data:bin_to_cstring(<<102,111,111,109,97,110,99,104,117,0>>, 3))},
+		{"When lenght is zero, empty string is returned with Rest intact",
+			?_assertEqual({"", <<109,97,110,99,104,117,0>>}, pdu_data:bin_to_cstring(<<109,97,110,99,104,117,0>>, 0))},
 		{"Encountering 0 terminator at start of binary, unpacks empty string and returns rest",
 			?_assertEqual({"", <<1,2,3>>}, pdu_data:bin_to_cstring(<<0,1,2,3>>, 8))}
 	].

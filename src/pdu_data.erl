@@ -41,6 +41,8 @@ cstring_to_bin(Data0, Max) when is_list(Data0) ->
 bin_to_cstring(Bin, Max) ->
 	bin_to_cstring(Bin, 1, Max, []).
 
+bin_to_cstring(Rest, _, 0, _) ->
+	{"", Rest};
 bin_to_cstring(<<>>, _,_, Acc) ->
 	{lists:reverse(Acc), <<>>};
 bin_to_cstring(<<0,Rest/binary>>, _, _, Acc) ->
