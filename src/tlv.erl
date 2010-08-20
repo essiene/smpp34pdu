@@ -27,227 +27,140 @@
 pack(_, undefined) ->
 	<<>>;
 
-pack(?DEST_ADDR_SUBUNIT, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?DEST_ADDR_SUBUNIT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?DEST_ADDR_SUBUNIT=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?SOURCE_ADDR_SUBUNIT, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?SOURCE_ADDR_SUBUNIT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SOURCE_ADDR_SUBUNIT=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?DEST_NETWORK_TYPE, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?DEST_NETWORK_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?DEST_NETWORK_TYPE=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?SOURCE_NETWORK_TYPE, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?SOURCE_NETWORK_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SOURCE_NETWORK_TYPE=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?DEST_BEARER_TYPE, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?DEST_BEARER_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?DEST_BEARER_TYPE=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?SOURCE_BEARER_TYPE, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?SOURCE_BEARER_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SOURCE_BEARER_TYPE=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?DEST_TELEMATICS_ID, Val) ->
-	Len = 2,
-	Size = Len * ?OCTET_SIZE,
-	<<?DEST_TELEMATICS_ID:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?DEST_TELEMATICS_ID=T, Val) ->
+	pack_int(T, Val, 2);
 
-pack(?SOURCE_TELEMATICS_ID, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?SOURCE_TELEMATICS_ID:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SOURCE_TELEMATICS_ID=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?QOS_TIME_TO_LIVE, Val) ->
-	Len = 4,
-	Size = Len * ?OCTET_SIZE,
-	<<?QOS_TIME_TO_LIVE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?QOS_TIME_TO_LIVE=T, Val) ->
+	pack_int(T, Val, 4);
 
-pack(?PAYLOAD_TYPE, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?PAYLOAD_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?PAYLOAD_TYPE=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?ADDITIONAL_STATUS_INFO_TEXT, Val) ->
-	Len = length(Val) + 1,
-	L = [<<?ADDITIONAL_STATUS_INFO_TEXT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:cstring_to_bin(Val,256)],
-	list_to_binary(L);
+pack(?ADDITIONAL_STATUS_INFO_TEXT=T, Val) ->
+	pack_cstring(T, Val, 256);
 
-pack(?RECEIPTED_MESSAGE_ID, Val) ->
-	Len = length(Val) + 1,
-	L = [<<?RECEIPTED_MESSAGE_ID:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:cstring_to_bin(Val,65)],
-	list_to_binary(L);
+pack(?RECEIPTED_MESSAGE_ID=T, Val) ->
+	pack_cstring(T, Val, 65);
 
-pack(?MS_MSG_WAIT_FACILITIES, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?MS_MSG_WAIT_FACILITIES:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?MS_MSG_WAIT_FACILITIES=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?PRIVACY_INDICATOR, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?PRIVACY_INDICATOR:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?PRIVACY_INDICATOR=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?SOURCE_SUBADDRESS, Val) ->
-	Len = byte_size(Val),
-	L = [<<?SOURCE_SUBADDRESS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,{2, 23})], 
-	list_to_binary(L);
+pack(?SOURCE_SUBADDRESS=T, Val) ->
+	pack_octstring_varlen(T, Val, {2, 23});
 
-pack(?DEST_SUBADDRESS, Val) ->
-	Len = byte_size(Val),
-	L = [<<?DEST_SUBADDRESS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,{2, 23})], 
-	list_to_binary(L);
+pack(?DEST_SUBADDRESS=T, Val) ->
+	pack_octstring_varlen(T, Val, {2, 23});
 
-pack(?USER_MESSAGE_REFERENCE, Val) ->
-	Len = 2,
-	Size = Len * ?OCTET_SIZE,
-	<<?USER_MESSAGE_REFERENCE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?USER_MESSAGE_REFERENCE=T, Val) ->
+	pack_int(T, Val, 2);
 
-pack(?USER_RESPONSE_CODE, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?USER_RESPONSE_CODE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?USER_RESPONSE_CODE=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?LANGUAGE_INDICATOR, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?LANGUAGE_INDICATOR:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?LANGUAGE_INDICATOR=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?SOURCE_PORT, Val) ->
-	Len = 2,
-	Size = Len * ?OCTET_SIZE,
-	<<?SOURCE_PORT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SOURCE_PORT=T, Val) ->
+	pack_int(T, Val, 2);
 
-pack(?DESTINATION_PORT, Val) ->
-	Len = 2,
-	Size = Len * ?OCTET_SIZE,
-	<<?DESTINATION_PORT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?DESTINATION_PORT=T, Val) ->
+	pack_int(T, Val, 2);
 
-pack(?SAR_MSG_REF_NUM, Val) ->
-	Len = 2,
-	Size = Len * ?OCTET_SIZE,
-	<<?SAR_MSG_REF_NUM:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SAR_MSG_REF_NUM=T, Val) ->
+	pack_int(T, Val, 2);
 
-pack(?SAR_TOTAL_SEGMENTS, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?SAR_TOTAL_SEGMENTS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SAR_TOTAL_SEGMENTS=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?SAR_SEGMENT_SEQNUM, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?SAR_SEGMENT_SEQNUM:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SAR_SEGMENT_SEQNUM=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?SC_INTERFACE_VERSION, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?SC_INTERFACE_VERSION:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SC_INTERFACE_VERSION=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?DISPLAY_TIME, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?DISPLAY_TIME:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?DISPLAY_TIME=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?MS_VALIDITY, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?MS_VALIDITY:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?MS_VALIDITY=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?DPF_RESULT, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?DPF_RESULT:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?DPF_RESULT=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?SET_DPF, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?SET_DPF:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SET_DPF=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?MS_AVAILABILITY_STATUS, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?MS_AVAILABILITY_STATUS:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?MS_AVAILABILITY_STATUS=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?NETWORK_ERROR_CODE, Val) ->
-	Len = 3,
-	L = [<<?NETWORK_ERROR_CODE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val,3)],
-	list_to_binary(L);
+pack(?NETWORK_ERROR_CODE=T, Val) ->
+	pack_octstring_fixedlen(T, Val, 3);
 
-pack(?MESSAGE_PAYLOAD, Val) ->
-	Len = byte_size(Val),
-	L = [<<?MESSAGE_PAYLOAD:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, Len)],
-	list_to_binary(L);
+pack(?MESSAGE_PAYLOAD=T, Val) ->
+	pack_octstring_nomax(T, Val);
 
-pack(?DELIVERY_FAILURE_REASON, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?DELIVERY_FAILURE_REASON:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?DELIVERY_FAILURE_REASON=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?MORE_MESSAGES_TO_SEND, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?MORE_MESSAGES_TO_SEND:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?MORE_MESSAGES_TO_SEND=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?MESSAGE_STATE, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?MESSAGE_STATE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?MESSAGE_STATE=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?CALLBACK_NUM, Val) ->
-	Len = byte_size(Val),
-	L = [<<?CALLBACK_NUM:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, {4, 19})],
-	list_to_binary(L);
+pack(?CALLBACK_NUM=T, Val) ->
+	pack_octstring_varlen(T, Val, {4, 19});
 
-pack(?CALLBACK_NUM_PRES_IND, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?CALLBACK_NUM_PRES_IND:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?CALLBACK_NUM_PRES_IND=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?CALLBACK_NUM_ATAG, Val) ->
-	Len = byte_size(Val),
-	L = [<<?CALLBACK_NUM_ATAG:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>,
-	pdu_data:octstring_to_bin(Val, {2, 65})], % the spec says Var max 65. But the description contains a 1 encoding scheme octet and then value octets
-	list_to_binary(L);
+pack(?CALLBACK_NUM_ATAG=T, Val) ->
+	% the spec says Var max 65. But the description 
+	% contains a 1 encoding scheme octet and 
+	% then value octets
+	pack_octstring_varlen(T, Val, {2, 65});
 
-pack(?NUMBER_OF_MESSAGES, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?NUMBER_OF_MESSAGES:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?NUMBER_OF_MESSAGES=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?SMS_SIGNAL, Val) ->
-	Len = 2,
-	Size = Len * ?OCTET_SIZE,
-	<<?SMS_SIGNAL:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?SMS_SIGNAL=T, Val) ->
+	pack_int(T, Val, 2);
 
-pack(?ALERT_ON_MESSAGE_DELIVERY, Val) ->
-	Len = 0,
-	Size = Len * ?OCTET_SIZE,
-	<<?ALERT_ON_MESSAGE_DELIVERY:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?ALERT_ON_MESSAGE_DELIVERY=T, _) ->
+	pack_noval(T);
 
-pack(?ITS_REPLY_TYPE, Val) ->
-	Len = 1,
-	Size = Len * ?OCTET_SIZE,
-	<<?ITS_REPLY_TYPE:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>;
+pack(?ITS_REPLY_TYPE=T, Val) ->
+	pack_int(T, Val, 1);
 
-pack(?ITS_SESSION_INFO, Val) ->
-	Len = 2,
-	L = [<<?ITS_SESSION_INFO:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, 2)],
-	list_to_binary(L);
+pack(?ITS_SESSION_INFO=T, Val) ->
+	pack_octstring_fixedlen(T, Val, 2);
 
-pack(?USSD_SERVICE_OP, Val) ->
-	Len = 1,
-	L = [<<?USSD_SERVICE_OP:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, 1)],
-	list_to_binary(L).
-
+pack(?USSD_SERVICE_OP=T, Val) ->
+	pack_octstring_fixedlen(T, Val, 1).
 
 unpack(?DEST_ADDR_SUBUNIT, <<Len:?TLV_LEN_SIZE,Val/binary>>) ->
 	pdu_data:bin_to_integer(Val, Len);
