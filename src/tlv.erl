@@ -409,8 +409,8 @@ pack_octstring_varlen(Tag, Val, {Min, Max}) ->
 
 pack_octstring_nomax(Tag, Val) ->
 	Len = byte_size(Val),
-	L = [<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, Len)],
-	list_to_binary(L).
+	Bin = pdu_data:octstring_to_bin(Val, Len),
+	<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Bin/binary>>.
 
 pack_cstring(Tag, Val, Max) ->
 	Len = 
