@@ -2,10 +2,27 @@
 -include("constants.hrl").
 -export([pack/2, unpack/2]).
 -export([pack_multi/2]).
+-export([pack_noval/1, pack_int/3, pack_cstring/3,
+		 pack_octstring_fixedlen/3, pack_octstring_varlen/3,
+		 pack_octstring_nomax/2]).
 
+-type(valid_values() :: integer()
+					|	iolist()
+					|   binary()).
 
--spec(pack/2 :: (integer(), integer()) -> binary()).
--spec(unpack/2 :: (integer(), binary()) -> {integer(), binary()}).
+-type(value_list() :: [valid_values()]).
+
+-spec(pack/2 :: (integer(), valid_values()) -> binary()).
+-spec(unpack/2 :: (integer(), binary()) -> {valid_values(), binary()}).
+-spec(pack_multi/2 :: (integer(), value_list()) -> binary()).
+-spec(pack_noval/1 :: (integer()) -> binary()).
+-spec(pack_int/3 :: (integer(), integer(), integer()) -> binary()).
+-spec(pack_cstring/3 :: (integer(), iolist(), integer()) -> binary()).
+-spec(pack_octstring_fixedlen/3 :: (integer(), binary(), integer()) ->
+		binary()).
+-spec(pack_octstring_varlen/3 :: (integer(), binary(), {integer(), integer()})
+		-> binary()).
+-spec(pack_octstring_nomax/2 :: (integer(), binary()) -> binary()).
 
 pack(_, undefined) ->
 	<<>>;
