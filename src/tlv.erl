@@ -399,6 +399,13 @@ pack_octstring_nomax(Tag, Val) ->
 	list_to_binary(L).
 
 pack_cstring(Tag, Val, Max) ->
-	Len = length(Val) + 1,
+	Len = 
+		case length(Val) of 
+			Ln when Ln =< Max-1 ->
+				Ln+1;
+			_ ->
+				Max
+		end,
+
 	L = [<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:cstring_to_bin(Val,Max)],
 	list_to_binary(L).
