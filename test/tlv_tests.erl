@@ -15,7 +15,15 @@ tlv_test_() ->
 				{"pack_int with Len == 1", 
 					?_assertEqual(<<16,12,0,1,5>>, tlv:pack_int(16#100C, 5, 1))}, 
 				{"pack_int with Len > 1", 
-					?_assertEqual(<<16,12,0,3,0,0,5>>, tlv:pack_int(16#100C, 5, 3))}
+					?_assertEqual(<<16,12,0,3,0,0,5>>, tlv:pack_int(16#100C, 5, 3))},
+				{"pack_cstring with Len < Max", 
+					?_assertEqual(<<16,12,0,4,97,98,99,0>>, tlv:pack_cstring(16#100C, "abc", 10))},
+				{"pack_cstring with Len == Max-1", 
+					?_assertEqual(<<16,12,0,4,97,98,99,0>>, tlv:pack_cstring(16#100C, "abc", 4))},
+				{"pack_cstring with Len == Max", 
+					?_assertEqual(<<16,12,0,3,97,98,0>>, tlv:pack_cstring(16#100C, "abc", 3))},
+				{"pack_cstring with Len > Max", 
+					?_assertEqual(<<16,12,0,3,97,98,0>>, tlv:pack_cstring(16#100C, "abcde", 3))}
 			]
 		},
 
