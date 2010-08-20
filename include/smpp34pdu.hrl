@@ -73,7 +73,25 @@
 		sar_total_segments,
 		sar_segment_seqnum,
 		more_messages_to_send,
-		payload_type 
+		payload_type,
+		message_payload,
+		privacy_indicator,
+		callback_num,
+		callback_num_pres_ind,
+		callback_num_atag,
+		source_subaddress,
+		dest_subaddress,
+		user_response_code,
+		display_time,
+		sms_signal,
+		ms_validity,
+		ms_msg_wait_facilities,
+		number_of_messages,
+		alert_on_message_delivery,
+		language_indicator,
+		its_reply_type,
+		its_session_info,
+		ussd_service_op
 }).
 
 -record(submit_sm_resp, {message_id=?DEFAULT_CSTRING}).
