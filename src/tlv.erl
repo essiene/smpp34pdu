@@ -353,3 +353,16 @@ pack_cstring(Tag, Val, Max) ->
 
 	L = [<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:cstring_to_bin(Val,Max)],
 	list_to_binary(L).
+
+
+unpack_int(Tag, <<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val/binary>>) ->
+	pdu_data:bin_to_integer(Val, Len).
+
+unpack_cstring(Tag, <<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val/binary>>) ->
+	pdu_data:bin_to_cstring(Val, Len).
+
+unpack_octstring(Tag, <<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val/binary>>) ->
+	pdu_data:bin_to_octstring(Val, Len).
+
+
+
