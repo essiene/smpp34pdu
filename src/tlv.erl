@@ -375,3 +375,30 @@ pack_multi(__, [], Accm) ->
 pack_multi(Tag, [Head|Rest], Accm) ->
 	Bin = pack(Tag, Head),
 	pack_multi(Tag, Rest, <<Accm/binary, Bin/binary>>).
+
+
+pack_noval(Tag) ->
+	<<Tag:?TLV_TAG_SIZE, 0:?TLV_LEN_SIZE>>.
+
+pack_int(Tag, Val, Len) ->
+	Size = Len * ?OCTET_SIZE,
+	<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE, Val:Size>>.
+
+pack_octstring_fixedlen(Tag, Val, Len) ->
+	L = [<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, Len)],
+	list_to_binary(L).
+
+pack_octstring_varlen(Tag, Val, {Min, Max}) ->
+	Len = byte_size(Val),
+	L = [<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, {Min, Max})], 	
+	list_to_binary(L).
+
+pack_octstring_nomax(Tag, Val) ->
+	Len = byte_size(Val),
+	L = [<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:octstring_to_bin(Val, Len)],
+	list_to_binary(L).
+
+pack_cstring(Tag, Val, Max) ->
+	Len = length(Val) + 1,
+	L = [<<Tag:?TLV_TAG_SIZE, Len:?TLV_LEN_SIZE>>, pdu_data:cstring_to_bin(Val,Max)],
+	list_to_binary(L).
