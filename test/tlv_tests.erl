@@ -47,7 +47,13 @@ tlv_test_() ->
 							tlv:pack_octstring_varlen(16#100C, <<"abcde">>, {3, 5}))},
 				{"pack_octstring_varlen with Len > Max", 
 					?_assertEqual(<<16,12,0,5,97,98,99,100,101>>,
-							tlv:pack_octstring_varlen(16#100C, <<"abcdefgh">>, {2, 5}))}
+							tlv:pack_octstring_varlen(16#100C, <<"abcdefgh">>, {2, 5}))},
+				{"pack_octstring_nomax string length == 0", 
+					?_assertEqual(<<16,12,0,0>>, tlv:pack_octstring_nomax(16#100C, <<"">>))},
+				{"pack_octstring_nomax with string length == 1", 
+					?_assertEqual(<<16,12,0,1,97>>, tlv:pack_octstring_nomax(16#100C, <<"a">>))},
+				{"pack_octstring_nomax with string length > 1", 
+					?_assertEqual(<<16,12,0,5,1,2,3,52,53>>, tlv:pack_octstring_nomax(16#100C, <<1,2,3,"45">>))}
 			]
 		},
 
