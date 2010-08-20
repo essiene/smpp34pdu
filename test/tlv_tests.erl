@@ -10,9 +10,9 @@ tlv_test_() ->
 			[
 				{"pack_noval", 
 					?_assertEqual(<<16,12,0,0>>, tlv:pack_noval(16#100C))}, 
-				{"pack_int with Len=0", 
+				{"pack_int with Len == 0", 
 					?_assertEqual(<<16,12,0,0>>, tlv:pack_int(16#100C, 5, 0))}, 
-				{"pack_int with Len=1", 
+				{"pack_int with Len == 1", 
 					?_assertEqual(<<16,12,0,1,5>>, tlv:pack_int(16#100C, 5, 1))}, 
 				{"pack_int with Len > 1", 
 					?_assertEqual(<<16,12,0,3,0,0,5>>, tlv:pack_int(16#100C, 5, 3))}
