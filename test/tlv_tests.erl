@@ -307,5 +307,20 @@ tlv_test_() ->
 					?_assertEqual({<<?USSD_USSN_CONFIRM>>, <<>>},
 							tlv:unpack(?USSD_SERVICE_OP, <<5,1,0,1,19>>))} 			
 			]
+		},
+
+		{"unpack_multi", 
+			[
+				{"empty binary will give list with no value",
+					?_assertEqual({[], <<>>}, tlv:unpack_multi(?NUMBER_OF_MESSAGES, <<>>))}, 
+				{"will unpack single value into list with single value", 
+					?_assertEqual({[10], <<>>}, tlv:unpack_multi(?NUMBER_OF_MESSAGES, <<3,4,0,1,10>>))}, 
+				{"will unpack multiple values into list with multiple values", 
+					?_assertEqual({[10,14,15,16], <<>>},
+							tlv:unpack_multi(?NUMBER_OF_MESSAGES, <<3,4,0,1,10,3,4,0,1,14,3,4,0,1,15,3,4,0,1,16>>))},
+				{"will unpack values and leave extra binary when TAG does not match", 
+					?_assertEqual({[10,14,15,16], <<2,5,0,1,1>>},
+							tlv:unpack_multi(?NUMBER_OF_MESSAGES, <<3,4,0,1,10,3,4,0,1,14,3,4,0,1,15,3,4,0,1,16,2,5,0,1,1>>))} 
+			]
 		}
 	].
