@@ -169,6 +169,33 @@ tlv_test_() ->
 			]
 		},
 
+		{"unpack helpers", 
+			[
+				{"unpack_int with length = 0", 
+					?_assertEqual({0, <<97>>}, tlv:unpack_int(16#1612, <<22,18,0,0,97>>))},
+				{"unpack_int with length = 1", 
+					?_assertEqual({97, <<>>}, tlv:unpack_int(16#1612, <<22,18,0,1,97>>))},
+				{"unpack_int with length > 1", 
+					?_assertEqual({65537, <<>>}, tlv:unpack_int(16#1612, <<22,18,0,3,1,0,1>>))},
+				{"unpack_cstring with length = 0", 
+					?_assertEqual({"", <<97>>}, tlv:unpack_cstring(16#1612, <<22,18,0,0,97>>))},
+				{"unpack_cstring with length = 1", 
+					?_assertEqual({"a", <<>>}, tlv:unpack_cstring(16#1612, <<22,18,0,1,97>>))},
+				{"unpack_cstring with length > 1", 
+					?_assertEqual({"abcde", <<>>}, tlv:unpack_cstring(16#1612, <<22,18,0,6,97,98,99,100,101,0>>))},
+				{"unpack_cstring with length > NULL terminator", 
+					?_assertEqual({"abc", <<100,101,102>>},
+							tlv:unpack_cstring(16#1612, <<22,18,0,6,97,98,99,0,100,101,102>>))},
+				{"unpack_octstring with length = 0", 
+					?_assertEqual({<<>>, <<1,2,3>>}, tlv:unpack_octstring(16#1612, <<22,18,0,0,1,2,3>>))},
+				{"unpack_octstring with length = 1", 
+					?_assertEqual({<<1>>, <<>>}, tlv:unpack_octstring(16#1612, <<22,18,0,1,1>>))},
+				{"unpack_octstring with length > 1", 
+					?_assertEqual({<<1,2,3,4>>, <<>>}, tlv:unpack_octstring(16#1612, <<22,18,0,4,1,2,3,4>>))}
+			]
+		},
+
+
 		{"unpack",
 			[
 				{"dest_addr_subunit", 
