@@ -1,7 +1,7 @@
 -module(tlv).
 -include("constants.hrl").
 -export([pack/2, unpack/2]).
--export([pack_multi/2]).
+-export([pack_multi/2, unpack_multi/2]).
 -export([pack_noval/1, pack_int/3, pack_cstring/3,
 		 pack_octstring_fixedlen/3, pack_octstring_varlen/3,
 		 pack_octstring_nomax/2]).
@@ -16,6 +16,7 @@
 -spec(pack/2 :: (integer(), valid_values()) -> binary()).
 -spec(unpack/2 :: (integer(), binary()) -> {valid_values(), binary()}).
 -spec(pack_multi/2 :: (integer(), value_list()) -> binary()).
+-spec(unpack_multi/2 :: (integer(), binary()) -> value_list()).
 -spec(pack_noval/1 :: (integer()) -> binary()).
 -spec(pack_int/3 :: (integer(), integer(), integer()) -> binary()).
 -spec(pack_cstring/3 :: (integer(), iolist(), integer()) -> binary()).
@@ -315,6 +316,18 @@ pack_multi(__, [], Accm) ->
 pack_multi(Tag, [Head|Rest], Accm) ->
 	Bin = pack(Tag, Head),
 	pack_multi(Tag, Rest, <<Accm/binary, Bin/binary>>).
+
+
+unpack_multi(_, <<>>) ->
+	[];
+unpack_multi(Tag, Bin) ->
+	unpack_multi(Tag, Bin, []).
+
+unpack_multi(_, <<>>, Accm) ->
+	lists:reverse(Accm);
+unpack_multi(Tag, Bin, Accm) ->
+	{Value, Rest} = unpack(Tag, Bin),
+	unpack_multi(Tag, Rest, [Value|Accm]).
 
 
 pack_noval(Tag) ->
