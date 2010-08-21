@@ -110,6 +110,7 @@ This situation shouldn't last for too long though.
 		QUERY_SM_RESP
 		SUBMIT_SM
 		SUBMIT_SM_RESP
+		DELIVER_SM
 		DELIVER_SM_RESP
 		UNBIND
 		UNBIND_RESP
@@ -127,7 +128,6 @@ This situation shouldn't last for too long though.
 
 
 	Unsupported PDUs:
-		DELIVER_SM
 		SUBMIT_MULTI
 		SUBMIT_MULTI_RESP
 		DATA_SM
