@@ -116,7 +116,25 @@
         data_coding = 0,
         sm_default_msg_id = 0,
         sm_length=0,
-        short_message=?DEFAULT_STRING
+        short_message=?DEFAULT_STRING,
+		user_message_reference,	
+		source_port,
+		destination_port,
+		sar_msg_ref_num,
+		sar_total_segments,
+		sar_segment_seqnum,
+		user_response_code,
+		privacy_indicator,
+		payload_type,
+		message_payload,
+		callback_num,
+		source_subaddress,
+		dest_subaddress,
+		language_indicator,
+		its_session_info,
+		network_error_code,
+		message_state,
+		receipted_message_id
         }).
 
 -record(deliver_sm_resp, {message_id=?DEFAULT_CSTRING}).
