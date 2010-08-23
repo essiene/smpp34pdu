@@ -144,6 +144,12 @@
         source_addr_npi=?DEFAULT_NPI,
         source_addr=?DEFAULT_CSTRING}).
 
+-record(data_sm_resp, {message_id=?DEFAULT_CSTRING,
+		delivery_failure_reason,
+		network_error_code,
+		additional_status_info_text,
+		dpf_result}).
+
 -record(query_sm_resp, {message_id=?DEFAULT_CSTRING,
         final_date=?DEFAULT_CSTRING,
         message_state=0,
