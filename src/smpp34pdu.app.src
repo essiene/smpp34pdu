@@ -1,7 +1,7 @@
 {application, smpp34pdu,
  [
   {description, ""},
-  {vsn, "1"},
+  {vsn, "0.1"},
   {modules, [
 	  		pdu_data,
 			tlv,
