@@ -16,3 +16,5 @@
   should define a command_status() type that defines all the command status
   macros, and there should be a command_id() type that defines all the valid
   command ids, etc
+
+- you know... string is really octstring

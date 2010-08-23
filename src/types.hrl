@@ -39,6 +39,7 @@
 					| query_sm_resp()
 					| submit_sm()
 					| submit_sm_resp()
+					| deliver_sm()
 					| deliver_sm_resp()
 					| data_sm_resp()
 					| unbind() 
