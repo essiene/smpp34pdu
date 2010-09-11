@@ -40,9 +40,17 @@ pack(CmdStat, Snum, #query_sm_resp{}=Body) ->
 	Bin = smpp34pdu_query_sm_resp:pack(Body),
 	pack(?QUERY_SM_RESP, CmdStat, Snum, Bin);
 
+pack(CmdStat, Snum, #submit_sm{}=Body) ->
+	Bin = smpp34pdu_submit_sm:pack(Body),
+	pack(?SUBMIT_SM, CmdStat, Snum, Bin);
+
 pack(CmdStat, Snum, #submit_sm_resp{}=Body) ->
 	Bin = smpp34pdu_submit_sm_resp:pack(Body),
 	pack(?SUBMIT_SM_RESP, CmdStat, Snum, Bin);
+
+pack(CmdStat, Snum, #deliver_sm{}=Body) ->
+	Bin = smpp34pdu_deliver_sm:pack(Body),
+	pack(?SUBMIT_SM, CmdStat, Snum, Bin);
 
 pack(CmdStat, Snum, #deliver_sm_resp{}=Body) ->
 	Bin = smpp34pdu_deliver_sm_resp:pack(Body),
@@ -150,8 +158,12 @@ unpack_body(?QUERY_SM, Bin) ->
 	smpp34pdu_query_sm:unpack(Bin);
 unpack_body(?QUERY_SM_RESP, Bin) ->
 	smpp34pdu_query_sm_resp:unpack(Bin);
+unpack_body(?SUBMIT_SM, Bin) ->
+	smpp34pdu_submit_sm:unpack(Bin);
 unpack_body(?SUBMIT_SM_RESP, Bin) ->
 	smpp34pdu_submit_sm_resp:unpack(Bin);
+unpack_body(?DELIVER_SM, Bin) ->
+	smpp34pdu_deliver_sm:unpack(Bin);
 unpack_body(?DELIVER_SM_RESP, Bin) ->
 	smpp34pdu_deliver_sm_resp:unpack(Bin);
 unpack_body(?UNBIND, _) ->
