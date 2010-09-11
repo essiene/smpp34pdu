@@ -9,9 +9,10 @@
 
 -type(valid_values() :: integer()
 					|	iolist()
-					|   binary()).
+					|   binary()
+					|   undefined).
 
--type(value_list() :: [valid_values()]).
+-type(value_list() :: undefined | [valid_values()]).
 
 -spec(pack/2 :: (integer(), valid_values()) -> binary()).
 -spec(unpack/2 :: (integer(), binary()) -> {valid_values(), binary()}).
@@ -306,6 +307,8 @@ unpack(?USSD_SERVICE_OP=T, Bin) ->
 	unpack_octstring(T, Bin).
 
 
+pack_multi(_, undefined) ->
+	<<>>;
 pack_multi(_, []) ->
 	<<>>;
 pack_multi(Tag, [_|_]=L) ->
