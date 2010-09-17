@@ -18,3 +18,14 @@
   command ids, etc
 
 - you know... string is really octstring
+
+- Some implementations add extra unexpected TLV values. smpp34pdu will stop
+  unpacking once it finds something it didn't expect. There should probably be
+  a flag that allows us to select between two optional behaviours:
+   	   - STRICT COMPLIANCY - error if unexpected stuff is received
+	   - RELAXED IGNORANT COMPLIANCY - Just stop unpacking and return
+	   - RELAXED HELPFULL - Try to skip the unknown TLV and continue to the
+	     rest, since there may be valid values after the annoying bugger. And
+		 probably hold onto the unexpected values.
+
+
