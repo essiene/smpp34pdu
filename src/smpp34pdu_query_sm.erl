@@ -25,7 +25,7 @@ unpack(Bin0) ->
 	{MessageId, Bin1} = bin_to_cstring(Bin0, 65),
 	{SrcAddrTon, Bin2} = bin_to_integer(Bin1, 1),
 	{SrcAddrNpi, Bin3} = bin_to_integer(Bin2, 1),
-	{SrcAddr, <<>>} = bin_to_cstring(Bin3, 21),
+	{SrcAddr, _} = bin_to_cstring(Bin3, 21),
 
 	#query_sm {message_id=MessageId,
 		source_addr_ton=SrcAddrTon,

@@ -38,7 +38,7 @@ unpack(Bin0) ->
 	{SrcAddr, Bin5} = bin_to_cstring(Bin4, 21),
 	{DestAddrTon, Bin6} = bin_to_integer(Bin5, 1),
 	{DestAddrNpi, Bin7} = bin_to_integer(Bin6, 1),
-	{DestAddr, <<>>} = bin_to_cstring(Bin7, 21),
+	{DestAddr, _} = bin_to_cstring(Bin7, 21),
 
 	#cancel_sm {service_type=ServiceType,
 		message_id=MessageId,

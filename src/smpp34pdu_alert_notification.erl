@@ -47,4 +47,8 @@ unpack_tlv_fields(<<>>, Body) ->
 	Body;
 unpack_tlv_fields(<<?MS_AVAILABILITY_STATUS:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
 	{Val, Rest} = tlv:unpack(?MS_AVAILABILITY_STATUS, Bin),
-	unpack_tlv_fields(Rest, Body#alert_notification{ms_availability_status=Val}).
+	unpack_tlv_fields(Rest, Body#alert_notification{ms_availability_status=Val});
+unpack_tlv_fields(<<_:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
+	tlv:unexpected(Bin),
+	Body.
+

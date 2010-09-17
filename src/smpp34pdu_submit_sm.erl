@@ -231,4 +231,7 @@ unpack_tlv_fields(<<?ITS_SESSION_INFO:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
 	unpack_tlv_fields(Rest, Body#submit_sm{its_session_info=Val});
 unpack_tlv_fields(<<?USSD_SERVICE_OP:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
 	{Val, Rest} = tlv:unpack(?USSD_SERVICE_OP, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{ussd_service_op=Val}).
+	unpack_tlv_fields(Rest, Body#submit_sm{ussd_service_op=Val});
+unpack_tlv_fields(<<_:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
+	tlv:unexpected(Bin),
+	Body.

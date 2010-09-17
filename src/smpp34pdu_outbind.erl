@@ -19,7 +19,7 @@ pack(#outbind{system_id=SystemId,
 
 unpack(Bin0) ->
 	{SystemId, Bin1} = bin_to_cstring(Bin0, 16),
-	{Password, <<>>} = bin_to_cstring(Bin1, 9),
+	{Password, _} = bin_to_cstring(Bin1, 9),
 
 	#outbind {system_id=SystemId,
 		password=Password}.

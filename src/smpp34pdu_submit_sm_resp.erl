@@ -14,6 +14,6 @@ pack(#submit_sm_resp{message_id=MessageId}) ->
 
 
 unpack(Bin0) ->
-	{MessageId, <<>>} = bin_to_cstring(Bin0, 65),
+	{MessageId, _} = bin_to_cstring(Bin0, 65),
 
 	#submit_sm_resp{message_id=MessageId}.

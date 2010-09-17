@@ -42,6 +42,9 @@ unpack_tlv_fields(<<?ADDITIONAL_STATUS_INFO_TEXT:?TLV_TAG_SIZE, _/binary>>=Bin, 
 	unpack_tlv_fields(Rest, Body#data_sm_resp{additional_status_info_text=Val});
 unpack_tlv_fields(<<?DPF_RESULT:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
 	{Val, Rest} = tlv:unpack(?DPF_RESULT, Bin),
-	unpack_tlv_fields(Rest, Body#data_sm_resp{dpf_result=Val}).
+	unpack_tlv_fields(Rest, Body#data_sm_resp{dpf_result=Val});
+unpack_tlv_fields(<<_:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
+	tlv:unexpected(Bin),
+	Body.
 
 

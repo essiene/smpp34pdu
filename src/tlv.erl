@@ -1,6 +1,6 @@
 -module(tlv).
 -include("constants.hrl").
--export([pack/2, unpack/2]).
+-export([pack/2, unpack/2, unexpected/1]).
 -export([pack_multi/2, unpack_multi/2]).
 -export([pack_noval/1, pack_int/3, pack_cstring/3,
 		 pack_octstring_fixedlen/3, pack_octstring_varlen/3,
@@ -333,6 +333,9 @@ unpack_multi(Tag, <<Tag:?TLV_TAG_SIZE,_/binary>>=Bin, Accm) ->
 	unpack_multi(Tag, Rest, [Value|Accm]);
 unpack_multi(_Tag0, <<_Tag1:?TLV_TAG_SIZE,_/binary>>=Bin, Accm) ->
 	{lists:reverse(Accm), Bin}.
+
+unexpected(Bin) ->
+	error_logger:warning_msg("SMPP34PDU: UNEXPECTED_TLV: ~p~n", [Bin]).
 
 
 pack_noval(Tag) ->

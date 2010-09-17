@@ -44,7 +44,7 @@ unpack(Bin0) ->
 	{RegDelivery, Bin7} = bin_to_integer(Bin6, 1),
 	{SmDefaultMsgId, Bin8} = bin_to_integer(Bin7, 1),
 	{SmLength, Bin9} = bin_to_integer(Bin8, 1),
-	{ShortMessage, <<>>} = bin_to_string(Bin9, 254),
+	{ShortMessage, _} = bin_to_string(Bin9, 254),
 
 
 	#replace_sm{message_id=MessageId, 

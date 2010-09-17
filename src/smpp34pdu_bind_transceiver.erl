@@ -34,7 +34,7 @@ unpack(Bin0) ->
 	{InterfaceVersion, Bin4} = bin_to_integer(Bin3, 1),
 	{AddrTon, Bin5} = bin_to_integer(Bin4, 1),
 	{AddrNpi, Bin6} = bin_to_integer(Bin5, 1),
-	{AddressRange, <<>>} = bin_to_cstring(Bin6, 41),
+	{AddressRange, _} = bin_to_cstring(Bin6, 41),
 
 	#bind_transceiver {system_id=SystemId,
 		password=Password,

@@ -27,4 +27,8 @@ unpack_tlv_fields(<<>>, Body) ->
 	Body;
 unpack_tlv_fields(<<?SC_INTERFACE_VERSION:?TLV_TAG_SIZE,_/binary>>=Bin, Body) ->
 	{Val, Rest} = tlv:unpack(?SC_INTERFACE_VERSION, Bin),
-	unpack_tlv_fields(Rest, Body#bind_transmitter_resp{sc_interface_version=Val}).
+	unpack_tlv_fields(Rest, Body#bind_transmitter_resp{sc_interface_version=Val});
+unpack_tlv_fields(<<_:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
+	tlv:unexpected(Bin),
+	Body.
+

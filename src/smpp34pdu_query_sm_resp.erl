@@ -25,7 +25,7 @@ unpack(Bin0) ->
 	{MessageId, Bin1} = bin_to_cstring(Bin0, 65),
 	{FinalDate, Bin2} = bin_to_cstring(Bin1, 17),
 	{MessageState, Bin3} = bin_to_integer(Bin2, 1),
-	{ErrCode, <<>>} = bin_to_integer(Bin3, 1),
+	{ErrCode, _} = bin_to_integer(Bin3, 1),
 
 	#query_sm_resp {message_id=MessageId,
 		final_date=FinalDate,
