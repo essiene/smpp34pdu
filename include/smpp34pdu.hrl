@@ -2,6 +2,7 @@
 -define(smpp34pdu, true).
 
 -include("../src/constants.hrl").
+-include("../src/names.hrl").
 
 -record(pdu, {command_length, 
         command_id, 
