@@ -131,7 +131,7 @@ unpack(Bin0, ok, Accm) ->
 
 			case byte_size(Bin4) of
 				N when N < BodyLength ->
-					unpack(Bin4, body_length, Accm);
+					unpack(Bin0, body_length, Accm);
 				_ ->
 					<<BodyBin:BodyLength/binary, Rest/binary>> = Bin4,
 					Body = unpack_body(CommandId, BodyBin),
