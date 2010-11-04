@@ -182,6 +182,6 @@ unpack_tlv_fields(<<?MESSAGE_STATE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
 unpack_tlv_fields(<<?RECEIPTED_MESSAGE_ID:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
 	{Val, Rest} = tlv:unpack(?RECEIPTED_MESSAGE_ID, Bin), 
 	unpack_tlv_fields(Rest, Body#deliver_sm{receipted_message_id=Val});
-unpack_tlv_fields(<<_:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
-	tlv:unexpected(Bin),
-	Body.
+unpack_tlv_fields(<<Unexpected:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
+    {_, Rest} = tlv:unpack(Unexpected, Bin),
+    unpack_tlv_fields(Rest, Body).
