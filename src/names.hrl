@@ -63,4 +63,35 @@
         _-> 'INVALID_SMPP_STATUS'
    end).
 
+-define(SMPP_PDU2CMDID(PduBody),
+    case PduBody of
+        #generic_nack{} -> 'GENERIC_NACK';
+        #bind_receiver{} -> 'BIND_RECEIVER';
+        #bind_receiver_resp{} -> 'BIND_RECEIVER_RESP';
+        #bind_transmitter{} -> 'BIND_TRANSMITTER';
+        #bind_transmitter_resp{} -> 'BIND_TRANSMITTER_RESP';
+        #query_sm{} -> 'QUERY_SM';
+        #query_sm_resp{} -> 'QUERY_SM_RESP';
+        #submit_sm{} -> 'SUBMIT_SM';
+        #submit_sm_resp{} -> 'SUBMIT_SM_RESP';
+        #deliver_sm{} -> 'DELIVER_SM';
+        #deliver_sm_resp{} -> 'DELIVER_SM_RESP';
+        #unbind{} -> 'UNBIND';
+        #unbind_resp{} -> 'UNBIND_RESP';
+        #replace_sm{} -> 'REPLACE_SM';
+        #replace_sm_resp{} -> 'REPLACE_SM_RESP';
+        #cancel_sm{} -> 'CANCEL_SM';
+        #cancel_sm_resp{} -> 'CANCEL_SM_RESP';
+        #bind_transceiver{} -> 'BIND_TRANSCEIVER';
+        #bind_transceiver_resp{} -> 'BIND_TRANSCEIVER_RESP';
+        #outbind{} -> 'OUTBIND';
+        #enquire_link{} -> 'ENQUIRE_LINK';
+        #enquire_link_resp{} -> 'ENQUIRE_LINK_RESP';
+   %     #submit_multi{} -> 'SUBMIT_MULTI';
+   %     #submit_multi_resp{} -> 'SUBMIT_MULTI_RESP';
+        #alert_notification{} -> 'ALERT_NOTIFICATION';
+   %%     #data_sm{} -> 'DATA_SM';
+        #data_sm_resp{} -> 'DATA_SM_RESP'
+    end).
+
 -endif.
