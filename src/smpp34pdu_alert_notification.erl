@@ -1,6 +1,8 @@
 -module(smpp34pdu_alert_notification).
 -include("smpp34pdu.hrl").
 -include("types.hrl").
+-include("tlv_macros.hrl").
+
 -export([pack/1,unpack/1]).
 -import(pdu_data, [cstring_to_bin/2, integer_to_bin/2]).
 -import(pdu_data, [bin_to_cstring/2, bin_to_integer/2]).
@@ -43,12 +45,8 @@ unpack(Bin0) ->
 		esme_addr_npi=EsmeAddrNpi,
 		esme_addr=EsmeAddr}).
 
-unpack_tlv_fields(<<>>, Body) ->
-	Body;
-unpack_tlv_fields(<<?MS_AVAILABILITY_STATUS:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
-	{Val, Rest} = tlv:unpack(?MS_AVAILABILITY_STATUS, Bin),
-	unpack_tlv_fields(Rest, Body#alert_notification{ms_availability_status=Val});
-unpack_tlv_fields(<<Unexpected:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
-    {_, Rest} = tlv:unpack(Unexpected, Bin),
-	unpack_tlv_fields(Rest, Body).
+?TLV_UNPACK_EMPTY_BIN;
+?TLV_UNPACK_FIELD(alert_notification, ms_availability_status,?MS_AVAILABILITY_STATUS);
+?TLV_UNPACK_UNEXPECTED.
+
 
