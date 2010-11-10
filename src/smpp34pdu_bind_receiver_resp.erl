@@ -1,6 +1,7 @@
 -module(smpp34pdu_bind_receiver_resp).
 -include("smpp34pdu.hrl").
 -include("types.hrl").
+-include("tlv_macros.hrl").
 -export([pack/1,unpack/1]).
 -import(pdu_data, [cstring_to_bin/2]).
 -import(pdu_data, [bin_to_cstring/2]).
@@ -23,11 +24,6 @@ unpack(Bin0) ->
 	unpack_tlv_fields(Bin1, #bind_receiver_resp{system_id=SystemId}).
 
 
-unpack_tlv_fields(<<>>, Body) ->
-	Body;
-unpack_tlv_fields(<<?SC_INTERFACE_VERSION:?TLV_TAG_SIZE,_/binary>>=Bin, Body) ->
-	{Val, Rest} = tlv:unpack(?SC_INTERFACE_VERSION, Bin),
-	unpack_tlv_fields(Rest, Body#bind_receiver_resp{sc_interface_version=Val});
-unpack_tlv_fields(<<Unexpected:?TLV_TAG_SIZE,_/binary>>=Bin, Body) ->
-    {_, Rest} = tlv:unpack(Unexpected, Bin),
-	unpack_tlv_fields(Rest, Body).
+?TLV_UNPACK_EMPTY_BIN;
+?TLV_UNPACK_FIELD(bind_receiver_resp, sc_interface_version, ?SC_INTERFACE_VERSION);
+?TLV_UNPACK_UNEXPECTED.
