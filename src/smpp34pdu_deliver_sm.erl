@@ -1,6 +1,8 @@
 -module(smpp34pdu_deliver_sm).
 -include("smpp34pdu.hrl").
 -include("types.hrl").
+-include("tlv_macros.hrl").
+
 -export([pack/1,unpack/1]).
 -import(pdu_data, [cstring_to_bin/2, string_to_bin/2, integer_to_bin/2]).
 -import(pdu_data, [bin_to_cstring/2, bin_to_string/2, bin_to_integer/2]).
@@ -126,62 +128,23 @@ unpack(Bin0) ->
 		sm_length=SmLen,
 		short_message=ShortMessage}).	
 
-unpack_tlv_fields(<<>>, Body) ->
-	Body;
-unpack_tlv_fields(<<?USER_MESSAGE_REFERENCE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
-	{Val, Rest} = tlv:unpack(?USER_MESSAGE_REFERENCE, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{user_message_reference=Val}); 
-unpack_tlv_fields(<<?SOURCE_PORT:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SOURCE_PORT, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{source_port=Val}); 
-unpack_tlv_fields(<<?DESTINATION_PORT:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?DESTINATION_PORT, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{destination_port=Val}); 
-unpack_tlv_fields(<<?SAR_MSG_REF_NUM:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SAR_MSG_REF_NUM, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{sar_msg_ref_num=Val}); 
-unpack_tlv_fields(<<?SAR_TOTAL_SEGMENTS:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SAR_TOTAL_SEGMENTS, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{sar_total_segments=Val}); 
-unpack_tlv_fields(<<?SAR_SEGMENT_SEQNUM:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SAR_SEGMENT_SEQNUM, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{sar_segment_seqnum=Val}); 
-unpack_tlv_fields(<<?USER_RESPONSE_CODE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?USER_RESPONSE_CODE, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{user_response_code=Val});
-unpack_tlv_fields(<<?PRIVACY_INDICATOR:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?PRIVACY_INDICATOR, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{privacy_indicator=Val});
-unpack_tlv_fields(<<?PAYLOAD_TYPE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?PAYLOAD_TYPE, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{payload_type=Val});
-unpack_tlv_fields(<<?MESSAGE_PAYLOAD:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?MESSAGE_PAYLOAD, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{message_payload=Val});
-unpack_tlv_fields(<<?CALLBACK_NUM:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack_multi(?CALLBACK_NUM, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{callback_num=Val});
-unpack_tlv_fields(<<?SOURCE_SUBADDRESS:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SOURCE_SUBADDRESS, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{source_subaddress=Val});
-unpack_tlv_fields(<<?DEST_SUBADDRESS:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?DEST_SUBADDRESS, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{dest_subaddress=Val});
-unpack_tlv_fields(<<?LANGUAGE_INDICATOR:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?LANGUAGE_INDICATOR, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{language_indicator=Val});
-unpack_tlv_fields(<<?ITS_SESSION_INFO:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?ITS_SESSION_INFO, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{its_session_info=Val});
-unpack_tlv_fields(<<?NETWORK_ERROR_CODE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?NETWORK_ERROR_CODE, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{network_error_code=Val});
-unpack_tlv_fields(<<?MESSAGE_STATE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?MESSAGE_STATE, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{message_state=Val});
-unpack_tlv_fields(<<?RECEIPTED_MESSAGE_ID:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?RECEIPTED_MESSAGE_ID, Bin), 
-	unpack_tlv_fields(Rest, Body#deliver_sm{receipted_message_id=Val});
-unpack_tlv_fields(<<Unexpected:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
-    {_, Rest} = tlv:unpack(Unexpected, Bin),
-    unpack_tlv_fields(Rest, Body).
+?TLV_UNPACK_EMPTY_BIN();
+?TLV_UNPACK_FIELD(deliver_sm, user_message_reference, ?USER_MESSAGE_REFERENCE);
+?TLV_UNPACK_FIELD(deliver_sm, source_port, ?SOURCE_PORT);
+?TLV_UNPACK_FIELD(deliver_sm, destination_port, ?DESTINATION_PORT);
+?TLV_UNPACK_FIELD(deliver_sm, sar_msg_ref_num, ?SAR_MSG_REF_NUM);
+?TLV_UNPACK_FIELD(deliver_sm, sar_total_segments, ?SAR_TOTAL_SEGMENTS);
+?TLV_UNPACK_FIELD(deliver_sm, sar_segment_seqnum, ?SAR_SEGMENT_SEQNUM);
+?TLV_UNPACK_FIELD(deliver_sm, user_response_code, ?USER_RESPONSE_CODE);
+?TLV_UNPACK_FIELD(deliver_sm, privacy_indicator, ?PRIVACY_INDICATOR);
+?TLV_UNPACK_FIELD(deliver_sm, payload_type, ?PAYLOAD_TYPE);
+?TLV_UNPACK_FIELD(deliver_sm, message_payload, ?MESSAGE_PAYLOAD);
+?TLV_UNPACK_FIELD(deliver_sm, callback_num, ?CALLBACK_NUM);
+?TLV_UNPACK_FIELD(deliver_sm, source_subaddress, ?SOURCE_SUBADDRESS);
+?TLV_UNPACK_FIELD(deliver_sm, dest_subaddress, ?DEST_SUBADDRESS);
+?TLV_UNPACK_FIELD(deliver_sm, language_indicator, ?LANGUAGE_INDICATOR);
+?TLV_UNPACK_FIELD(deliver_sm, its_session_info, ?ITS_SESSION_INFO);
+?TLV_UNPACK_FIELD(deliver_sm, network_error_code, ?NETWORK_ERROR_CODE);
+?TLV_UNPACK_FIELD(deliver_sm, message_state, ?MESSAGE_STATE);
+?TLV_UNPACK_FIELD(deliver_sm, receipted_message_id, ?RECEIPTED_MESSAGE_ID);
+?TLV_UNPACK_UNEXPECTED().
