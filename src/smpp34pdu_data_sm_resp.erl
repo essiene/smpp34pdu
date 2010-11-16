@@ -30,9 +30,9 @@ unpack(Bin0) ->
 
 	unpack_tlv_fields(Bin1, #data_sm_resp {message_id=MessageId}).
 
-?TLV_UNPACK_EMPTY_BIN;
+?TLV_UNPACK_EMPTY_BIN();
 ?TLV_UNPACK_FIELD(data_sm_resp, delivery_failure_reason, ?DELIVERY_FAILURE_REASON);
 ?TLV_UNPACK_FIELD(data_sm_resp, network_error_code, ?NETWORK_ERROR_CODE);
 ?TLV_UNPACK_FIELD(data_sm_resp, additional_status_info_text, ?ADDITIONAL_STATUS_INFO_TEXT);
 ?TLV_UNPACK_FIELD(data_sm_resp, dpf_result, ?DPF_RESULT);
-?TLV_UNPACK_UNEXPECTED.
+?TLV_UNPACK_UNEXPECTED().

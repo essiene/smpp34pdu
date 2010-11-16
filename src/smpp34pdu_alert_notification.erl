@@ -45,8 +45,8 @@ unpack(Bin0) ->
 		esme_addr_npi=EsmeAddrNpi,
 		esme_addr=EsmeAddr}).
 
-?TLV_UNPACK_EMPTY_BIN;
+?TLV_UNPACK_EMPTY_BIN();
 ?TLV_UNPACK_FIELD(alert_notification, ms_availability_status,?MS_AVAILABILITY_STATUS);
-?TLV_UNPACK_UNEXPECTED.
+?TLV_UNPACK_UNEXPECTED().
 
 

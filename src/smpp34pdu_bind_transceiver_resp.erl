@@ -24,6 +24,6 @@ unpack(Bin0) ->
 	unpack_tlv_fields(Bin1, #bind_transceiver_resp{system_id=SystemId}).
 
 
-?TLV_UNPACK_EMPTY_BIN;
+?TLV_UNPACK_EMPTY_BIN();
 ?TLV_UNPACK_FIELD(bind_transceiver_resp, sc_interface_version, ?SC_INTERFACE_VERSION);
-?TLV_UNPACK_UNEXPECTED.
+?TLV_UNPACK_UNEXPECTED().
