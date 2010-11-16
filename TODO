@@ -18,5 +18,3 @@
   command ids, etc
 
 - you know... string is really octstring
-
-- Use macros to replace the drudgery that is the code in the parser
