@@ -1,6 +1,8 @@
 -module(smpp34pdu_submit_sm).
 -include("smpp34pdu.hrl").
 -include("types.hrl").
+-include("tlv_macros.hrl").
+
 -export([pack/1,unpack/1]).
 -import(pdu_data, [cstring_to_bin/2, string_to_bin/2, integer_to_bin/2]).
 -import(pdu_data, [bin_to_cstring/2, bin_to_string/2, bin_to_integer/2]).
@@ -146,92 +148,33 @@ unpack(Bin0) ->
 		sm_length=SmLen,
 		short_message=ShortMessage}).	
 
-unpack_tlv_fields(<<>>, Body) ->
-	Body;
-unpack_tlv_fields(<<?USER_MESSAGE_REFERENCE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
-	{Val, Rest} = tlv:unpack(?USER_MESSAGE_REFERENCE, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{user_message_reference=Val}); 
-unpack_tlv_fields(<<?SOURCE_PORT:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SOURCE_PORT, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{source_port=Val}); 
-unpack_tlv_fields(<<?SOURCE_ADDR_SUBUNIT:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SOURCE_ADDR_SUBUNIT, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{source_addr_subunit=Val}); 
-unpack_tlv_fields(<<?DESTINATION_PORT:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?DESTINATION_PORT, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{destination_port=Val}); 
-unpack_tlv_fields(<<?DEST_ADDR_SUBUNIT:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?DEST_ADDR_SUBUNIT, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{dest_addr_subunit=Val}); 
-unpack_tlv_fields(<<?SAR_MSG_REF_NUM:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SAR_MSG_REF_NUM, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{sar_msg_ref_num=Val}); 
-unpack_tlv_fields(<<?SAR_TOTAL_SEGMENTS:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SAR_TOTAL_SEGMENTS, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{sar_total_segments=Val}); 
-unpack_tlv_fields(<<?SAR_SEGMENT_SEQNUM:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SAR_SEGMENT_SEQNUM, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{sar_segment_seqnum=Val}); 
-unpack_tlv_fields(<<?MORE_MESSAGES_TO_SEND:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?MORE_MESSAGES_TO_SEND, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{more_messages_to_send=Val}); 
-unpack_tlv_fields(<<?PAYLOAD_TYPE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?PAYLOAD_TYPE, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{payload_type=Val});
-unpack_tlv_fields(<<?MESSAGE_PAYLOAD:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?MESSAGE_PAYLOAD, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{message_payload=Val});
-unpack_tlv_fields(<<?PRIVACY_INDICATOR:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?PRIVACY_INDICATOR, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{privacy_indicator=Val});
-unpack_tlv_fields(<<?CALLBACK_NUM:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack_multi(?CALLBACK_NUM, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{callback_num=Val});
-unpack_tlv_fields(<<?CALLBACK_NUM_PRES_IND:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack_multi(?CALLBACK_NUM_PRES_IND, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{callback_num_pres_ind=Val});
-unpack_tlv_fields(<<?CALLBACK_NUM_ATAG:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack_multi(?CALLBACK_NUM_ATAG, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{callback_num_atag=Val});
-unpack_tlv_fields(<<?SOURCE_SUBADDRESS:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SOURCE_SUBADDRESS, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{source_subaddress=Val});
-unpack_tlv_fields(<<?DEST_SUBADDRESS:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?DEST_SUBADDRESS, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{dest_subaddress=Val});
-unpack_tlv_fields(<<?USER_RESPONSE_CODE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?USER_RESPONSE_CODE, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{user_response_code=Val});
-unpack_tlv_fields(<<?DISPLAY_TIME:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?DISPLAY_TIME, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{display_time=Val});
-unpack_tlv_fields(<<?SMS_SIGNAL:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?SMS_SIGNAL, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{sms_signal=Val});
-unpack_tlv_fields(<<?MS_VALIDITY:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?MS_VALIDITY, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{ms_validity=Val});
-unpack_tlv_fields(<<?MS_MSG_WAIT_FACILITIES:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?MS_MSG_WAIT_FACILITIES, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{ms_msg_wait_facilities=Val});
-unpack_tlv_fields(<<?NUMBER_OF_MESSAGES:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?NUMBER_OF_MESSAGES, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{number_of_messages=Val});
-unpack_tlv_fields(<<?ALERT_ON_MESSAGE_DELIVERY:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?ALERT_ON_MESSAGE_DELIVERY, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{alert_on_message_delivery=Val});
-unpack_tlv_fields(<<?LANGUAGE_INDICATOR:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?LANGUAGE_INDICATOR, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{language_indicator=Val});
-unpack_tlv_fields(<<?ITS_REPLY_TYPE:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?ITS_REPLY_TYPE, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{its_reply_type=Val});
-unpack_tlv_fields(<<?ITS_SESSION_INFO:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?ITS_SESSION_INFO, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{its_session_info=Val});
-unpack_tlv_fields(<<?USSD_SERVICE_OP:?TLV_TAG_SIZE, _/binary>>=Bin, Body) -> 
-	{Val, Rest} = tlv:unpack(?USSD_SERVICE_OP, Bin), 
-	unpack_tlv_fields(Rest, Body#submit_sm{ussd_service_op=Val});
-unpack_tlv_fields(<<Unexpected:?TLV_TAG_SIZE, _/binary>>=Bin, Body) ->
-    {_, Rest} = tlv:unpack(Unexpected, Bin),
-	unpack_tlv_fields(Rest, Body).
+?TLV_UNPACK_EMPTY_BIN();
+?TLV_UNPACK_FIELD(submit_sm, user_message_reference, ?USER_MESSAGE_REFERENCE);
+?TLV_UNPACK_FIELD(submit_sm, source_port, ?SOURCE_PORT);
+?TLV_UNPACK_FIELD(submit_sm, source_addr_subunit, ?SOURCE_ADDR_SUBUNIT);
+?TLV_UNPACK_FIELD(submit_sm, destination_port, ?DESTINATION_PORT);
+?TLV_UNPACK_FIELD(submit_sm, dest_addr_subunit, ?DEST_ADDR_SUBUNIT);
+?TLV_UNPACK_FIELD(submit_sm, sar_msg_ref_num, ?SAR_MSG_REF_NUM);
+?TLV_UNPACK_FIELD(submit_sm, sar_total_segments, ?SAR_TOTAL_SEGMENTS);
+?TLV_UNPACK_FIELD(submit_sm, sar_segment_seqnum, ?SAR_SEGMENT_SEQNUM);
+?TLV_UNPACK_FIELD(submit_sm, more_messages_to_send, ?MORE_MESSAGES_TO_SEND);
+?TLV_UNPACK_FIELD(submit_sm, payload_type, ?PAYLOAD_TYPE);
+?TLV_UNPACK_FIELD(submit_sm, message_payload, ?MESSAGE_PAYLOAD);
+?TLV_UNPACK_FIELD(submit_sm, privacy_indicator, ?PRIVACY_INDICATOR);
+?TLV_UNPACK_FIELD(submit_sm, callback_num, ?CALLBACK_NUM);
+?TLV_UNPACK_FIELD(submit_sm, callback_num_pres_ind, ?CALLBACK_NUM_PRES_IND);
+?TLV_UNPACK_FIELD(submit_sm, callback_num_atag, ?CALLBACK_NUM_ATAG);
+?TLV_UNPACK_FIELD(submit_sm, source_subaddress, ?SOURCE_SUBADDRESS);
+?TLV_UNPACK_FIELD(submit_sm, dest_subaddress, ?DEST_SUBADDRESS);
+?TLV_UNPACK_FIELD(submit_sm, user_response_code, ?USER_RESPONSE_CODE);
+?TLV_UNPACK_FIELD(submit_sm, display_time, ?DISPLAY_TIME);
+?TLV_UNPACK_FIELD(submit_sm, sms_signal, ?SMS_SIGNAL);
+?TLV_UNPACK_FIELD(submit_sm, ms_validity, ?MS_VALIDITY);
+?TLV_UNPACK_FIELD(submit_sm, ms_msg_wait_facilities, ?MS_MSG_WAIT_FACILITIES);
+?TLV_UNPACK_FIELD(submit_sm, number_of_messages, ?NUMBER_OF_MESSAGES);
+?TLV_UNPACK_FIELD(submit_sm, alert_on_message_delivery, ?ALERT_ON_MESSAGE_DELIVERY);
+?TLV_UNPACK_FIELD(submit_sm, language_indicator, ?LANGUAGE_INDICATOR);
+?TLV_UNPACK_FIELD(submit_sm, its_reply_type, ?ITS_REPLY_TYPE);
+?TLV_UNPACK_FIELD(submit_sm, its_session_info, ?ITS_SESSION_INFO);
+?TLV_UNPACK_FIELD(submit_sm, ussd_service_op, ?USSD_SERVICE_OP);
+?TLV_UNPACK_UNEXPECTED().
