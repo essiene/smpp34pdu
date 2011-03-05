@@ -56,6 +56,14 @@ pack(CmdStat, Snum, #deliver_sm_resp{}=Body) ->
 	Bin = smpp34pdu_deliver_sm_resp:pack(Body),
 	pack(?DELIVER_SM_RESP, CmdStat, Snum, Bin);
 
+pack(CmdStat, Snum, #data_sm{}=Body) ->
+	Bin = smpp34pdu_data_sm:pack(Body),
+	pack(?DATA_SM, CmdStat, Snum, Bin);
+
+pack(CmdStat, Snum, #data_sm_resp{}=Body) ->
+	Bin = smpp34pdu_data_sm_resp:pack(Body),
+	pack(?DATA_SM_RESP, CmdStat, Snum, Bin);
+
 pack(CmdStat, Snum, #unbind{}) ->
 	pack(?UNBIND, CmdStat, Snum, <<>>);
 
@@ -87,14 +95,6 @@ pack(CmdStat, Snum, #bind_transceiver_resp{}=Body) ->
 pack(CmdStat, Snum, #outbind{}=Body) ->
 	Bin = smpp34pdu_outbind:pack(Body),
 	pack(?OUTBIND, CmdStat, Snum, Bin);
-
-pack(CmdStat, Snum, #data_sm{}=Body) ->
-	Bin = smpp34pdu_data_sm:pack(Body),
-	pack(?DATA_SM, CmdStat, Snum, Bin);
-
-pack(CmdStat, Snum, #data_sm_resp{}=Body) ->
-	Bin = smpp34pdu_data_sm_resp:pack(Body),
-	pack(?DATA_SM_RESP, CmdStat, Snum, Bin);
 
 pack(CmdStat, Snum, #enquire_link{}) ->
 	pack(?ENQUIRE_LINK, CmdStat, Snum, <<>>);
@@ -174,6 +174,10 @@ unpack_body(?DELIVER_SM, Bin) ->
 	smpp34pdu_deliver_sm:unpack(Bin);
 unpack_body(?DELIVER_SM_RESP, Bin) ->
 	smpp34pdu_deliver_sm_resp:unpack(Bin);
+unpack_body(?DATA_SM, Bin) ->
+	smpp34pdu_data_sm:unpack(Bin);
+unpack_body(?DATA_SM_RESP, Bin) ->
+	smpp34pdu_data_sm_resp:unpack(Bin);
 unpack_body(?UNBIND, _) ->
 	#unbind{};
 unpack_body(?UNBIND_RESP, _) ->
@@ -192,10 +196,6 @@ unpack_body(?BIND_TRANSCEIVER_RESP, Bin) ->
 	smpp34pdu_bind_transceiver_resp:unpack(Bin);
 unpack_body(?OUTBIND, Bin) ->
 	smpp34pdu_outbind:unpack(Bin);
-unpack_body(?DATA_SM, Bin) ->
-	smpp34pdu_data_sm:unpack(Bin);
-unpack_body(?DATA_SM_RESP, Bin) ->
-	smpp34pdu_data_sm_resp:unpack(Bin);
 unpack_body(?ENQUIRE_LINK, _) ->
 	#enquire_link{};
 unpack_body(?ENQUIRE_LINK_RESP, _) ->
