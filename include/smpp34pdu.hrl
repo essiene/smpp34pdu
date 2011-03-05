@@ -145,55 +145,6 @@
         source_addr_npi=?DEFAULT_NPI,
         source_addr=?DEFAULT_CSTRING}).
 
--record(data_sm_resp, {message_id=?DEFAULT_CSTRING,
-		delivery_failure_reason,
-		network_error_code,
-		additional_status_info_text,
-		dpf_result}).
-
--record(query_sm_resp, {message_id=?DEFAULT_CSTRING,
-        final_date=?DEFAULT_CSTRING,
-        message_state=0,
-        error_code=0}).
-
--record(cancel_sm, {service_type=?DEFAULT_CSTRING,
-        message_id=?DEFAULT_CSTRING,
-        source_addr_ton=?DEFAULT_TON,
-        source_addr_npi=?DEFAULT_NPI,
-        source_addr=?DEFAULT_CSTRING,
-        dest_addr_ton=?DEFAULT_TON,
-        dest_addr_npi=?DEFAULT_NPI,
-        destination_addr=?DEFAULT_CSTRING}).
-
--record(cancel_sm_resp, {}).
-
--record(replace_sm, {message_id=?DEFAULT_CSTRING,
-        source_addr_ton=?DEFAULT_TON,
-        source_addr_npi=?DEFAULT_NPI,
-        source_addr=?DEFAULT_CSTRING,
-        schedule_delivery_time=?DEFAULT_CSTRING,
-        validity_period=?DEFAULT_CSTRING,
-        registered_delivery = 0,
-        sm_default_msg_id = 0,
-        sm_length=0,
-        short_message=?DEFAULT_STRING}).
-
--record(replace_sm_resp, {}).
-
-
--record(enquire_link, {}).
--record(enquire_link_resp, {}).
--record(unbind, {}).
--record(unbind_resp, {}).
-
--record(alert_notification, {source_addr_ton=?DEFAULT_TON,
-		source_addr_npi=?DEFAULT_NPI,
-		source_addr=?DEFAULT_CSTRING,
-		esme_addr_ton=?DEFAULT_TON,
-		esme_addr_npi=?DEFAULT_NPI,
-		esme_addr=?DEFAULT_CSTRING,
-		ms_availability_status}).
-
 -record(data_sm, {service_type=?DEFAULT_CSTRING,
 		source_addr_ton=?DEFAULT_TON,
 		source_addr_npi=?DEFAULT_NPI,
@@ -242,5 +193,55 @@
 		language_indicator,
 		its_reply_type,
 		its_session_info}).
+
+
+-record(data_sm_resp, {message_id=?DEFAULT_CSTRING,
+		delivery_failure_reason,
+		network_error_code,
+		additional_status_info_text,
+		dpf_result}).
+
+-record(query_sm_resp, {message_id=?DEFAULT_CSTRING,
+        final_date=?DEFAULT_CSTRING,
+        message_state=0,
+        error_code=0}).
+
+-record(cancel_sm, {service_type=?DEFAULT_CSTRING,
+        message_id=?DEFAULT_CSTRING,
+        source_addr_ton=?DEFAULT_TON,
+        source_addr_npi=?DEFAULT_NPI,
+        source_addr=?DEFAULT_CSTRING,
+        dest_addr_ton=?DEFAULT_TON,
+        dest_addr_npi=?DEFAULT_NPI,
+        destination_addr=?DEFAULT_CSTRING}).
+
+-record(cancel_sm_resp, {}).
+
+-record(replace_sm, {message_id=?DEFAULT_CSTRING,
+        source_addr_ton=?DEFAULT_TON,
+        source_addr_npi=?DEFAULT_NPI,
+        source_addr=?DEFAULT_CSTRING,
+        schedule_delivery_time=?DEFAULT_CSTRING,
+        validity_period=?DEFAULT_CSTRING,
+        registered_delivery = 0,
+        sm_default_msg_id = 0,
+        sm_length=0,
+        short_message=?DEFAULT_STRING}).
+
+-record(replace_sm_resp, {}).
+
+
+-record(enquire_link, {}).
+-record(enquire_link_resp, {}).
+-record(unbind, {}).
+-record(unbind_resp, {}).
+
+-record(alert_notification, {source_addr_ton=?DEFAULT_TON,
+		source_addr_npi=?DEFAULT_NPI,
+		source_addr=?DEFAULT_CSTRING,
+		esme_addr_ton=?DEFAULT_TON,
+		esme_addr_npi=?DEFAULT_NPI,
+		esme_addr=?DEFAULT_CSTRING,
+		ms_availability_status}).
 
 -endif.
