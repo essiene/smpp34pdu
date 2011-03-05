@@ -11,6 +11,7 @@
 -type(query_sm() :: #query_sm{}).
 -type(query_sm_resp() :: #query_sm_resp{}).
 -type(submit_sm() :: #submit_sm{}).
+-type(data_sm() :: #data_sm{}).
 -type(submit_sm_resp() :: #submit_sm_resp{}).
 -type(deliver_sm() :: #deliver_sm{}).
 -type(deliver_sm_resp() :: #deliver_sm_resp{}).
