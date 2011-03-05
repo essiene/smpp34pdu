@@ -50,7 +50,7 @@ pack(CmdStat, Snum, #submit_sm_resp{}=Body) ->
 
 pack(CmdStat, Snum, #deliver_sm{}=Body) ->
 	Bin = smpp34pdu_deliver_sm:pack(Body),
-	pack(?SUBMIT_SM, CmdStat, Snum, Bin);
+	pack(?DELIVER_SM, CmdStat, Snum, Bin);
 
 pack(CmdStat, Snum, #deliver_sm_resp{}=Body) ->
 	Bin = smpp34pdu_deliver_sm_resp:pack(Body),
