@@ -4,11 +4,13 @@
 -export([pack/1, pack/3, unpack/1]).
 
 -type(unpack_status() :: 'header_length' | 'body_length' | 'ok').
--type(pack_error() :: 'pdu_type_unsupported').
+-type(pack_error_type() :: 'pdu_type_unsupported').
+-type(pack_ok() :: {'ok', binary()}).
+-type(pack_error() :: {'error', pack_error_type()}).
 
--spec(pack/1 :: (pdu()) -> {'ok', binary()} | {'error', pack_error()}).
--spec(pack/3 :: (integer(), integer(), valid_pdu()) -> binary()).
--spec(pack/4 :: (integer(), integer(), integer(), binary()) -> binary()).
+-spec(pack/1 :: (pdu()) -> pack_ok() | pack_error()).
+-spec(pack/3 :: (integer(), integer(), valid_pdu()) -> pack_ok() | pack_error()).
+-spec(pack/4 :: (integer(), integer(), integer(), binary()) -> pack_ok()).
 
 -spec(unpack/1 :: (binary()) -> {unpack_status(), [pdu()],binary()}).
 -spec(unpack/3 :: (binary(), unpack_status(), [pdu()]) -> {unpack_status(), [pdu()], binary()}).
