@@ -26,9 +26,9 @@
 -spec(pack_octstring_varlen/3 :: (integer(), binary(), {integer(), integer()})
 		-> binary()).
 -spec(pack_octstring_nomax/2 :: (integer(), binary()) -> binary()).
--spec(unpack_int/2 :: (integer(), binary()) -> integer()).
--spec(unpack_cstring/2 :: (integer(), binary()) -> iolist()).
--spec(unpack_octstring/2 :: (integer(), binary()) -> binary()).
+-spec(unpack_int/2 :: (integer(), binary()) -> {integer(), binary()}).
+-spec(unpack_cstring/2 :: (integer(), binary()) -> {iolist(), binary()}).
+-spec(unpack_octstring/2 :: (integer(), binary()) -> {binary(), binary()}).
 
 pack(_, undefined) ->
 	<<>>;
