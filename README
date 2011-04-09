@@ -68,18 +68,37 @@ Usage/Examples
 
 start() ->
 	% Create a bind_receiver PDU record
+
 	BindReceiverBody = #bind_receiver{system_id="abcdefghij", 
 							password="abcd", system_type="", 
 							interface_version=?VERSION, addr_ton=2, 
 							addr_npi=1,address_range=""},
 
+    % Build the actual PDU record. At the very minimum, only the
+    % body= value of the record is required. During packing, the default
+    % values will be handled properly.
+
+    BindPdu = #pdu{body=BindReceiverBody},
+
 	% Pack this PDU into binary
-	% Note that this calculates all the neccessary header fields
-	% like command_id, command_length, command_status and builds a complete
-	% PDU
+	% All the neccessary header fields like command_id, command_length,
+    % command_status and sequence_number are deciphered if not explicitly
+    % specified, and then put into the binary PDU
+    %
+    % If nothing goes wrong, the tuple {ok, Binary} is returned
+    % else and error tuple {error, Reason} is returned.
 
+    {ok, PackedBinary} = smpp34pdu:pack(BindPdu),
 
-	PackedBinary = smpp34pdu:pack(?ESME_ROK, 1, BindReceiverBody),
+    % Unpacking is also simple. Just feed the binary to the unpack/1
+    % function and voila!
+    % 
+    % If nothing goes wrong, unpack will return a 3-tuple containing
+    % 1. The atom 'ok'
+    % 2. A list of parsed #pdu{}
+    % 3. A left-over binary of an incomplete PDU. This can happen
+    %    when reading from a network connection and not all bytes have
+    %    been read as yet.
 
 	{ok, [Pdu], <<>>} = smpp34pdu:unpack(PackedBinary),
 
@@ -90,7 +109,7 @@ start() ->
 Docs
 -----
 
-A more complete documentation will be included soon
+A more complete documentation will be included soon-ish ;)
 
 
 Current Status
