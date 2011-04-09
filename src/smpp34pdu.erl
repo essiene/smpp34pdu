@@ -1,7 +1,7 @@
 -module(smpp34pdu).
 -include("smpp34pdu.hrl").
 -include("types.hrl").
--export([pack/3, unpack/1]).
+-export([pack/1, pack/3, unpack/1]).
 
 -type(unpack_status() :: 'header_length' | 'body_length' | 'ok').
 
@@ -12,6 +12,25 @@
 -spec(unpack/3 :: (binary(), unpack_status(), [pdu()]) -> {unpack_status(), [pdu()], binary()}).
 
 -spec(unpack_body/2 :: (integer(), binary()) -> valid_pdu() | invalid_command_id()).
+
+
+
+pack(#pdu{command_status=CmdStat0, sequence_number=Snum0, body=Body}) ->
+    CmdStat1 = case CmdStat0 of
+        undefined ->
+            0;
+        N ->
+            N
+    end,
+
+    Snum1 = case Snum0 of
+        undefined ->
+            1;
+        N1 ->
+            N1
+    end,
+
+    pack(CmdStat1, Snum1, Body).
 
 pack(CmdStat, Snum, #generic_nack{}) ->
 	pack(?GENERIC_NACK, CmdStat, Snum, <<>>);
