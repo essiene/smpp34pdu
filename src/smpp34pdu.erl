@@ -104,7 +104,10 @@ pack(CmdStat, Snum, #enquire_link_resp{}) ->
 
 pack(CmdStat, Snum, #alert_notification{}=Body) ->
 	Bin = smpp34pdu_alert_notification:pack(Body),
-	pack(?ALERT_NOTIFICATION, CmdStat, Snum, Bin).
+	pack(?ALERT_NOTIFICATION, CmdStat, Snum, Bin);
+
+pack(_,_,_) ->
+    {error, pdu_type_unsupported}.
 
 
 
