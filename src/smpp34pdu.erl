@@ -4,7 +4,9 @@
 -export([pack/1, pack/3, unpack/1]).
 
 -type(unpack_status() :: 'header_length' | 'body_length' | 'ok').
+-type(pack_error() :: 'pdu_type_unsupported').
 
+-spec(pack/1 :: (pdu()) -> {'ok', binary()} | {'error', pack_error()}).
 -spec(pack/3 :: (integer(), integer(), valid_pdu()) -> binary()).
 -spec(pack/4 :: (integer(), integer(), integer(), binary()) -> binary()).
 
