@@ -111,7 +111,7 @@ pack(CmdStat, Snum, #alert_notification{}=Body) ->
 pack(Cid, CmdStat, Snum, Body) ->
 		Clen = byte_size(Body) + ?HEADER_OCTET_SIZE,
 		L = [<<Clen:32,Cid:32,CmdStat:32,Snum:32>>, Body],
-		list_to_binary(L).
+        {ok, list_to_binary(L)}.
 
 
 
